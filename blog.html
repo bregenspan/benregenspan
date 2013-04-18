@@ -34,7 +34,9 @@
         -webkit-transform: rotate(9deg);
         text-align: right;
         width: 162px;
-        float: right;
+        position: fixed;
+        right: 10px;
+        top: 22px;
       }
 
       h2 {
@@ -60,8 +62,71 @@
       <section id="content">
 
         <header id="top">
-          <h1>Ben Regenspan</h1>
+          <h1 id="title">Ben Regenspan</h1>
         </header>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
 
         <article class="post">
           <header>
@@ -94,6 +159,27 @@
       </section>
 
     </div>
+
+    <script>
+      (function () {
+        var title = document.getElementById('title');
+        var rotate = 9;
+        var top = 5;
+        var lastYPosition = window.scrollY;
+        window.addEventListener('scroll', function () {
+          var direction = 1;
+          if (window.scrollY < lastYPosition) {
+            direction = -1;
+          }
+          rotate += 2 * direction;
+          top += 1 * direction;
+          title.style.webkitTransform = "rotate(" + rotate + "deg)";
+          title.style.top = top + "px";
+          lastYPosition = window.scrollY;
+        });
+
+      }());
+    </script>
 
   </body>
 </html>
