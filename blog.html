@@ -62,7 +62,7 @@
       <section id="content">
 
         <header id="top">
-          <h1 id="title">Ben Regenspan</h1>
+          <h1 data-500-end="opacity:0; transform:rotate(0deg);" data-end="opacity:1; transform:rotate(90deg);" id="title">Ben Regenspan</h1>
         </header>
 
         <article class="post">
@@ -160,25 +160,9 @@
 
     </div>
 
+    <script src="lib/skrollr.min.js"></script>
     <script>
-      (function () {
-        var title = document.getElementById('title');
-        var rotate = 9;
-        var top = 5;
-        var lastYPosition = window.scrollY;
-        window.addEventListener('scroll', function () {
-          var direction = 1;
-          if (window.scrollY < lastYPosition) {
-            direction = -1;
-          }
-          rotate += 2 * direction;
-          top += 1 * direction;
-          title.style.webkitTransform = "rotate(" + rotate + "deg)";
-          title.style.top = top + "px";
-          lastYPosition = window.scrollY;
-        });
-
-      }());
+      skrollr.init();
     </script>
 
   </body>
