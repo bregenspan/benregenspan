@@ -57,7 +57,7 @@
       }
 
       #content {
-        padding: 46px 66px 0;
+        padding: 56px 66px 0;
       }
 
       h1, h2, h3 {
@@ -87,12 +87,17 @@
       }
 
       #sidebar {
-        position: absolute;
+        position: fixed;
         right: 10px;
         top: 120px;
         width: 162px;
         font-size:2em;
         text-align: center;
+      }
+
+      #sidebar .icon {
+        -webkit-transition: color 1s;
+        text-shadow: -1px 1px #888;
       }
 
       #sidebar .icon:hover {
@@ -111,7 +116,7 @@
 
 
       /* Small window size: do tiny logo + sidebar */
-      @media (min-width: 600px) and (max-width: 760px) {
+      @media (min-width: 600px) and (max-width: 790px) {
         #top h1 {
           width:auto;
           text-align: center;
@@ -137,23 +142,33 @@
         #top h1, #sidebar {
           position: static;
         }
+        #top h1 {
+          -webkit-transform: none;
+        }
         #container {
           margin: 0;
         }
 
-        .doodad {
+        #content {
+          padding: 10px 20px;
+        }
+
+        .doodad-track {
           position:fixed;
           bottom:0px;
-          background: #000;
-          height:20px;
+          background: #888;
+          background: rgba(0,0,0,0.5);
+          height:15px;
           width:100%;
         }
 
-        .doodad .item {
+        .doodad {
           position: absolute;
-          width: 10px;
-          height: 100%;
-          background: red;
+          width: 50px;
+          height: 20px;
+          margin-top: -8px;
+          margin-left: -25px;
+          background: transparent url(img/pipe.png);
         }
 
       }
@@ -171,7 +186,7 @@
         <h1 data-0="opacity:1; top:22px; transform:rotate(9deg);" data-end="opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span class="name-part">Ben</span> <span class="name-part">Regenspan</span></h1>
         </header>
 
-        <aside id="sidebar" data-0="top:120px" data-end="top:800px">
+        <aside id="sidebar" data-0="top:120px" data-end="top:10px">
 
         <a class="icon" href="twitter.com" title="Twitter">T</a>
         <a class="icon" href="github.com" title="GitHub">g</a>
@@ -270,7 +285,7 @@
       </section>
 
 
-      <div class="doodad"><div data-0="left:0%;" data-end="left:100%;" class="item"></div></div>
+      <div class="doodad-track"><div data-0="left:0%;" data-end="left:100%;" class="doodad"></div></div>
 
     </div>
 
