@@ -5,6 +5,33 @@
 
     <style>
 
+@font-face {
+  font-family: 'fontello';
+  src: url('fonts/fontello.eot?27200950');
+  src: url('fonts/fontello.eot?27200950#iefix') format('embedded-opentype'),
+       url('fonts/fontello.woff?27200950') format('woff'),
+       url('fonts/fontello.ttf?27200950') format('truetype'),
+       url('fonts/fontello.svg?27200950#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+      .icon {
+        font-family: fontello;
+        text-decoration: none;
+      }
+
+      /* Nicholas Gallagher's clearfix */
+      .cf:before,
+      .cf:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+      }
+
+      .cf:after {
+          clear: both;
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -12,21 +39,32 @@
       html, body {
         margin: 0px;
         padding: 0px;
+        min-height: 100%;
       }
 
-      html, body, #container, #content {
-        height: 100%;
+      #container, #content {
+        min-height: 100%;
+      }
+
+      body {
+        background: url(https://twimg0-a.akamaihd.net/profile_background_images/376795478/pipebgwithbehemoth.jpg);
+        background-position: -219px;
+        font-family: 'Noto Serif', serif;
+      }
+
+      a {
+        color: rgb(0, 0, 238);
       }
 
       #content {
-        padding: 18px 20px 0;
+        padding: 46px 66px 0;
       }
 
       h1, h2, h3 {
-        font-family: Helvetica, Arial, Verdana, sans-serif;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
       }
 
-      h1 {
+      #top h1 {
         margin: 0;
         background: #ab8771;
         color: #fff;
@@ -44,121 +82,212 @@
       }
 
       #container {
-        padding-left: 100px;
-        background: url(https://twimg0-a.akamaihd.net/profile_background_images/376795478/pipebgwithbehemoth.jpg);
-        background-position: -219px;
-      }
-
-      #content {
+        margin-left: 15%;
         background: #fff;
       }
+
+      #sidebar {
+        position: absolute;
+        right: 10px;
+        top: 120px;
+        width: 162px;
+        font-size:2em;
+        text-align: center;
+      }
+
+      #sidebar .icon:hover {
+        color: black;
+      }
+
+
+      article header, article h2, article p {
+        max-width: 600px;
+      }
+
+      .name-part {
+        display: block;
+        float: left;
+      }
+
+
+      /* Small window size: do tiny logo + sidebar */
+      @media (min-width: 600px) and (max-width: 760px) {
+        #top h1 {
+          width:auto;
+          text-align: center;
+        }
+        .name-part {
+          font-size: 0px;
+        }
+        .name-part:first-letter {
+          font-size:20px;
+        }
+
+        #sidebar {
+          width: 1.5em;
+          font-size: 1.5em;
+        }
+      }
+
+      /* Mobile: stack everything */
+      @media (max-width: 600px) {
+        article, header, footer, sidebar {
+          float: left;
+        }
+        #top h1, #sidebar {
+          position: static;
+        }
+        #container {
+          margin: 0;
+        }
+
+        .doodad {
+          position:fixed;
+          bottom:0px;
+          background: #000;
+          height:20px;
+          width:100%;
+        }
+
+        .doodad .item {
+          position: absolute;
+          width: 10px;
+          height: 100%;
+          background: red;
+        }
+
+      }
+
     </style>
 
   </head>
-  <body>
+  <body class="cf">
 
-    <div id="container">
+    <div id="container" class="cf">
 
       <section id="content">
 
         <header id="top">
-          <h1 data-500-end="opacity:0; transform:rotate(0deg);" data-end="opacity:1; transform:rotate(90deg);" id="title">Ben Regenspan</h1>
+        <h1 data-0="opacity:1; top:22px; transform:rotate(9deg);" data-end="opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span class="name-part">Ben</span> <span class="name-part">Regenspan</span></h1>
         </header>
 
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
+        <aside id="sidebar" data-0="top:120px" data-end="top:800px">
 
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
+        <a class="icon" href="twitter.com" title="Twitter">T</a>
+        <a class="icon" href="github.com" title="GitHub">g</a>
 
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
+        <a class="icon" href="stackoverflow.com" title="StackOverflow">&#xe032;</a>
 
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
-        <aside id="sidebar">
-          Test
         </aside>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
+
+        <article class="post">
+          <header>
+            <h2>I think bears are pretty cool but sharks are better</h2>
+          </header>
+          <p>This is the actual text of the article here.</p>
+        </article>
 
         <footer>
           Test
         </footer>
       </section>
 
+
+      <div class="doodad"><div data-0="left:0%;" data-end="left:100%;" class="item"></div></div>
+
     </div>
+
+<script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Open+Sans::latin', 'Noto+Serif::latin'] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+    })();
+</script>
 
     <script src="lib/skrollr.min.js"></script>
     <script>
