@@ -56,6 +56,11 @@
         font-family: 'Noto Serif', serif;
         color: #080f17;
       }
+      
+      footer {
+        color: #666;
+        font-size: 0.8em;
+      }
 
       #content {
         padding: 56px 66px 0;
@@ -80,7 +85,7 @@
       }
 
       #content section {
-        margin: 40px 0;
+        margin: 0 0 40px 0;
       }
 
       #top h1 {
@@ -136,15 +141,13 @@
         text-transform: uppercase;
         font-size: 0.6em;
         border-radius: 3px;
-        -webkit-transition: opacity 0.5s;
-      }
-
-      h3 .tag:hover {
-        opacity: 1;
+        -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+        display: inline-block;
       }
 
       article:hover .tag {
         opacity: 1;
+        -webkit-transform: rotate(4deg) scale(1.1);        
       }
 
       h3 a {
@@ -247,7 +250,7 @@
 
         <section class="about">
           <header><h2>About Me</h2></header>
-          <p>I (Ben Regenspan of New York, NY), am a full-stack developer. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun. The most success I have had on a dating site recently is spotting a mass-assignment vulnerability.</p>
+          <p>I (Ben Regenspan of New York, NY), am a full-stack developer. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun. The most success I have had on a dating site recently is spotting a mass-assignment vulnerability. I was Lead Social Developer for Huffington Post for a few years, and most recently I work at <a href="http://www.sohotechlabs.com">Soho Tech Labs</a>, building apps and web products.</p>
         </section>
 
         <section class="scarves">
@@ -255,6 +258,7 @@
           <p>I have a small, but (I like to think) well-curated, collection of scarves.</p>
 
           <a data-pin-do="embedBoard" href="http://pinterest.com/benjr/scarves/" data-pin-scale-height="120" data-pin-board-width="400"></a>
+        </section>
 
         <section class="projects">
           <header><h2>Open-source Projects</h2></header>
@@ -313,7 +317,7 @@
         </section>
 
         <footer>
-          Test
+          Ben Regenspan 2013
         </footer>
       </section>
 
