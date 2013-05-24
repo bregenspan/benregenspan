@@ -110,7 +110,7 @@
         max-width: 600px;
       }
 
-      .name-part {
+      #top span {
         display: block;
         float: left;
       }
@@ -122,10 +122,10 @@
           width:auto;
           text-align: center;
         }
-        .name-part {
+        #top span {
           font-size: 0px;
         }
-        .name-part:first-letter {
+        #top span:first-letter {
           font-size:20px;
         }
 
@@ -184,17 +184,46 @@
       <section id="content">
 
         <header id="top">
-        <h1 data-0="opacity:1; top:22px; transform:rotate(9deg);" data-end="opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span class="name-part">Ben</span> <span class="name-part">Regenspan</span></h1>
+        <h1 data-0="opacity:1; top:22px; transform:rotate(9deg);" data-end="opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span>Ben</span> <span>Regenspan</span></h1>
         </header>
 
         <aside id="sidebar" data-0="top:120px" data-end="top:10px">
 
-        <a class="icon" href="twitter.com" title="Twitter">T</a>
-        <a class="icon" href="github.com" title="GitHub">g</a>
+        <a class="icon" href="http://twitter.com" title="Twitter">T</a>
+        <a class="icon" href="http://github.com" title="GitHub">g</a>
 
-        <a class="icon" href="stackoverflow.com" title="StackOverflow">&#xe032;</a>
+        <a class="icon" href="http://stackoverflow.com" title="StackOverflow">&#xe032;</a>
 
         </aside>
+
+        <section class="projects">
+          <header><h2>Open-source Projects</h2></header>
+
+          <h3><a href="https://github.com/bregenspan/django-ajax-changelist">Django Ajax Changelist</a> (built)</h3>
+          <p>This small Django app lets you specify fields in your Django admin's object list that you would
+          like to be AJAX-editable. This is intended for when users of the admin need to update 
+          certain properties on a number of items, and don't want to have to click through to the object detail
+          page, then return back to the change list each time.</p>
+
+          <h3><a href="https://github.com/bregenspan/jewnicorn">Jewnicorn</a></h3>
+          <p>This is a lightly modified fork of gunicorn, the widely-used all-Python HTTP server. It preserves all 
+          of gunicorn's features, but prevents it from serving content on Shabbos. (<a href="https://github.com/bregenspan/jewnicorn/commit/0244c15b3aab39a180b4ddc577fe1298e628aab0">"astral" is used</a> for finding local
+          sun-up/sun-down times).</p>
+          <p>While this project exists entirely as a dumb joke, it should be noted that some sites do close down on Shabbos, <a href="http://gadgetopia.com/post/6799">B&H likely being</a> the most prominent example.  There is an <a href="http://judaism.stackexchange.com/questions/2671/do-you-have-to-close-your-blog-website-on-shabbos">interesting discussion of this subject</a> over on StackExchange.</p>
+          
+          <h3><a href="https://github.com/bregenspan/fight-for-your-right-to-pay-with-a-credit-card">Fight For Your Right (To Pay With a Credit Card)</a> (javascript, chrome-extension)</h3>
+          <p>This simple Chrome extension defaults Paypal's payment option to credit card.</p>
+
+          <h3><a href="https://github.com/bregenspan/one-plus-forward-two-plus-backward">One Plus Forward, Two Plus Backward</a></h3>
+          <p>This Chrome extension adds a limit of 140 characters to Google Plus and hides the buttons for doing fancy things that wouldn't be possible on Twitter, like recording video. In the interests of exceptional yet subtle UI, the HTML5 Audio API (via <a href="http://buzz.jaysalvat.com/">Buzz!</a>) is used to play an airhorn effect when the user exceeds the character limit, and an image of the Dalai Lama flashes on the screen to remind the user of the beauty that can be found in simplicity. (Sadly, some updates are required to make this work again after the latest Google+ redesign)</p>
+          <h3><a href="https://github.com/bregenspan/live-twitter-background">Live Twitter Background</a></h3>
+          <p>This is an old project and there are a number of things I'd clean up about the code. Nevertheless, if you'd like to use something written in PHP to periodically update your Twitter background to show a highly unecessary list of recent followers + your current Skype status, this could be a good fit.</p>
+
+
+          My contributions to other open-source projects currently tend to be very small -- I'll commit documentation fixes, tiny features, etc. I hope to make more substantial open-soruce contributions in future.
+
+
+        </section>
 
         <article class="post">
           <header>
