@@ -3,7 +3,6 @@
   <head>
     <title>Ben Regenspan</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <style>
 
 @font-face {
@@ -57,6 +56,11 @@
         font-family: 'Noto Serif', serif;
         color: #080f17;
       }
+      
+      footer {
+        color: #666;
+        font-size: 0.8em;
+      }
 
       #content {
         padding: 56px 66px 0;
@@ -81,7 +85,7 @@
       }
 
       #content section {
-        margin: 40px 0;
+        margin: 0 0 40px 0;
       }
 
       #top h1 {
@@ -103,6 +107,10 @@
 
       h2 {
         font-size: 1.2em;
+      }
+
+      h3 {
+        font-size: 1.05em;
       }
 
       #sidebar {
@@ -137,15 +145,13 @@
         text-transform: uppercase;
         font-size: 0.6em;
         border-radius: 3px;
-        -webkit-transition: opacity 0.5s;
-      }
-
-      h3 .tag:hover {
-        opacity: 1;
+        -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+        display: inline-block;
       }
 
       article:hover .tag {
         opacity: 1;
+        -webkit-transform: rotate(4deg) scale(1.1);        
       }
 
       h3 a {
@@ -179,7 +185,7 @@
 
       /* Mobile: stack everything */
       @media (max-width: 600px) {
-        article, header, footer, aside {
+        #top, aside {
           float: left;
         }
         #top h1, #sidebar {
@@ -231,28 +237,31 @@
 
     <div id="container" class="cf">
 
-        <!--[if lt IE 9]>
-        You're using an old web browser! This site might look and work a lot less cool than if you were using a new web browser. In fact, it probably won't work much at all. It's a pain to make sites work on old browsers, so I watched a lot of British nature shows instead. If you would like to get with the program, go to <a href="http://whatbrowser.org">upgrade your browser</a>.
-        <![endif]-->
-
       <section id="content">
 
         <header id="top">
-        <h1 data-0="filter: blur(0px); opacity:1; top:22px; transform:rotate(9deg);" data-end="filter:blur(5px); opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span>Ben</span> <span>Regenspan</span></h1>
+        <h1 data-0="opacity:1; top:22px; transform:rotate(9deg);" data-end="opacity:0; top:500px; transform:rotate(130deg);" id="title" class="cf"><span>Ben</span> <span>Regenspan</span></h1>
         </header>
 
         <aside id="sidebar" data-0="top:120px" data-end="top:10px">
 
-        <a class="icon" href="http://twitter.com" title="Twitter">T</a>
-        <a class="icon" href="http://github.com" title="GitHub">g</a>
+        <a class="icon" href="http://twitter.com/BenRegenspan" title="Twitter">T</a>
+        <a class="icon" href="http://github.com/bregenspan" title="GitHub">g</a>
 
-        <a class="icon" href="http://stackoverflow.com" title="StackOverflow">&#xe032;</a>
+        <a class="icon" href="http://stackoverflow.com/users/69697/ben" title="StackOverflow">&#xe032;</a>
 
         </aside>
 
         <section class="about">
           <header><h2>About Me</h2></header>
-          <p>I (Ben Regenspan of New York, NY), am a full-stack developer. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun.</p>
+          <p>I (Ben Regenspan of New York, NY), am a full-stack web developer. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun. The most success I have had on a dating site recently is spotting a mass-assignment vulnerability. I was Lead Social Developer for <a href="http://www.huffingtonpost.com/">Huffington Post</a> for a few years, and most recently I work at <a href="http://www.sohotechlabs.com">Soho Tech Labs</a>, building apps and web products.</p>
+        </section>
+
+        <section class="scarves">
+          <header><h3>Scarves</h2></header>
+          <p>I have a small, but (I like to think) well-curated, collection of scarves.</p>
+
+          <a data-pin-do="embedBoard" href="http://pinterest.com/benjr/scarves/" data-pin-scale-height="120" data-pin-board-width="400"></a>
         </section>
 
         <section class="projects">
@@ -300,9 +309,13 @@
         <section class="experiments">
           <header><h2>Experiments</h2></header>
 
+          <article><h3><a href="http://techcrunch.com/2011/04/01/in-baffling-move-huffington-post-erects-paywall-solely-for-nyt-employees/">April Fools' Reverse Paywall</a></h3>
+          <p>I built a fun little April Fools joke at Huffington Post - a paywall that only targeted visitors with New York Times IP addresses. There were some interesting challenges to the project due to CDN-level caching, so the IP detection was written using Akamai ESI.</p>
+          </article>
+
           <article>
           <h3><a href="http://www.totalshite.com/captcha_philharmonic/">Captcha Philharmonic</a></h3>
-          <p>A series of audio Captchas are added one by one, then slowly removed, creating a chorus of strange voices and an impossible Captcha challenge. This sounded a lot prettier before Google last revised its audio Captcha format to defeat automatic solutions. I do consider this to be art and my artists' statement can be found <a href="http://www.artybollocks.com/#abg_full">here</a>.</p>
+          <p>A series of audio Captchas are added one by one, then slowly removed, creating a chorus of strange voices and an impossible Captcha challenge. This sounded a lot prettier before Google last revised its audio Captcha format to defeat automatic solutions. I do consider this to be Art and my artists' statement can be found <a href="http://www.artybollocks.com/#abg_full">here</a>.</p>
           </article>
 
           <article>
@@ -311,15 +324,8 @@
           </article>
         </section>
 
-        <article class="post">
-          <header>
-            <h2>I think bears are pretty cool but sharks are better</h2>
-          </header>
-          <p>This is the actual text of the article here.</p>
-        </article>
-
         <footer>
-          Test
+          Ben Regenspan 2013
         </footer>
       </section>
 
@@ -341,6 +347,16 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(wf, s);
     })();
+</script>
+
+<script type="text/javascript">
+(function(d){
+  var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+  p.type = 'text/javascript';
+  p.async = true;
+  p.src = '//assets.pinterest.com/js/pinit.js';
+  f.parentNode.insertBefore(p, f);
+}(document));
 </script>
 
     <script src="lib/skrollr.min.js"></script>
