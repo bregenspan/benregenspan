@@ -1,59 +1,96 @@
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+ 
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+ 
+// MIT license 
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
+
 var Point = function (x, y) {
     this.x = x;
     this.y = y;
-}
+};
 
 Point.prototype.greaterThan = function (point) {
     return (this.y > point.y || this.x > point.x);
-}
+};
 
 Point.prototype.equals = function (point) {
     return (this.y === point.y && this.x === point.x);
-}
-
-// shim layer with setTimeout fallback
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
-              function( callback ){
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
+};
 
 function AnimatedPolyline (segments, ctx, callback) {
+    this.finished = false;
     this.segments = segments;
     this.ctx = ctx;
     this.callback = callback || function () {};
+    ctx.lineCap = 'round';
 
     // index in coordinates array where current segment beginsAQ
     var idx = this.currentSegmentIndex = 0;
 
     this.position = segments[0]; 
-
-    _.bindAll(this);
 }
 
-AnimatedPolyline.prototype.draw = function () {
+AnimatedPolyline.prototype.draw = function (lastRender) {
+
+    if (this.finished) {
+        return;
+    }
+
+    if (typeof lastRender === 'undefined') {
+        lastRender = new Date().getTime();
+    }
+
+    var delta = new Date().getTime() - lastRender;
+    this.renderTick(delta);
+    lastRender = new Date().getTime();
+
+    // set up our next frame
     var me = this;
-    this.timeout = setTimeout(function () {
-        requestAnimFrame(me.draw);
-        me.render();
-    }, 10);
+    window.requestAnimationFrame(function () {
+        me.draw(lastRender);
+    });
 };
 
 AnimatedPolyline.prototype.finish = function () {
+    this.finished = true;
     window.clearTimeout(this.timeout);
     this.callback();
 };
 
-AnimatedPolyline.prototype.render = function () {
+AnimatedPolyline.prototype.renderTick = function (delta) {
+    var interval = 60 / 1000;
     var ctx = this.ctx;
     var idx = this.currentSegmentIndex;
     var targetPos = this.segments[idx + 1];
+    var moveAmount = delta * interval;
 
+    console.log(moveAmount);
     var pos = this.position;
  
     if (targetPos.greaterThan(pos)) {
@@ -61,10 +98,10 @@ AnimatedPolyline.prototype.render = function () {
         ctx.moveTo(pos.x, pos.y);
         
         if (targetPos.y > pos.y) {
-           pos.y += 2;
+           pos.y += moveAmount;
         }
         if (targetPos.x > pos.x) {
-           pos.x += 2;
+           pos.x += moveAmount;
         }
         
         if (pos.x > targetPos.x) {
@@ -93,5 +130,8 @@ var coordinates = [
     new Point(301, 196)
 ];
 
-var line = new AnimatedPolyline(coordinates, document.getElementById('canvas').getContext('2d'));
+var canvas = window.document.createElement('canvas');
+window.document.getElementsByTagName('body')[0].appendChild(canvas);
+
+var line = new AnimatedPolyline(coordinates, canvas.getContext('2d'));
 line.draw();
