@@ -88,7 +88,9 @@ AnimatedPolyline.prototype.renderTick = function (delta) {
     var ctx = this.ctx;
     var idx = this.currentSegmentIndex;
     var targetPos = this.segments[idx + 1];
-    var moveAmount = delta * interval;
+
+    // 2px / frame @ 60 target fps
+    var moveAmount = delta * interval * 4;
 
     console.log(moveAmount);
     var pos = this.position;
@@ -122,16 +124,3 @@ AnimatedPolyline.prototype.renderTick = function (delta) {
         }
     }
 };
-
-var coordinates = [
-    new Point(3, 2),
-    new Point(195, 2),
-    new Point(195, 195),
-    new Point(301, 196)
-];
-
-var canvas = window.document.createElement('canvas');
-window.document.getElementsByTagName('body')[0].appendChild(canvas);
-
-var line = new AnimatedPolyline(coordinates, canvas.getContext('2d'));
-line.draw();
