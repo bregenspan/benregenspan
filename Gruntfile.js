@@ -10,7 +10,9 @@ module.exports = function(grunt) {
       my_target: {
           files: {
               'build/main.js': [
-                  'src/js/polyline.js',
+                  'src/js/connector/point.js',
+                  'src/js/connector/polyline.js',
+                  'src/js/connector/connector.js',
                   'src/js/lib/RaF_polyfill.js',
                   'src/js/lib/skrollr.min.js',
                   'src/js/lib/skrollr.mobile.min.js'
