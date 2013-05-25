@@ -15,7 +15,9 @@ module.exports = function(grunt) {
                   'src/js/connector/connector.js',
                   'src/js/lib/RaF_polyfill.js',
                   'src/js/lib/skrollr.min.js',
-                  'src/js/lib/skrollr.mobile.min.js'
+                  'src/js/lib/skrollr.mobile.min.js',
+
+                  'src/js/index.js'
               ]
           }
       }
@@ -28,7 +30,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-        scripts: {
+        js: {
             files: 'src/**.js',
             tasks: ['uglify']
         },
@@ -36,12 +38,21 @@ module.exports = function(grunt) {
             files: 'src/**',
             tasks: ['copy']
         }
+     },
+     sass: {
+        dist: {
+            files: {
+                'build/main.css': 'src/main.scss'
+            }
+        }
      }
+     
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['uglify', 'copy']);
+  grunt.registerTask('default', ['uglify', 'copy', 'sass']);
 };
