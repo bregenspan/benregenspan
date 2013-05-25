@@ -39,7 +39,7 @@
     var progressBar = doc.createElement('div');
     progressBar.className = 'doodad-track';
     var progressBarNub = doc.createElement('div');
-    progressBarNub.classname = 'doodad';
+    progressBarNub.className = 'doodad';
     progressBar.appendChild(progressBarNub);
     $('container').appendChild(progressBar);
 

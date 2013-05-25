@@ -26,16 +26,20 @@
 
 
 /* Nicholas Gallagher's clearfix */
-.cf:before,
-.cf:after {
+%clearfix {
+  &:before,
+  &:after {
     content: " "; /* 1 */
     display: table; /* 2 */
-}
+  }
 
-.cf:after {
+  &:after {
     clear: both;
+  }
 }
 
+
+/* Fix the box model */
 * {
   box-sizing: border-box;
 }
@@ -49,6 +53,7 @@ html, body {
 }
 
 body {
+  @extend %clearfix;
   background: url(https://twimg0-a.akamaihd.net/profile_background_images/376795478/pipebgwithbehemoth.jpg);
   background-position: -219px;
   font-family: 'Noto Serif', serif;
@@ -84,6 +89,7 @@ footer {
 }
 
 #container {
+  @extend %clearfix;
   margin-left: 15%;
   background: #fefafa;
   @include breakpoint(mobile) {
@@ -139,6 +145,7 @@ section {
 }
 
 #top h1 {
+  @extend %clearfix;
   margin: 0;
   background: #ab8771;
   color: #fff;
