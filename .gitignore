@@ -1,0 +1,14 @@
+# Swap
+*.swp
+*.swo
+
+
+# Node
+node_modules
+
+
+# Other cruft
+*.orig
+
+
+build
