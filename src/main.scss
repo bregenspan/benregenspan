@@ -131,19 +131,37 @@ h3 {
   background: #333;
 }
 
-.aside {
-  position: absolute;
-  right: 20px;
-  width: 300px;
-  height: 300px;
-}
-
 section {
   clear: both;
+
+  margin: 0 0 140px 0;
+
+  figure {
+    opacity: 0;
+
+    -webkit-transition: opacity 2s;
+
+    position: absolute;
+    right: 20px;
+    width: 300px;
+    height: 300px;
+
+    & > img {
+      width: 150px;
+      margin: 75px;
+    }
+  }
+
+  /* In large mode -- we show one figure at a time, just for the active section */
+  &.active figure {
+    opacity: 1.0;
+  }
 }
 
-#content section {
-  margin: 0 0 40px 0;
+#unicorn {
+  width: 120px;
+  height: 90px;
+  position: absolute;
 }
 
 @include breakpoint(mobile) {

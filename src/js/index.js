@@ -45,15 +45,6 @@
     $('container').appendChild(progressBar);
 
 
-    // FIXME: draw line connecting about and title
-    window.setTimeout(function () {
-        //var c = new Connector($('content'), $('about').getElementsByTagName('h2')[0], $('title'));
-        //c.draw();
-        //
-        var c = new Connector($('content'), $('scarves').getElementsByTagName('h2')[0], $('scarvesGraphic'));
-        c.draw();
-    }, 1000);
-
 
     // Nifty on-scroll effects
     var title = $('title');
@@ -68,5 +59,35 @@
     progressBarNub.setAttribute('data-end', 'left:100%');
 
     skrollr.init();
+
+
+    var sections = document.getElementsByTagName('section');
+
+    var activateSection = function (section) {
+        var ACTIVE = 'active';
+        for (var i = 0, ilen = sections.length; i < ilen; i++) {
+            sections[i].className = sections[i].className.replace(ACTIVE, '');
+        }
+        section.className += ' ' + ACTIVE;
+
+        var figure = section.getElementsByTagName('figure')[0];
+        figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight) + 'px';
+
+        var unicorn = $('unicorn'),
+            unicornHeight = unicorn.offsetHeight,
+            unicornWidth = unicorn.offsetWidth;
+        var c = new Connector($('content'), section.getElementsByTagName('h2')[0], figure, function (x, y) {
+            unicorn.style.top = y - (unicornHeight / 2) + 'px';
+            unicorn.style.left = x - (unicornWidth / 2) + 'px';
+        });
+        c.draw();
+    };
+
+    for (var i = 0, ilen = sections.length; i < ilen; i++) {
+        sections[i].addEventListener('click', function () {
+            activateSection(this);
+        });
+    }
+
 
 }());

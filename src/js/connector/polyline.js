@@ -1,11 +1,12 @@
 var AnimatedPolyline = (function (Point) {
     'use strict';
 
-    var AnimatedPolyline = function (segments, ctx, callback) {
+    var AnimatedPolyline = function (segments, ctx, callback, moveCallback) {
         this.finished = false;
         this.segments = segments;
         this.ctx = ctx;
         this.callback = callback || function () {};
+        this.moveCallback = moveCallback || function () {};
 
         // array index of beginning position of current segment
         var idx = this.currentSegmentIndex = 0;
@@ -106,6 +107,8 @@ var AnimatedPolyline = (function (Point) {
             ctx.lineTo(pos.x, pos.y);
             ctx.lineWidth = 4;
             ctx.stroke();
+
+            this.moveCallback(pos.x, pos.y);
 
         } else if (targetPos.equals(pos)) {
             this.currentSegmentIndex += 1;

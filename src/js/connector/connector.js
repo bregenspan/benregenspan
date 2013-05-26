@@ -8,9 +8,9 @@
  *   TODO: support choice of source and target edges. For now, left and right edges are used.
  */
 
-/*global Point, AnimatedPolyline, document, window, console*/
+/*global EventTarget, Point, AnimatedPolyline, document, window, console*/
 
-var Connector = (function (Point, AnimatedPolyline) {
+var Connector = (function (EventTarget, Point, AnimatedPolyline) {
     'use strict';
 
     var margin = 5;
@@ -37,14 +37,18 @@ var Connector = (function (Point, AnimatedPolyline) {
         return [left, top];
     }
 
-    var C = function (parentEl, src, dest) {
+    var C = function (parentEl, src, dest, moveCallback) {
         this.src = src;
         this.dest = dest;
         this.parentEl = parentEl;
 
+        this.moveCallback = moveCallback || function () {};
+
         // TODO: handle browser resize
         var de = document.documentElement;
         this.canvasHeight = de.clientHeight * 3;
+
+        // FIXME: need FF fallback, + imageURL as background (no animation) fallback
         this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', de.clientWidth, this.canvasHeight);
         parentEl.style.background = '-webkit-canvas(connectorCtx)';
         parentEl.style.backgroundRepeat = 'no-repeat';
@@ -62,6 +66,10 @@ var Connector = (function (Point, AnimatedPolyline) {
             }
         };
     };
+
+    C.prototype = new EventTarget();
+    C.prototype.constructor = C;
+
 
     // TODO - set on scroll every time full viewport * 2 is scrolled
     C.prototype.setCanvasOffset = function () {
@@ -87,11 +95,10 @@ var Connector = (function (Point, AnimatedPolyline) {
         var line = new AnimatedPolyline([
             new Point(srcX, srcY),
             new Point(destX, destY)
-        ], ctx);
+        ], ctx, null, this.moveCallback);
         line.draw();
-
     };
 
     return C;
 
-}(Point, AnimatedPolyline));
+}(EventTarget, Point, AnimatedPolyline));
