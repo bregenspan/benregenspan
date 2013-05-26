@@ -61,30 +61,61 @@
     skrollr.init();
 
 
-    var sections = document.getElementsByTagName('section');
+    var slice = Array.prototype.slice;
+    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
+    var activeSection;
+    var activeConnector;
 
     var activateSection = function (section) {
+
+        var figure = section.getElementsByTagName('figure');
+        if (!figure.length) return;
+
+        // don't listen on sections that contain articles (we listen to the articles themselves)
+        if (section.tagName.toLowerCase() === 'section' && section.getElementsByTagName('article').length) {
+            return;
+        }
+
+        activeSection = section;
+
+        figure = figure[0];
+
         var ACTIVE = 'active';
         for (var i = 0, ilen = sections.length; i < ilen; i++) {
             sections[i].className = sections[i].className.replace(ACTIVE, '');
         }
         section.className += ' ' + ACTIVE;
 
-        var figure = section.getElementsByTagName('figure')[0];
         figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight) + 'px';
 
         var unicorn = $('unicorn'),
             unicornHeight = unicorn.offsetHeight,
             unicornWidth = unicorn.offsetWidth;
-        var c = new Connector($('content'), section.getElementsByTagName('h2')[0], figure);
-        c.addListener("move", function (e) {
+
+        var title = section.getElementsByTagName('h3');
+        if (!title.length) {
+            title = section.getElementsByTagName('h2');
+        }
+        title = title[0];
+
+        if (activeConnector) {
+            activeConnector.line.stopDrawing();
+        }
+
+        activeConnector = new Connector($('content'), title, figure);
+        activeConnector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';
             }
             unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
             unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
         });
-        c.draw();
+        activeConnector.addListener("cleared", function (e) {
+            unicorn.style.visibility = 'hidden';
+            activeSection.className = activeSection.className.replace('active', '');
+        });
+
+        activeConnector.draw();
     };
 
     for (var i = 0, ilen = sections.length; i < ilen; i++) {

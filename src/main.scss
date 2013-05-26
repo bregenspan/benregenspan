@@ -132,9 +132,11 @@ h3 {
 }
 
 section {
-  clear: both;
-
   margin: 0 0 140px 0;
+  clear: both;
+}
+
+section, article {
 
   figure {
     opacity: 0;

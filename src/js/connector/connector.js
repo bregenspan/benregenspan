@@ -75,6 +75,10 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
     // TODO - set on scroll every time full viewport * 2 is scrolled
     C.prototype.setCanvasOffset = function () {
+        this.fire('cleared');
+        if (this.line) {
+            this.line.stopDrawing();
+        }
         this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
         this.canvasOffset = document.body.scrollTop;
         this.parentEl.style.backgroundPosition = "0 " + this.canvasOffset + "px";
@@ -105,11 +109,11 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         var destX = destPosition[0];
         var destY = (destPosition[1] + (dest.offsetHeight / 2)) - this.canvasOffset;
 
-        var line = new AnimatedPolyline([
+        this.line = new AnimatedPolyline([
             new Point(srcX, srcY),
             new Point(destX, destY)
         ], ctx, null, function (x, y) { me.fireMoveEvent(x, y); });
-        line.draw();
+        this.line.draw();
     };
 
     return C;

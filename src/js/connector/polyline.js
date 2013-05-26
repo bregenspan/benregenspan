@@ -1,3 +1,5 @@
+/*global window*/
+
 var AnimatedPolyline = (function (Point) {
     'use strict';
 
@@ -54,18 +56,27 @@ var AnimatedPolyline = (function (Point) {
 
         // set up our next frame
         var me = this;
-        window.requestAnimationFrame(function () {
+        this.animRequest = window.requestAnimationFrame(function () {
             me.draw(lastRender);
         });
     };
 
     AnimatedPolyline.prototype.finish = function () {
-        this.finished = true;
-        window.clearTimeout(this.timeout);
+        this.stopDrawing();
         this.callback();
     };
 
+    AnimatedPolyline.prototype.stopDrawing = function () {
+        this.finished = true;
+        if (this.animRequest) {
+            window.cancelAnimationFrame(this.animRequest);
+            this.animRequest = null;
+        }
+    };
+
     AnimatedPolyline.prototype.renderTick = function (delta) {
+
+        if (this.finished) return;
         var interval = 60 / 1000;
         var ctx = this.ctx;
         var idx = this.currentSegmentIndex;
@@ -78,6 +89,7 @@ var AnimatedPolyline = (function (Point) {
        
         //console.log(pos);
         if (!targetPos.equals(pos)) {
+            ctx.save();
             ctx.beginPath();
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#ccc';
@@ -104,17 +116,17 @@ var AnimatedPolyline = (function (Point) {
                 pos.x -= moveAmount;
             }
 
-            var radius = 75;
-            var startAngle = 1.1 * Math.PI;
-            var endAngle = 1.9 * Math.PI;
-            var counterClockwise = false;
-            context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-
+            //var radius = 75;
+            //var startAngle = 1.1 * Math.PI;
+            //var endAngle = 1.9 * Math.PI;
+            //var counterClockwise = false;
+            //context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
 
 
             ctx.lineTo(pos.x, pos.y);
             ctx.lineWidth = 4;
             ctx.stroke();
+            ctx.restore();
 
             this.moveCallback(pos.x, pos.y);
 
