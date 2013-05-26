@@ -104,6 +104,14 @@ var AnimatedPolyline = (function (Point) {
                 pos.x -= moveAmount;
             }
 
+            var radius = 75;
+            var startAngle = 1.1 * Math.PI;
+            var endAngle = 1.9 * Math.PI;
+            var counterClockwise = false;
+            context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+
+
+
             ctx.lineTo(pos.x, pos.y);
             ctx.lineWidth = 4;
             ctx.stroke();
