@@ -2,7 +2,7 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global document:false, skrollr:false, window:true*/
+/*global document:false, Connector:false, skrollr:false, window:true*/
 
 (function () {
     'use strict';
@@ -36,6 +36,7 @@
     }(doc));
 
 
+    // Pointless bottom progress bar, shows in mobile view
     var progressBar = doc.createElement('div');
     progressBar.className = 'doodad-track';
     var progressBarNub = doc.createElement('div');
@@ -44,14 +45,24 @@
     $('container').appendChild(progressBar);
 
 
+    // FIXME: draw line connecting about and title
+    window.setTimeout(function () {
+        //var c = new Connector($('content'), $('about').getElementsByTagName('h2')[0], $('title'));
+        //c.draw();
+        //
+        var c = new Connector($('content'), $('scarves').getElementsByTagName('h2')[0], $('aboutImg'));
+        c.draw();
+    }, 1000);
+
+
     // Nifty on-scroll effects
     var title = $('title');
     title.setAttribute('data-0', 'opacity:1; top:22px; transform:rotate(9deg)');
-    title.setAttribute('data-end', 'opacity:0; top:500px; transform:rotate(130deg);');
+    title.setAttribute('data-200', 'opacity:0; top:500px; transform:rotate(130deg);');
 
     var sidebar = $('sidebar');
     sidebar.setAttribute('data-0', 'top:120px');
-    sidebar.setAttribute('data-end', 'top:10px');
+    sidebar.setAttribute('data-200', 'top:10px');
 
     progressBarNub.setAttribute('data-0', 'left:0%');
     progressBarNub.setAttribute('data-end', 'left:100%');
