@@ -13,7 +13,10 @@
 var Connector = (function (EventTarget, Point, AnimatedPolyline) {
     'use strict';
 
-    var margin = 5;
+    var style = {
+        'marginLeft': 5,
+        'marginRight': 50
+    };
 
     /* Get position of `node` relative to a
      * specified `ancestor` */
@@ -37,15 +40,21 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         return [left, top];
     }
 
-    var C = function (parentEl, src, dest, moveCallback) {
+    var C = function (prefs) {
+
+        var parentEl = prefs.parentEl;
+        var src = prefs.src;
+        var dest = prefs.dest;
+        prefs.style = prefs.style || {};
+        for (var option in prefs.style) {
+            style[option] = prefs.style[option];
+        }
 
         EventTarget.call(this);
         
         this.src = src;
         this.dest = dest;
         this.parentEl = parentEl;
-
-        this.moveCallback = moveCallback || function () {};
 
         // TODO: handle browser resize
         var de = document.documentElement;
@@ -103,10 +112,10 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         var srcPosition = getRelPosition(src, this.parentEl),
             destPosition = getRelPosition(dest, this.parentEl);
 
-        var srcX = srcPosition[0] + src.offsetWidth + margin;
+        var srcX = srcPosition[0] + src.offsetWidth + style.marginLeft;
         var srcY = (srcPosition[1] + (src.offsetHeight / 2)) - this.canvasOffset;
         
-        var destX = destPosition[0];
+        var destX = destPosition[0] - style.marginRight;
         var destY = (destPosition[1] + (dest.offsetHeight / 2)) - this.canvasOffset;
 
         this.line = new AnimatedPolyline([

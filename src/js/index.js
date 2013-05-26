@@ -86,7 +86,8 @@
         }
         section.className += ' ' + ACTIVE;
 
-        figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight) + 'px';
+        var MARGIN = 20;
+        figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
 
         var unicorn = $('unicorn'),
             unicornHeight = unicorn.offsetHeight,
@@ -102,7 +103,15 @@
             activeConnector.line.stopDrawing();
         }
 
-        activeConnector = new Connector($('content'), title, figure);
+        activeConnector = new Connector({
+            parentEl: $('content'),
+            src: title,
+            dest: figure,
+            style: {
+                marginRight: 50,
+                marginLeft: 5
+            }
+        });
         activeConnector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';

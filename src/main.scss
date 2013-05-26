@@ -145,12 +145,12 @@ section, article {
 
     position: absolute;
     right: 20px;
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
 
     & > img {
       width: 150px;
-      margin: 75px;
+      margin: 25px;
     }
   }
 
@@ -162,9 +162,12 @@ section, article {
 
 #unicorn {
   width: 120px;
-  height: 90px;
+  height: 68px;
   position: absolute;
   visibility: hidden;
+
+  &::selection { background: transparent }
+  &::-moz-selection { background: transparent }
 }
 
 @include breakpoint(mobile) {
