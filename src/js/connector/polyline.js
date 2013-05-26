@@ -75,8 +75,6 @@ var AnimatedPolyline = (function (Point) {
 
         var pos = this.currentPoint;
        
-         console.log(pos, this.nextPoint);
-        
         //console.log(pos);
         if (!targetPos.equals(pos)) {
             ctx.beginPath();

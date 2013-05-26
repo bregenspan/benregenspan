@@ -50,7 +50,7 @@
         //var c = new Connector($('content'), $('about').getElementsByTagName('h2')[0], $('title'));
         //c.draw();
         //
-        var c = new Connector($('content'), $('scarves').getElementsByTagName('h2')[0], $('aboutImg'));
+        var c = new Connector($('content'), $('scarves').getElementsByTagName('h2')[0], $('scarvesGraphic'));
         c.draw();
     }, 1000);
 

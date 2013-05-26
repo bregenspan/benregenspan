@@ -8,13 +8,15 @@
  *   TODO: support choice of source and target edges. For now, left and right edges are used.
  */
 
-/*global Point, AnimatedPolyline, document, console*/
+/*global Point, AnimatedPolyline, document, window, console*/
 
 var Connector = (function (Point, AnimatedPolyline) {
     'use strict';
 
     var margin = 5;
 
+    /* Get position of `node` relative to a
+     * specified `ancestor` */
     function getRelPosition(node, ancestor) {     
         var top = 0,
             left = 0;
@@ -40,10 +42,32 @@ var Connector = (function (Point, AnimatedPolyline) {
         this.dest = dest;
         this.parentEl = parentEl;
 
+        // TODO: handle browser resize
+        var de = document.documentElement;
+        this.canvasHeight = de.clientHeight * 3;
+        this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', de.clientWidth, this.canvasHeight);
         parentEl.style.background = '-webkit-canvas(connectorCtx)';
+        parentEl.style.backgroundRepeat = 'no-repeat';
+   
+        this.setCanvasOffset();
 
-        this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', 1000, 1000);
-        
+        var me = this;
+
+        var screensScrolled = 0;
+        window.onscroll = function () {
+            var scrolledOld = screensScrolled;
+            screensScrolled = Math.floor(document.body.scrollTop / (de.clientHeight * 2));
+            if (screensScrolled !== scrolledOld) {
+                me.setCanvasOffset();
+            }
+        };
+    };
+
+    // TODO - set on scroll every time full viewport * 2 is scrolled
+    C.prototype.setCanvasOffset = function () {
+        this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
+        this.canvasOffset = document.body.scrollTop;
+        this.parentEl.style.backgroundPosition = "0 " + this.canvasOffset + "px";
     };
 
     C.prototype.draw = function () {
@@ -55,10 +79,10 @@ var Connector = (function (Point, AnimatedPolyline) {
             destPosition = getRelPosition(dest, this.parentEl);
 
         var srcX = srcPosition[0] + src.offsetWidth + margin;
-        var srcY = srcPosition[1] + (src.offsetHeight / 2);
+        var srcY = (srcPosition[1] + (src.offsetHeight / 2)) - this.canvasOffset;
         
         var destX = destPosition[0];
-        var destY = destPosition[1] + (dest.offsetHeight / 2);
+        var destY = (destPosition[1] + (dest.offsetHeight / 2)) - this.canvasOffset;
 
         var line = new AnimatedPolyline([
             new Point(srcX, srcY),
