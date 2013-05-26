@@ -162,6 +162,7 @@ section {
   width: 120px;
   height: 90px;
   position: absolute;
+  visibility: hidden;
 }
 
 @include breakpoint(mobile) {

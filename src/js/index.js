@@ -76,9 +76,13 @@
         var unicorn = $('unicorn'),
             unicornHeight = unicorn.offsetHeight,
             unicornWidth = unicorn.offsetWidth;
-        var c = new Connector($('content'), section.getElementsByTagName('h2')[0], figure, function (x, y) {
-            unicorn.style.top = y - (unicornHeight / 2) + 'px';
-            unicorn.style.left = x - (unicornWidth / 2) + 'px';
+        var c = new Connector($('content'), section.getElementsByTagName('h2')[0], figure);
+        c.addListener("move", function (e) {
+            if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
+                unicorn.style.visibility = 'visible';
+            }
+            unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
+            unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
         });
         c.draw();
     };

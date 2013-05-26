@@ -10,12 +10,13 @@ module.exports = function(grunt) {
       my_target: {
           files: {
               'build/main.js': [
+                  'src/js/lib/event_target.js',
+      
                   'src/js/connector/point.js',
                   'src/js/connector/polyline.js',
                   'src/js/connector/connector.js',
                   'src/js/lib/polyfill/RaF.js',
                   'src/js/lib/polyfill/addEventListener.js',
-                  'src/js/lib/event_target.js',
                   'src/js/lib/skrollr.min.js',
                   'src/js/lib/skrollr.mobile.min.js',
 

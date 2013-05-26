@@ -38,6 +38,9 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
     }
 
     var C = function (parentEl, src, dest, moveCallback) {
+
+        EventTarget.call(this);
+        
         this.src = src;
         this.dest = dest;
         this.parentEl = parentEl;
@@ -70,7 +73,6 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
     C.prototype = new EventTarget();
     C.prototype.constructor = C;
 
-
     // TODO - set on scroll every time full viewport * 2 is scrolled
     C.prototype.setCanvasOffset = function () {
         this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
@@ -78,10 +80,21 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         this.parentEl.style.backgroundPosition = "0 " + this.canvasOffset + "px";
     };
 
+    C.prototype.fireMoveEvent = function (x, y) {
+
+        // adjust from canvas-relative coordinates to div#content -relative coordinates
+        this.fire({
+            x: x,
+            y: y + this.canvasOffset,
+            type: 'move'
+        });
+    };
+
     C.prototype.draw = function () {
         var src = this.src,
             dest = this.dest,
-            ctx = this.ctx;
+            ctx = this.ctx,
+            me = this;
 
         var srcPosition = getRelPosition(src, this.parentEl),
             destPosition = getRelPosition(dest, this.parentEl);
@@ -95,7 +108,7 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         var line = new AnimatedPolyline([
             new Point(srcX, srcY),
             new Point(destX, destY)
-        ], ctx, null, this.moveCallback);
+        ], ctx, null, function (x, y) { me.fireMoveEvent(x, y); });
         line.draw();
     };
 
