@@ -54,8 +54,7 @@ html, body {
 
 body {
   @extend %clearfix;
-  background: url(https://twimg0-a.akamaihd.net/profile_background_images/376795478/pipebgwithbehemoth.jpg);
-  background-position: -219px;
+  background: url(img/pipetile.png);
   font-family: 'Noto Serif', serif;
   color: #080f17;
 }
@@ -152,6 +151,15 @@ section, article {
       width: 150px;
       margin: 25px;
     }
+
+    @include breakpoint(narrow) {
+      opacity: 1.0;
+      width: auto;
+      height: auto;
+      float: left;
+      position: static;
+    }
+
   }
 
   /* In large mode -- we show one figure at a time, just for the active section */
@@ -165,6 +173,13 @@ section, article {
   height: 68px;
   position: absolute;
   visibility: hidden;
+
+  @include breakpoint(narrow) {
+    display: none;
+  }
+  @include breakpoint(mobile) {
+    display: none;
+  }
 
   &::selection { background: transparent }
   &::-moz-selection { background: transparent }
