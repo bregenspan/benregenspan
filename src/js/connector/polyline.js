@@ -92,7 +92,7 @@ var AnimatedPolyline = (function (Point) {
             ctx.save();
             ctx.beginPath();
             ctx.lineCap = 'round';
-            ctx.strokeStyle = '#ccc';
+            ctx.strokeStyle = '#f1dbce';
             ctx.moveTo(pos.x, pos.y);
 
             var yDiff = Math.abs(targetPos.y - pos.y),

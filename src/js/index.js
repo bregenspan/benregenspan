@@ -131,5 +131,8 @@
         sections[i].addEventListener('click', activateSection);
     }
 
+    window.addEventListener("scroll", function () {
+        
+    });
 
 }());
