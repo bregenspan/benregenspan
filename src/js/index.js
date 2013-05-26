@@ -66,8 +66,8 @@
     var activeSection;
     var activeConnector;
 
-    var activateSection = function (section) {
-
+    var activateSection = function () {
+        var section = this;
         var figure = section.getElementsByTagName('figure');
         if (!figure.length) return;
 
@@ -119,9 +119,7 @@
     };
 
     for (var i = 0, ilen = sections.length; i < ilen; i++) {
-        sections[i].addEventListener('click', function () {
-            activateSection(this);
-        });
+        sections[i].addEventListener('click', activateSection);
     }
 
 
