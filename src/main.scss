@@ -275,6 +275,7 @@ article {
   width: 3em;
   font-size: 2em;
   text-align: center;
+  z-index: 10;
 
   -webkit-transition: -webkit-transform 3s;
   -moz-transition: -moz-transform 3s;
@@ -299,7 +300,7 @@ article {
 
   .icon {
     @include vendor-prefix(transition, color 1s);
-    text-shadow: -1px 1px #888;
+    text-shadow: 0px 0px 3px #fff;
   }
 
   .icon:hover {
