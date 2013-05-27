@@ -52,7 +52,7 @@ var ScrollNav;
     };
 
     ScrollNav.prototype.activateSection = function (section) {
-        if (!section) return;
+        if (!section || section === this.activeSection) return;
         var self = this;
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return;
