@@ -126,6 +126,10 @@ h3 {
 section {
   clear: both;
   padding: 70px 0 70px;
+
+  @include breakpoint(mobile) {
+    padding: 20px 0 20px;
+  }
 }
 
 section, article {
@@ -145,8 +149,8 @@ section, article {
     height: 200px;
 
     & > img {
-      border-radius: 75px;
-      width: 150px;
+      border-radius: 150px;
+      width: 100%;
       margin: 25px;
       border: 75px double #2e1404;
       @include vendor-prefix(transition, border-width 3s ease-in, border-radius 3s ease-in);
@@ -154,9 +158,25 @@ section, article {
 
     @include breakpoint(narrow) {
       opacity: 1.0;
-      width: auto;
+      width: 30%;
       height: auto;
       float: left;
+      position: static;
+      & > img {
+        border: 0px;
+        margin: 0px;
+      }
+    }
+
+    @include breakpoint(mobile) {
+      opacity: 1.0;
+      width: 30%;
+      height: auto;
+      float: left;
+      & > img {
+        border: 0px;
+        margin: 0px;
+      }
       position: static;
     }
 
@@ -221,12 +241,13 @@ section, article {
   top: 22px;
 
   @include breakpoint(mobile) {
+    margin-right: 20px;
     position: static;
     @include vendor-prefix(transform, none);
   }
 
   @include breakpoint(narrow) {
-    width:auto;
+    width: 1.5em;
     text-align: center;
   }
 
@@ -249,6 +270,8 @@ article {
 
   @include breakpoint(mobile) {
     position: static;
+    width: auto;
+    margin-top: 20px;
   }
 
   @include breakpoint(narrow) {
