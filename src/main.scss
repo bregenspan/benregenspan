@@ -2,11 +2,11 @@
       http://css-tricks.com/media-queries-sass-3-2-and-codekit/
  */
 @mixin breakpoint($point) {
-  @if $point == narrow {
+  @if $point == medium {
     @media (min-width: 600px) and (max-width: 790px) { @content; }
   }
-  @else if $point == mobile {
-    @media (max-width: 600px)  { @content; }
+  @else if $point == large {
+    @media (min-width: 790px)  { @content; }
   }
 }
 
@@ -79,6 +79,7 @@ a {
 footer {
   color: #666;
   font-size: 0.8em;
+  margin-bottom: 16px;
 }
 
 #content {
@@ -139,27 +140,26 @@ section, article {
 
   figure {
     opacity: 0;
-
     -webkit-transition: opacity 2s;
 
-    position: absolute;
-    right: 20px;
-    width: 200px;
-    height: 200px;
+    opacity: 1.0;
+    width: auto;
+    height: auto;
+    float: left;
+    position: static;
 
-    & > img {
-      width: 150px;
-      margin: 25px;
+    @include breakpoint(large) {
+      opacity: 0;
+      position: absolute;
+      right: 20px;
+      width: 200px;
+      height: 200px;
+
+      & > img {
+        width: 150px;
+        margin: 25px;
+      }
     }
-
-    @include breakpoint(narrow) {
-      opacity: 1.0;
-      width: auto;
-      height: auto;
-      float: left;
-      position: static;
-    }
-
   }
 
   /* In large mode -- we show one figure at a time, just for the active section */
