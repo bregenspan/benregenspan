@@ -60,7 +60,6 @@ html, body {
 }
 
 body {
-  @extend %clearfix;
   background: url(img/pipetile.png);
   font-family: 'Noto Serif', serif;
   color: #080f17;
@@ -138,6 +137,10 @@ section, article {
 
     position: absolute;
     right: 20px;
+
+    // this will get overridden via JS:
+    top: 0px;
+
     width: 200px;
     height: 200px;
 
@@ -301,6 +304,10 @@ section p, section h3 {
 }
 
 
+.doodad-track {
+  display: none;
+}
+
 /* Mobile: show horizontal scrolling pipe on bottom, for some reason */
 @include breakpoint(mobile) {
 
@@ -335,7 +342,7 @@ section p, section h3 {
 
   /* Noto Serif is a bit big, so while it's loading, size up default font */
   body {
-    font-size: 1.2em;
+    font-size: 1.17em;
   }
 
   /* And size up headings just a bit, re: Open Sans */
