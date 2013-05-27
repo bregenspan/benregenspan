@@ -60,7 +60,6 @@
 
     skrollr.init();
 
-
     var slice = Array.prototype.slice;
     var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
     var activeSection;
@@ -126,6 +125,8 @@
 
         activeConnector.draw();
     };
+
+    //activateSection($('about'));
 
     for (var i = 0, ilen = sections.length; i < ilen; i++) {
         sections[i].addEventListener('click', activateSection);

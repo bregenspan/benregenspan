@@ -150,6 +150,8 @@ section, article {
     & > img {
       width: 150px;
       margin: 25px;
+      border: 75px double #000;
+      -webkit-transition: border-width 5s;
     }
 
     @include breakpoint(narrow) {
@@ -163,8 +165,13 @@ section, article {
   }
 
   /* In large mode -- we show one figure at a time, just for the active section */
-  &.active figure {
-    opacity: 1.0;
+  &.active {
+    figure {
+      opacity: 1.0;
+      & > img {
+        border: 0px double #000;
+      }
+    }
   }
 
 }

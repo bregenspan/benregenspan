@@ -120,6 +120,7 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
         this.line = new AnimatedPolyline([
             new Point(srcX, srcY),
+            new Point(srcX + 20, srcY),
             new Point(destX, destY)
         ], ctx, null, function (x, y) { me.fireMoveEvent(x, y); });
         this.line.draw();
