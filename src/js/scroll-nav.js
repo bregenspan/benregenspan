@@ -1,4 +1,6 @@
-var ScrollNav = (function () {
+var ScrollNav;
+
+(function () {
 
     function $(id) { return document.getElementById(id); }
 
@@ -6,13 +8,16 @@ var ScrollNav = (function () {
     var MARGIN = 20;
 
     // Custom scroll-driven effects
-    var ScrollNav = function (sections) {
+    ScrollNav = function (sections) {
         var self = this;
         this.sections = sections;
-        this.activeSession = undefined;
+        this.activeSection = undefined;
         this.activeConnector = undefined;
 
-        var activateSection = function (e) {
+        this.sectionActivateHandlers = {};
+        this.sectionDeactivateHandlers = {};
+
+        var activateSection = function () {
             self.activateSection(this);
         };
         this.foreachSection(function (section) {
@@ -34,36 +39,77 @@ var ScrollNav = (function () {
         }
     };
 
-    ScrollNav.prototype.activateSection = function (section) {
-        var self = this;
+    ScrollNav.prototype.getFigureForSection = function (section) {
         var figure = section.getElementsByTagName('figure');
-        if (!figure.length) return;
+        if (!figure.length) return false;
+        return figure[0];
+    };
+
+    ScrollNav.prototype.getChildByTagName = function (tagName) {
+        var els = this.activeSection.getElementsByTagName(tagName);
+        if (!els.length) return false;
+        return els[0];
+    };
+
+    ScrollNav.prototype.activateSection = function (section) {
+        if (!section) return;
+        var self = this;
+        var figure = this.getFigureForSection(section);
+        if (!figure && !this.hasHandlerForSection(section)) return;
 
         // don't listen on sections that contain articles (we listen to the articles themselves)
         if (section.tagName.toLowerCase() === 'section' && section.getElementsByTagName('article').length) {
             return;
         }
 
-        this.activeSection = section;
+        // Deactivate last section
+        if (this.activeSection) {
+            this.callSectionHandler(true);
+        }
 
-        figure = figure[0];
+        this.activeSection = section;
 
         this.foreachSection(function (section) {
             section.className = section.className.replace(ACTIVE, '');
         });
         section.className += ' ' + ACTIVE;
 
-        figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
-
-        var unicorn = $('unicorn'),
-            unicornHeight = unicorn.offsetHeight,
-            unicornWidth = unicorn.offsetWidth;
-
-        var title = section.getElementsByTagName('h3');
-        if (!title.length) {
-            title = section.getElementsByTagName('h2');
+        if (figure) {
+            figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
+            this.drawConnector();
         }
-        title = title[0];
+
+        this.callSectionHandler();
+    };
+
+    ScrollNav.prototype.addHandler = function (sectionId, activateHandler, deactivateHandler) {
+        this.sectionActivateHandlers[sectionId] = activateHandler;
+        this.sectionDeactivateHandlers[sectionId] = deactivateHandler;
+    };
+
+    ScrollNav.prototype.hasHandlerForSection = function (section) {
+        if (typeof this.sectionActivateHandlers[section.id] === 'function') {
+            return true;
+        }
+        return false;
+    };
+
+    ScrollNav.prototype.callSectionHandler = function (deactivate) {
+        var section = this.activeSection,
+            id = section.id;
+
+        var handlers = this.sectionActivateHandlers;
+        if (deactivate) {
+            handlers = this.sectionDeactivateHandlers;
+        }
+        if (typeof handlers[id] === 'function') {
+            handlers[id].call(null, section);
+        }
+    };
+
+    ScrollNav.prototype.drawConnector = function () {
+        var title = this.getChildByTagName('h3') || this.getChildByTagName('h2');
+        var figure = this.getFigureForSection(this.activeSection);
 
         if (this.activeConnector) {
             this.activeConnector.line.stopDrawing();
@@ -78,6 +124,11 @@ var ScrollNav = (function () {
                 marginLeft: 5
             }
         });
+
+        var unicorn = $('unicorn'),
+            unicornHeight = unicorn.offsetHeight,
+            unicornWidth = unicorn.offsetWidth;
+        
         this.activeConnector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';
@@ -87,12 +138,11 @@ var ScrollNav = (function () {
         });
         this.activeConnector.addListener("cleared", function (e) {
             unicorn.style.visibility = 'hidden';
+            if (!self.activeSession) return;
             self.activeSection.className = self.activeSection.className.replace('active', '');
         });
 
         this.activeConnector.draw();
     };
-
-    return ScrollNav;
 
 }());

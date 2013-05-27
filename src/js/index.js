@@ -35,7 +35,6 @@
         f.parentNode.insertBefore(p, f);
     }(doc));
 
-
     // Pointless bottom progress bar, shows in mobile view
     var progressBar = doc.createElement('div');
     progressBar.className = 'doodad-track';
@@ -66,8 +65,11 @@
     var slice = Array.prototype.slice;
     var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
     var nav = new ScrollNav(sections);
-
-
+    nav.addHandler('comicSans', function (section) {
+        section.className += ' comic-sans';
+    }, function (section) {
+        section.className = section.className.replace('comic-sans', '');   
+    });
 
 
 }());
