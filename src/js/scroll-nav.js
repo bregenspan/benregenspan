@@ -138,7 +138,7 @@ var ScrollNav;
         });
         this.activeConnector.addListener("cleared", function (e) {
             unicorn.style.visibility = 'hidden';
-            if (!self.activeSession) return;
+            if (!self.activeSection) return;
             self.activeSection.className = self.activeSection.className.replace('active', '');
         });
 
