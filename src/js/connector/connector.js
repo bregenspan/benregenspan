@@ -57,14 +57,35 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         this.parentEl = parentEl;
 
         // TODO: handle browser resize
-        var de = document.documentElement;
-        this.canvasHeight = de.clientHeight * 3;
+        var de = document.documentElement,
+            canvasWidth = de.clientWidth,
+            canvasHeight = this.canvasHeight = de.clientHeight * 3;
 
-        // FIXME: need FF fallback, + imageURL as background (no animation) fallback
-        this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', de.clientWidth, this.canvasHeight);
-        parentEl.style.background = '-webkit-canvas(connectorCtx)';
-        parentEl.style.backgroundRepeat = 'no-repeat';
-   
+        // TODO: fallback to imageURL for older browsers / IE
+        if (document.getCSSCanvasContext) {
+            // Webkit
+            this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', canvasWidth, canvasHeight);
+            parentEl.style.background = '-webkit-canvas(connectorCtx)';
+            parentEl.style.backgroundRepeat = 'no-repeat';
+        } else {
+            // Mozilla
+            var canvas = document.createElement('canvas');
+            canvas.id = 'connectorCanvas';
+            canvas.height = canvasHeight;
+            canvas.width = canvasWidth;
+
+            // For some reason, the element that's used as background has to be added
+            // to the DOM.  So we add, but position offscreen.
+            canvas.style.position = 'absolute';
+            canvas.style.top = '-10000px';
+            canvas.style.left = '-10000px';
+
+            document.body.appendChild(canvas);
+            this.ctx = canvas.getContext('2d');
+            parentEl.style.background = '-moz-element(#connectorCanvas)';
+            parentEl.style.backgroundRepeat = 'no-repeat';
+        }
+
         this.setCanvasOffset();
 
         var me = this;

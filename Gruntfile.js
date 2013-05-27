@@ -5,7 +5,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        sourceMap: 'build/source-map.js'
       },
       my_target: {
           files: {
@@ -18,9 +19,13 @@ module.exports = function(grunt) {
                   'src/js/lib/polyfill/RaF.js',
                   'src/js/lib/polyfill/addEventListener.js',
                   'src/js/lib/skrollr.min.js',
-                  'src/js/lib/skrollr.mobile.min.js',
+                  
+                  'src/js/scroll-nav.js',
 
                   'src/js/index.js'
+              ],
+              'build/mobile-only.js': [
+                  'src/js/lib/skrollr.mobile.min.js'
               ]
           }
       }

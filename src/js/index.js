@@ -2,7 +2,7 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global document:false, Connector:false, skrollr:false, window:true*/
+/*global document:false, Connector:false, skrollr:false, ScrollNav:false, window:true*/
 
 (function () {
     'use strict';
@@ -60,80 +60,14 @@
 
     skrollr.init();
 
+
+
+
     var slice = Array.prototype.slice;
     var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
-    var activeSection;
-    var activeConnector;
+    var nav = new ScrollNav(sections);
 
-    var activateSection = function () {
-        var section = this;
-        var figure = section.getElementsByTagName('figure');
-        if (!figure.length) return;
 
-        // don't listen on sections that contain articles (we listen to the articles themselves)
-        if (section.tagName.toLowerCase() === 'section' && section.getElementsByTagName('article').length) {
-            return;
-        }
 
-        activeSection = section;
-
-        figure = figure[0];
-
-        var ACTIVE = 'active';
-        for (var i = 0, ilen = sections.length; i < ilen; i++) {
-            sections[i].className = sections[i].className.replace(ACTIVE, '');
-        }
-        section.className += ' ' + ACTIVE;
-
-        var MARGIN = 20;
-        figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
-
-        var unicorn = $('unicorn'),
-            unicornHeight = unicorn.offsetHeight,
-            unicornWidth = unicorn.offsetWidth;
-
-        var title = section.getElementsByTagName('h3');
-        if (!title.length) {
-            title = section.getElementsByTagName('h2');
-        }
-        title = title[0];
-
-        if (activeConnector) {
-            activeConnector.line.stopDrawing();
-        }
-
-        activeConnector = new Connector({
-            parentEl: $('content'),
-            src: title,
-            dest: figure,
-            style: {
-                marginRight: 50,
-                marginLeft: 5
-            }
-        });
-        activeConnector.addListener("move", function (e) {
-            if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
-                unicorn.style.visibility = 'visible';
-            }
-            unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
-            unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
-        });
-        activeConnector.addListener("cleared", function (e) {
-            unicorn.style.visibility = 'hidden';
-            activeSection.className = activeSection.className.replace('active', '');
-        });
-
-        activeConnector.draw();
-    };
-
-    //activateSection($('about'));
-
-    for (var i = 0, ilen = sections.length; i < ilen; i++) {
-        sections[i].addEventListener('click', activateSection);
-    }
-
-    window.addEventListener("scroll", function () {
-        
-    });
 
 }());

@@ -1,6 +1,7 @@
 # Swap
 *.swp
 *.swo
+*.swn
 
 
 # Node
