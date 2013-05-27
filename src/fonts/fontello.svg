@@ -1,43 +1,15 @@
 <?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>
-Created by FontForge 20110222 at Sun Apr 28 22:02:14 2013
- By root
-Copyright (C) 2012 by original authors @ fontello.com
-</metadata>
+<metadata>Copyright (C) 2012 by original authors @ fontello.com</metadata>
 <defs>
-<font id="fontello" horiz-adv-x="364" >
-  <font-face 
-    font-family="fontello"
-    font-weight="500"
-    font-stretch="normal"
-    units-per-em="1000"
-    panose-1="2 0 6 3 0 0 0 0 0 0"
-    ascent="850"
-    descent="-150"
-    bbox="0 -150 1245 850"
-    underline-thickness="50"
-    underline-position="-100"
-    unicode-range="U+0054-E032"
-  />
-<missing-glyph 
-d="M33 0v666h265v-666h-265zM66 33h199v600h-199v-600z" />
-    <glyph glyph-name=".notdef" 
-d="M33 0v666h265v-666h-265zM66 33h199v600h-199v-600z" />
-    <glyph glyph-name=".null" horiz-adv-x="0" 
- />
-    <glyph glyph-name="nonmarkingreturn" horiz-adv-x="333" 
- />
-    <glyph glyph-name="T" unicode="T" horiz-adv-x="1260" 
-d="M15 -37q30 -3 60 -3q176 0 314 108q-84 1 -148.5 51.5t-87.5 123.5q17 -4 47 -4q36 0 67 9q-85 16 -144 85t-59 162v3q52 -29 115 -31q-49 32 -81 87t-32 123t35 127q89 -112 223 -183.5t297 -80.5q-7 31 -7 58q0 104 74 178t179 74q109 0 184 -80q85 18 160 62
-q-28 -91 -110 -140q75 9 144 40q-48 -75 -125 -131v-33q0 -212 -120 -396q-131 -202 -346 -280q-117 -42 -252 -42q-208 0 -387 113z" />
-    <glyph glyph-name="g" unicode="g" horiz-adv-x="969" 
-d="M227 157q82 0 147.5 -43t65.5 -111q0 -64 -62 -108q-63 -45 -151 -45q-89 0 -150 45q-62 45 -62 108q0 84 100 130q-26 40 -26 75q0 39 28 74q-38 23 -63 62t-25 89q0 73 53.5 125.5t127.5 52.5q55 0 101 -31h7q60 0 109 32v-115q-18 -10 -44 -14q7 -21 7 -50
-q0 -70 -50 -121t-119 -55q-24 -29 -24 -53q0 -26 24 -48q1 0 3 0.5t3 0.5zM208 515q-29 0 -50.5 -24.5t-21.5 -55.5t21.5 -55.5t50.5 -24.5q30 0 51 24t21 56t-21 56t-51 24zM227 67q-34 0 -61 -17.5t-27 -46.5q0 -28 27 -46t61 -18t61.5 18t27.5 46q0 29 -27 46.5t-62 17.5
-zM470 769q0 34 23.5 57.5t57.5 23.5t58 -23.5t24 -57.5t-24 -58t-58 -24t-57.5 24t-23.5 58zM489 601h134v-479h-134v479zM670 499h55v-285q9 -73 91 -99q15 -5 31 -7h20q22 0 45.5 7t32.5 17l7 9l2 99q-40 -13 -65 -13q-31 0 -36 17l-4 13q0 3 -1 4v238h91v102h-91v93h-123
-v-93h-55v-102z" />
-    <glyph glyph-name="uniE032" unicode="&#xe032;" horiz-adv-x="754" 
-d="M0 245h64v-329h493v329h66v-395h-623v395zM113 63h395v-80h-395v80zM115 129l6 80l393 -27l-6 -80zM131 305l19 78l383 -94l-19 -80zM193 510l41 70l340 -199l-41 -70zM375 723l66 45l221 -326l-68 -45zM625 840l82 10l47 -391l-80 -9z" />
-  </font>
-</defs></svg>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="twitter" unicode="&#x54;" d="M0-37q30-3 60-3 176 0 314 108-82 1-147 50t-89 125q20-4 47-4 35 0 67 9-88 17-146 87t-58 161l0 3q53-30 115-31-52 34-83 90t-31 121q0 68 35 127 94-117 230-187t291-78q-7 33-7 58 0 104 74 178t179 74q109 0 184-80 87 18 160 62-28-91-110-140 73 9 144 40-48-75-125-131l0-33q0-101-30-203t-90-194-145-165-202-115-253-43q-209 0-387 113z" horiz-adv-x="1230" />
+<glyph glyph-name="github" unicode="&#x67;" d="M0 3q0-63 62-108t150-45 151 45 63 108q0 64-63 109t-151 45q-1 0-3-1t-3-1q-24 22-24 48t24 54q71 4 120 55t49 121q0 28-7 50 28 5 44 14l0 115q-48-32-109-32l-7 0q-46 31-101 31-75 0-128-52t-53-126q0-47 24-87t64-64q-28-36-28-74 0-36 26-75-46-21-73-55t-27-75z m121 432q0 33 22 57t51 24q30 0 51-24t21-57-21-57-51-24q-29 0-51 24t-22 57z m3-432q0 27 26 46t63 19 63-19 26-46q0-26-26-45t-63-19-63 19-26 45z m331 766q0 34 24 58t58 24 58-24 24-58-24-58-58-24-58 24-24 58z m19-647l0 479 134 0 0-479-134 0z m181 377l55 0 0-285q4-30 20-52t35-32 38-16 31-7l20 0q27 0 48 8 23 8 30 16l7 9 2 99q-42-13-65-13-5 0-9 1-23 3-27 16l-4 13q0 3-1 4l0 238 91 0 0 102-91 0 0 93-123 0 0-93-55 0 0-102z" horiz-adv-x="939" />
+<glyph glyph-name="mail" unicode="&#xe800;" d="M580 306l258-266-789 0 259 264 135-128z m-518 355l760 0-380-361z m566-309l258 243 0-509z m-629-266l0 509 259-244z" horiz-adv-x="886" />
+<glyph glyph-name="stackoverflow" unicode="&#xe032;" d="M0-150l0 395 64 0 0-328 492 0 0 328 66 0 0-395-623 0z m113 133l0 80 395 0 0-80-395 0z m2 146l6 80 393-27-6-80z m16 176l20 78 383-94-20-80z m62 205l41 70 340-199-41-70z m182 213l66 45 221-326-68-45z m250 117l82 10 47-391-80-10z" horiz-adv-x="754" />
+</font>
+</defs>
+</svg>

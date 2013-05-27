@@ -229,6 +229,10 @@ section, article {
     width:auto;
     text-align: center;
   }
+
+  .wf-loading & {
+    visibility: hidden;
+  }
 }
 
 article {
@@ -239,8 +243,8 @@ article {
   position: fixed;
   right: 10px;
   top: 120px;
-  width: 162px;
-  font-size:2em;
+  width: 3em;
+  font-size: 2em;
   text-align: center;
 
   @include breakpoint(mobile) {

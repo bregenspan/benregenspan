@@ -1,0 +1,31 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "glyphs": [
+    {
+      "uid": "ae3so8q0b0n2h8esv9flua2nmwswa8fd",
+      "css": "mail",
+      "code": 59392,
+      "src": "modernpics"
+    },
+    {
+      "uid": "b1ec8e90c2c85cf0035849980a3789b3",
+      "css": "twitter",
+      "code": 84,
+      "src": "zocial"
+    },
+    {
+      "uid": "9bba5df43e4e9419975336161e1810c3",
+      "css": "github",
+      "code": 103,
+      "src": "zocial"
+    },
+    {
+      "uid": "a5e7f5574a71d31bdf2012f0c2acb2a3",
+      "css": "stackoverflow",
+      "code": 57394,
+      "src": "elusive"
+    }
+  ]
+}

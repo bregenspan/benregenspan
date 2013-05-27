@@ -1,8 +1,6 @@
 # Swap
-*.swp
-*.swo
-*.swn
-
+*.sw*
+!*.swf
 
 # Node
 node_modules
