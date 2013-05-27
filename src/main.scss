@@ -251,8 +251,15 @@ section, article {
     text-align: center;
   }
 
+  @include vendor-prefix(transform, translate(0px, 0px) rotate(9deg));
+  -webkit-transition: -webkit-transform 3s;
+  -moz-transition: -moz-transform 3s;
+  transition: transform 3s;
+  -ms-transition: -ms-transform 3s;
+
   .wf-loading & {
     visibility: hidden;
+    @include vendor-prefix(transform, translate(0px, -160px) rotate(-50deg));
   }
 }
 
@@ -267,6 +274,16 @@ article {
   width: 3em;
   font-size: 2em;
   text-align: center;
+
+  -webkit-transition: -webkit-transform 3s;
+  -moz-transition: -moz-transform 3s;
+  transition: transform 3s;
+  -ms-transition: -ms-transform 3s;
+  @include vendor-prefix(transform, scale(1.0) rotate(0deg));
+
+  .wf-loading & {
+    @include vendor-prefix(transform, scale(0.0) rotate(90deg));
+  }
 
   @include breakpoint(mobile) {
     position: static;
@@ -368,7 +385,7 @@ section p, section h3 {
 .wf-loading {
 
   /* Noto Serif is a bit big, so while it's loading, size up default font */
-  body {
+  section {
     font-size: 1.17em;
   }
 
