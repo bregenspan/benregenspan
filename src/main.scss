@@ -282,7 +282,7 @@ article {
   @include vendor-prefix(transform, scale(1.0) rotate(0deg));
 
   .wf-loading & {
-    @include vendor-prefix(transform, scale(0.0) rotate(90deg));
+    @include vendor-prefix(transform, scale(0.0) rotate(-180deg));
   }
 
   @include breakpoint(mobile) {
