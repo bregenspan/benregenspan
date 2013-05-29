@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        sourceMap: 'build/source-map.js'
+        sourceMap: 'debug/source-map.js'
       },
       my_target: {
           files: {
@@ -53,7 +53,17 @@ module.exports = function(grunt) {
                 'build/main.css': 'src/main.scss'
             }
         }
-     }
+     },
+     cssmin: {
+        add_banner: {
+            options: {
+                banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
+            },
+        files: {
+            'build/main.css': ['build/main.css']
+        }
+    }
+}
      
   });
 
@@ -61,6 +71,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-  grunt.registerTask('default', ['uglify', 'copy', 'sass']);
+  grunt.registerTask('default', ['uglify', 'copy', 'sass', 'cssmin']);
 };
