@@ -14,6 +14,10 @@ var Point = (function () {
         return (this.y === point.y && this.x === point.x);
     };
 
+    Point.prototype.clone = function () {
+        return new Point(this.x, this.y);
+    };
+
     return Point;
 
 }());

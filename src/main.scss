@@ -87,7 +87,7 @@ footer {
   clear: both;
   color: #666;
   font-size: 0.8em;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
 }
 
 #container {
@@ -140,11 +140,12 @@ section, article {
 
     @include vendor-prefix(transition, opacity 2s);
 
+    visibility: hidden;
     position: absolute;
     right: 20px;
 
     // this will get overridden via JS:
-    top: 0px;
+    top: -1000px;
 
     width: 200px;
     height: 200px;
@@ -158,6 +159,7 @@ section, article {
     }
 
     @include breakpoint(narrow) {
+      visibility: visible;
       opacity: 1.0;
       width: 30%;
       height: auto;
@@ -170,6 +172,8 @@ section, article {
     }
 
     @include breakpoint(mobile) {
+      visibility: visible;
+      display: block;
       opacity: 1.0;
       width: 30%;
       height: auto;
@@ -186,6 +190,7 @@ section, article {
   &.active {
     figure {
       opacity: 1.0;
+      visibility: visible;
       & > img {
         border-width: 0px;
         &.square {

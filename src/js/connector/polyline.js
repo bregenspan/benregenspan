@@ -1,17 +1,18 @@
 /*global window*/
 
-var AnimatedPolyline = (function (Point) {
+var AnimatedPolyline = (function () {
     'use strict';
 
-    var AnimatedPolyline = function (segments, ctx, callback, moveCallback) {
+    var AnimatedPolyline = function (options) {
+        this.animated = true;
         this.finished = false;
-        this.segments = segments;
-        this.ctx = ctx;
-        this.callback = callback || function () {};
-        this.moveCallback = moveCallback || function () {};
+        this.segments = options.segments;
+        this.ctx = options.ctx;
+        this.callback = options.callback || function () {};
+        this.moveCallback = options.moveCallback || function () {};
 
         // array index of beginning position of current segment
-        var idx = this.currentSegmentIndex = 0;
+        this.currentSegmentIndex = 0;
 
         this.startSegment();
     };
@@ -19,7 +20,7 @@ var AnimatedPolyline = (function (Point) {
     AnimatedPolyline.prototype.startSegment = function () {
         var idx = this.currentSegmentIndex,
             segments = this.segments;
-           
+
         // Finish if we've exhausted our line segments
         if (this.currentSegmentIndex >= segments.length - 1) {
             this.finish();
@@ -33,14 +34,22 @@ var AnimatedPolyline = (function (Point) {
         this.yDirection = true;
 
         if (this.nextPoint.x - this.currentPoint.x < 0) {
-            this.xDirection = false;            
+            this.xDirection = false;
         }
         if (this.nextPoint.y - this.currentPoint.y < 0) {
             this.yDirection = false;
         }
     };
 
-    AnimatedPolyline.prototype.draw = function (lastRender) {
+    AnimatedPolyline.prototype.draw = function (animated) {
+        if (typeof animated !== 'undefined') {
+            this.animated = animated;
+        }
+        this.finished = false;
+        this.loop();
+    };
+
+    AnimatedPolyline.prototype.loop = function (lastRender) {
 
         if (this.finished) {
             return;
@@ -57,7 +66,7 @@ var AnimatedPolyline = (function (Point) {
         // set up our next frame
         var me = this;
         this.animRequest = window.requestAnimationFrame(function () {
-            me.draw(lastRender);
+            me.loop(lastRender);
         });
     };
 
@@ -74,20 +83,52 @@ var AnimatedPolyline = (function (Point) {
         }
     };
 
+    /* Given an amount to move from the current position (unit = canvas coordinates),
+     * return the new coordinates to move to.
+     */
+    AnimatedPolyline.prototype.getNextPosition = function (moveAmount) {
+        var pos = this.currentPoint.clone(),
+            targetPos = this.nextPoint.clone();
+
+        if (!this.animated) {
+            return targetPos;
+        }
+
+        var yDiff = Math.abs(targetPos.y - pos.y),
+            xDiff = Math.abs(targetPos.x - pos.x);
+
+        if (moveAmount > yDiff) {
+            // amount we're about to move exceeds amount we need to
+            pos.y = targetPos.y;
+        } else if (this.yDirection && targetPos.y > pos.y) {
+            pos.y += moveAmount;
+        } else if (!this.yDirection && targetPos.y < pos.y) {
+            pos.y -= moveAmount;
+        }
+
+        if (moveAmount > xDiff) {
+            // amount we're about to move exceeds what we need to
+            pos.x = targetPos.x;
+        } else if (this.xDirection && targetPos.x > pos.x) {
+            pos.x += moveAmount;
+        } else if (!this.xDirection && targetPos.x < pos.x) {
+            pos.x -= moveAmount;
+        }
+        return pos;
+    };
+
     AnimatedPolyline.prototype.renderTick = function (delta) {
 
         if (this.finished) return;
         var interval = 60 / 1000;
         var ctx = this.ctx;
-        var idx = this.currentSegmentIndex;
         var targetPos = this.nextPoint;
 
         // 2px / frame @ 60 target fps
         var moveAmount = delta * interval * 4;
 
         var pos = this.currentPoint;
-       
-        //console.log(pos);
+
         if (!targetPos.equals(pos)) {
             ctx.save();
             ctx.beginPath();
@@ -95,26 +136,7 @@ var AnimatedPolyline = (function (Point) {
             ctx.strokeStyle = '#f1dbce';
             ctx.moveTo(pos.x, pos.y);
 
-            var yDiff = Math.abs(targetPos.y - pos.y),
-                xDiff = Math.abs(targetPos.x - pos.x);
-
-            if (moveAmount > yDiff) {
-                // amount we're about to move exceeds amount we need to
-                pos.y = targetPos.y;
-            } else if (this.yDirection && targetPos.y > pos.y) {
-                pos.y += moveAmount;
-            } else if (!this.yDirection && targetPos.y < pos.y) {
-                pos.y -= moveAmount;
-            }
-
-            if (moveAmount > xDiff) {
-                // amount we're about to move exceeds what we need to
-                pos.x = targetPos.x;
-            } else if (this.xDirection && targetPos.x > pos.x) {
-                pos.x += moveAmount;
-            } else if (!this.xDirection && targetPos.x < pos.x) {
-                pos.x -= moveAmount;
-            }
+            pos = this.currentPoint = this.getNextPosition(moveAmount);
 
             //var radius = 75;
             //var startAngle = 1.1 * Math.PI;
@@ -128,7 +150,11 @@ var AnimatedPolyline = (function (Point) {
             ctx.stroke();
             ctx.restore();
 
-            this.moveCallback(pos.x, pos.y);
+            this.moveCallback({
+                x: pos.x,
+                y: pos.y,
+                animated: this.animated
+            });
 
         } else if (targetPos.equals(pos)) {
             this.currentSegmentIndex += 1;
@@ -138,4 +164,4 @@ var AnimatedPolyline = (function (Point) {
 
     return AnimatedPolyline;
 
-}(Point));
+}());

@@ -2,7 +2,8 @@
  *
  *   Usage:
  *
- *   var c = new Connector(document.getElementById('mySource'), document.getElementById('myTarget'));
+ *   var c = new Connector(document.getElementById('mySource'),
+ *                         document.getElementById('myTarget'));
  *   c.draw();
  *
  *   TODO: support choice of source and target edges. For now, left and right edges are used.
@@ -20,21 +21,21 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
     /* Get position of `node` relative to a
      * specified `ancestor` */
-    function getRelPosition(node, ancestor) {     
+    function getRelPosition(node, ancestor) {
         var top = 0,
             left = 0;
 
         while (node) {
-           if (node.tagName) {
-               top = top + node.offsetTop;
-               left = left + node.offsetLeft;
-               node = node.offsetParent;
-           } else {
-               node = node.parentNode;
-           }
-           if (node === ancestor) {
-               node = null;
-           }
+            if (node.tagName) {
+                top = top + node.offsetTop;
+                left = left + node.offsetLeft;
+                node = node.offsetParent;
+            } else {
+                node = node.parentNode;
+            }
+            if (node === ancestor) {
+                node = null;
+            }
         }
 
         return [left, top];
@@ -51,7 +52,7 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         }
 
         EventTarget.call(this);
-        
+
         this.src = src;
         this.dest = dest;
         this.parentEl = parentEl;
@@ -64,7 +65,8 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         // TODO: fallback to imageURL for older browsers / IE
         if (document.getCSSCanvasContext) {
             // Webkit
-            this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx', canvasWidth, canvasHeight);
+            this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx',
+                    canvasWidth, canvasHeight);
             parentEl.style.background = '-webkit-canvas(connectorCtx)';
             parentEl.style.backgroundRepeat = 'no-repeat';
         } else {
@@ -105,13 +107,17 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
     // TODO - set on scroll every time full viewport * 2 is scrolled
     C.prototype.setCanvasOffset = function () {
-        this.fire('cleared');
+        //this.fire('cleared');
         if (this.line) {
             this.line.stopDrawing();
         }
         this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
         this.canvasOffset = document.body.scrollTop;
         this.parentEl.style.backgroundPosition = "0 " + this.canvasOffset + "px";
+
+        if (this.line) {
+            this.draw(false);
+        }
     };
 
     C.prototype.fireMoveEvent = function (x, y) {
@@ -124,7 +130,12 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         });
     };
 
-    C.prototype.draw = function () {
+    C.prototype.draw = function (animated) {
+
+        if (typeof animated === 'undefined') {
+            animated = true;
+        }
+
         var src = this.src,
             dest = this.dest,
             ctx = this.ctx,
@@ -135,16 +146,25 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
         var srcX = srcPosition[0] + src.offsetWidth + style.marginLeft;
         var srcY = (srcPosition[1] + (src.offsetHeight / 2)) - this.canvasOffset;
-        
+
         var destX = destPosition[0] - style.marginRight;
         var destY = (destPosition[1] + (dest.offsetHeight / 2)) - this.canvasOffset;
 
-        this.line = new AnimatedPolyline([
-            new Point(srcX, srcY),
-            new Point(srcX + 20, srcY),
-            new Point(destX, destY)
-        ], ctx, null, function (x, y) { me.fireMoveEvent(x, y); });
-        this.line.draw();
+        this.line = new AnimatedPolyline({
+            segments: [
+                new Point(srcX, srcY),
+                new Point(srcX + 20, srcY),
+                new Point(destX, destY)
+            ],
+            ctx: ctx,
+            callback: null,
+            moveCallback: function (o) {
+                if (o.animated) {
+                    me.fireMoveEvent(o.x, o.y);
+                }
+            }
+        });
+        this.line.draw(animated);
     };
 
     return C;

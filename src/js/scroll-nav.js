@@ -1,6 +1,9 @@
+/*global Connector*/
+
 var ScrollNav;
 
 (function () {
+    'use strict';
 
     function $(id) { return document.getElementById(id); }
 
@@ -53,12 +56,12 @@ var ScrollNav;
 
     ScrollNav.prototype.activateSection = function (section) {
         if (!section || section === this.activeSection) return;
-        var self = this;
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return;
 
         // don't listen on sections that contain articles (we listen to the articles themselves)
-        if (section.tagName.toLowerCase() === 'section' && section.getElementsByTagName('article').length) {
+        if (section.tagName.toLowerCase() === 'section' &&
+                section.getElementsByTagName('article').length) {
             return;
         }
 
@@ -75,7 +78,8 @@ var ScrollNav;
         section.className += ' ' + ACTIVE;
 
         if (figure) {
-            figure.style.top = (document.body.scrollTop + document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
+            figure.style.top = (document.body.scrollTop +
+                    document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
             this.drawConnector();
         }
 
@@ -108,6 +112,7 @@ var ScrollNav;
     };
 
     ScrollNav.prototype.drawConnector = function () {
+        var self = this;
         var title = this.getChildByTagName('h3') || this.getChildByTagName('h2');
         var figure = this.getFigureForSection(this.activeSection);
 
@@ -128,7 +133,7 @@ var ScrollNav;
         var unicorn = $('unicorn'),
             unicornHeight = unicorn.offsetHeight,
             unicornWidth = unicorn.offsetWidth;
-        
+
         this.activeConnector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';
