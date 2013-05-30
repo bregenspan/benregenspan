@@ -1,11 +1,15 @@
-/*global Connector*/
+/*global DomUtil, Connector, document, window*/
 
 var ScrollNav;
 
 (function () {
     'use strict';
 
-    function $(id) { return document.getElementById(id); }
+    var doc = document,
+        win = window,
+        getRelPosition = DomUtil.getRelPosition;
+
+    function $(id) { return doc.getElementById(id); }
 
     var ACTIVE = 'active';
     var MARGIN = 20;
@@ -32,8 +36,29 @@ var ScrollNav;
         }, 1000);
 
         window.addEventListener("scroll", function () {
-            // TODO: handle activating sections on-scroll here 
+            var position = self.position();
+            var height = self.browserHeight();
+            var activatePosition = position + (height / 2.5);
+
+            for (var i = 0, ilen = self.sections.length; i < ilen; i++) {
+                var section = self.sections[i];
+                var posTop = getRelPosition(section, document.body)[1];
+                var posBottom = posTop + section.clientHeight;
+  
+                if (activatePosition < posBottom && activatePosition > posTop) {
+                    if (self.activateSection(section))
+                        break;
+                }
+            }
         });
+    };
+
+    ScrollNav.prototype.position = function () {
+        return win.pageYOffset || doc.body.scrollTop;
+    };
+
+    ScrollNav.prototype.browserHeight = function () {
+        return win.innerHeight|| doc.documentElement.clientHeight|| doc.body.clientHeight;
     };
 
     ScrollNav.prototype.foreachSection = function (func) {
@@ -55,14 +80,14 @@ var ScrollNav;
     };
 
     ScrollNav.prototype.activateSection = function (section) {
-        if (!section || section === this.activeSection) return;
+        if (!section || section === this.activeSection) return false;
         var figure = this.getFigureForSection(section);
-        if (!figure && !this.hasHandlerForSection(section)) return;
+        if (!figure && !this.hasHandlerForSection(section)) return false;
 
         // don't listen on sections that contain articles (we listen to the articles themselves)
         if (section.tagName.toLowerCase() === 'section' &&
                 section.getElementsByTagName('article').length) {
-            return;
+            return false;
         }
 
         // Deactivate last section
@@ -78,12 +103,13 @@ var ScrollNav;
         section.className += ' ' + ACTIVE;
 
         if (figure) {
-            figure.style.top = (document.body.scrollTop +
+            figure.style.top = (this.position() +
                     document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
             this.drawConnector();
         }
 
         this.callSectionHandler();
+        return true;
     };
 
     ScrollNav.prototype.addHandler = function (sectionId, activateHandler, deactivateHandler) {
