@@ -63,7 +63,7 @@
 
 
     var slice = Array.prototype.slice;
-    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
+    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByClassName('project')));
     var nav = new ScrollNav(sections);
     nav.addHandler('comicSans', function (section) {
         section.className += ' comic-sans';

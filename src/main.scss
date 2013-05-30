@@ -131,7 +131,7 @@ section {
   }
 }
 
-section, article {
+section, .project {
 
   figure {
     opacity: 0;
@@ -267,7 +267,7 @@ section, article {
   }
 }
 
-article {
+.project {
   margin: 40px 0;
 }
 
@@ -313,9 +313,10 @@ article {
   }
 }
 
-article header, article h2, article p,
-section p, section h3 {
-  max-width: 500px;
+.project, section {
+  p, h2, h3 {
+    max-width: 500px;
+  }
 }
 
 .tag {
@@ -334,7 +335,7 @@ section p, section h3 {
   
   display: inline-block;
 
-  article:hover & {
+  .project:hover & {
     opacity: 1;
     @include vendor-prefix(transform, rotate(4deg) scale(1.1));        
   }

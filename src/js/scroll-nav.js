@@ -87,9 +87,9 @@ var ScrollNav;
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return false;
 
-        // don't listen on sections that contain articles (we listen to the articles themselves)
+        // don't listen on sections that contain project sub-sections (we listen to the sub-sections themselves)
         if (section.tagName.toLowerCase() === 'section' &&
-                section.getElementsByTagName('article').length) {
+                section.getElementsByClassName('project').length) {
             return false;
         }
 
