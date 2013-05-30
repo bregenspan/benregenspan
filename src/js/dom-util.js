@@ -1,5 +1,10 @@
 var DomUtil = {
 
+    /*
+     * Alias document.getElementById
+     */
+    $: function (id) { return document.getElementById(id); },
+
     /* 
      * Get position of `node` relative to a specified
      *      `ancestor`

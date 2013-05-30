@@ -13,6 +13,7 @@ module.exports = function(grunt) {
               'build/main.js': [
                   'src/js/lib/event_target.js',
                   'src/js/dom-util.js',
+                  'src/js/func-util.js',
 
                   'src/js/connector/point.js',
                   'src/js/connector/polyline.js',

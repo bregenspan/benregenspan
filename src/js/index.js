@@ -2,14 +2,14 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global document:false, Connector:false, skrollr:false, ScrollNav:false, window:true*/
+/*global document:false, Connector:false, DomUtil:false, skrollr:false, ScrollNav:false, window:true*/
 
 (function () {
     'use strict';
 
-    var doc = document;
+    var doc = document,
+        $ = DomUtil.$;
 
-    function $(id) { return doc.getElementById(id); }
 
     // Pretty Webfonts
     window.WebFontConfig = {

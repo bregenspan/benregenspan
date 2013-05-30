@@ -1,4 +1,4 @@
-/*global DomUtil, Connector, document, window*/
+/*global DomUtil, FuncUtil, Connector, document, window*/
 
 var ScrollNav;
 
@@ -7,9 +7,8 @@ var ScrollNav;
 
     var doc = document,
         win = window,
-        getRelPosition = DomUtil.getRelPosition;
-
-    function $(id) { return doc.getElementById(id); }
+        getRelPosition = DomUtil.getRelPosition,
+        $ = DomUtil.$;
 
     var ACTIVE = 'active';
     var MARGIN = 20;
@@ -35,7 +34,7 @@ var ScrollNav;
             self.activateSection($('about'));
         }, 1000);
 
-        window.addEventListener("scroll", function () {
+        window.addEventListener("scroll", FuncUtil.debounce(function () {
             var position = self.position();
             var height = self.browserHeight();
             var activatePosition = position + (height / 2.5);
@@ -50,7 +49,7 @@ var ScrollNav;
                         break;
                 }
             }
-        });
+        }, 30));
     };
 
     ScrollNav.prototype.position = function () {
@@ -80,7 +79,11 @@ var ScrollNav;
     };
 
     ScrollNav.prototype.activateSection = function (section) {
-        if (!section || section === this.activeSection) return false;
+
+        // let's consider this a success; the section was already activated
+        if (section === this.activeSection) return true;
+
+        if (!section) return false;
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return false;
 
