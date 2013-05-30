@@ -31,7 +31,8 @@ var ScrollNav;
         });
 
         window.setTimeout(function () {
-            self.activateSection($('about'));
+            if (!self.activeSection)
+                self.activateSection($('about'));
         }, 1000);
 
         window.addEventListener("scroll", FuncUtil.debounce(function () {
