@@ -9,37 +9,15 @@
  *   TODO: support choice of source and target edges. For now, left and right edges are used.
  */
 
-/*global EventTarget, Point, AnimatedPolyline, document, window, console*/
+/*global DomUtil, EventTarget, Point, AnimatedPolyline, document, window, console*/
 
-var Connector = (function (EventTarget, Point, AnimatedPolyline) {
+var Connector = (function (DomUtil, EventTarget, Point, AnimatedPolyline) {
     'use strict';
 
     var style = {
         'marginLeft': 5,
         'marginRight': 50
     };
-
-    /* Get position of `node` relative to a
-     * specified `ancestor` */
-    function getRelPosition(node, ancestor) {
-        var top = 0,
-            left = 0;
-
-        while (node) {
-            if (node.tagName) {
-                top = top + node.offsetTop;
-                left = left + node.offsetLeft;
-                node = node.offsetParent;
-            } else {
-                node = node.parentNode;
-            }
-            if (node === ancestor) {
-                node = null;
-            }
-        }
-
-        return [left, top];
-    }
 
     var C = function (prefs) {
 
@@ -139,7 +117,8 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
         var src = this.src,
             dest = this.dest,
             ctx = this.ctx,
-            me = this;
+            me = this,
+            getRelPosition = DomUtil.getRelPosition;
 
         var srcPosition = getRelPosition(src, this.parentEl),
             destPosition = getRelPosition(dest, this.parentEl);
@@ -169,4 +148,4 @@ var Connector = (function (EventTarget, Point, AnimatedPolyline) {
 
     return C;
 
-}(EventTarget, Point, AnimatedPolyline));
+}(DomUtil, EventTarget, Point, AnimatedPolyline));

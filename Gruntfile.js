@@ -12,7 +12,9 @@ module.exports = function(grunt) {
           files: {
               'build/main.js': [
                   'src/js/lib/event_target.js',
-      
+                  'src/js/dom-util.js',
+                  'src/js/func-util.js',
+
                   'src/js/connector/point.js',
                   'src/js/connector/polyline.js',
                   'src/js/connector/connector.js',
@@ -33,7 +35,7 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-            { expand: true, cwd: 'src/', src: ['**.html', '**.ico', 'fonts', 'fonts/**', 'img', 'img/**'], dest: 'build/'}
+            { expand: true, cwd: 'src/', src: ['**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'], dest: 'build/'}
         ]
       }
     },

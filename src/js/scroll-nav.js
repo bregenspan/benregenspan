@@ -1,11 +1,14 @@
-/*global Connector*/
+/*global DomUtil, FuncUtil, Connector, document, window*/
 
 var ScrollNav;
 
 (function () {
     'use strict';
 
-    function $(id) { return document.getElementById(id); }
+    var doc = document,
+        win = window,
+        getRelPosition = DomUtil.getRelPosition,
+        $ = DomUtil.$;
 
     var ACTIVE = 'active';
     var MARGIN = 20;
@@ -28,12 +31,34 @@ var ScrollNav;
         });
 
         window.setTimeout(function () {
-            self.activateSection($('about'));
+            if (!self.activeSection)
+                self.activateSection($('about'));
         }, 1000);
 
-        window.addEventListener("scroll", function () {
-            // TODO: handle activating sections on-scroll here 
-        });
+        window.addEventListener("scroll", FuncUtil.debounce(function () {
+            var position = self.position();
+            var height = self.browserHeight();
+            var activatePosition = position + (height / 2.5);
+
+            for (var i = 0, ilen = self.sections.length; i < ilen; i++) {
+                var section = self.sections[i];
+                var posTop = getRelPosition(section, document.body)[1];
+                var posBottom = posTop + section.clientHeight;
+  
+                if (activatePosition < posBottom && activatePosition > posTop) {
+                    if (self.activateSection(section))
+                        break;
+                }
+            }
+        }, 30));
+    };
+
+    ScrollNav.prototype.position = function () {
+        return win.pageYOffset || doc.body.scrollTop;
+    };
+
+    ScrollNav.prototype.browserHeight = function () {
+        return win.innerHeight|| doc.documentElement.clientHeight|| doc.body.clientHeight;
     };
 
     ScrollNav.prototype.foreachSection = function (func) {
@@ -55,14 +80,18 @@ var ScrollNav;
     };
 
     ScrollNav.prototype.activateSection = function (section) {
-        if (!section || section === this.activeSection) return;
-        var figure = this.getFigureForSection(section);
-        if (!figure && !this.hasHandlerForSection(section)) return;
 
-        // don't listen on sections that contain articles (we listen to the articles themselves)
+        // let's consider this a success; the section was already activated
+        if (section === this.activeSection) return true;
+
+        if (!section) return false;
+        var figure = this.getFigureForSection(section);
+        if (!figure && !this.hasHandlerForSection(section)) return false;
+
+        // don't listen on sections that contain project sub-sections (we listen to the sub-sections themselves)
         if (section.tagName.toLowerCase() === 'section' &&
-                section.getElementsByTagName('article').length) {
-            return;
+                section.getElementsByClassName('project').length) {
+            return false;
         }
 
         // Deactivate last section
@@ -78,12 +107,13 @@ var ScrollNav;
         section.className += ' ' + ACTIVE;
 
         if (figure) {
-            figure.style.top = (document.body.scrollTop +
+            figure.style.top = (this.position() +
                     document.documentElement.clientHeight - figure.offsetHeight - MARGIN) + 'px';
             this.drawConnector();
         }
 
         this.callSectionHandler();
+        return true;
     };
 
     ScrollNav.prototype.addHandler = function (sectionId, activateHandler, deactivateHandler) {

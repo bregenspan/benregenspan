@@ -2,14 +2,14 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global document:false, Connector:false, skrollr:false, ScrollNav:false, window:true*/
+/*global document:false, Connector:false, DomUtil:false, skrollr:false, ScrollNav:false, window:true*/
 
 (function () {
     'use strict';
 
-    var doc = document;
+    var doc = document,
+        $ = DomUtil.$;
 
-    function $(id) { return doc.getElementById(id); }
 
     // Pretty Webfonts
     window.WebFontConfig = {
@@ -63,13 +63,52 @@
 
 
     var slice = Array.prototype.slice;
-    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByTagName('article')));
+    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByClassName('project')));
     var nav = new ScrollNav(sections);
     nav.addHandler('comicSans', function (section) {
         section.className += ' comic-sans';
     }, function (section) {
         section.className = section.className.replace('comic-sans', '');   
     });
+
+
+
+    /* Animate Abe Lincoln favicon */
+    (function () {
+        var canvas = document.createElement('canvas'),
+            ctx,
+            img = document.createElement('img');
+
+        if (canvas.getContext && typeof canvas.toDataURL === 'function') {
+          canvas.height = canvas.width = 16;
+          ctx = canvas.getContext('2d');
+          img.onload = function () {
+            var img = this,
+                position = canvas.height,
+                link = document.getElementById('favicon'),
+                newLink;
+
+            var loop = function () {
+                newLink = link.cloneNode(true);
+                ctx.clearRect(0, 0, canvas.height, canvas.width);
+                ctx.drawImage(img, 0, position);
+                newLink.setAttribute('href', canvas.toDataURL());
+                link.parentNode.replaceChild(newLink, link);
+                link = newLink;
+                if (position > 0) {
+                    position--;
+                    window.setTimeout(loop, 100);
+                } else {
+                    position = canvas.height;
+                    window.setTimeout(loop, 10000);
+                }
+            };
+            loop();
+
+          };
+          img.src = 'favicon.png';
+        }
+    }());
 
 
 }());

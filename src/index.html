@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="A full-stack web developer, he is generally well-dressed and fairly hygienic.">
     <link rel="stylesheet" href="main.css">
+    <link id="favicon" rel="icon" type="image/png" href="favicon.png">
   </head>
 
   <body>
@@ -38,16 +39,16 @@
         <section id="projects">
           <header><h2>Open-source Projects</h2></header>
 
-          <article>
+          <div class="project">
             <header>
               <h3><a href="https://github.com/bregenspan/django-ajax-changelist">Django Ajax Changelist</a></h3>
               <span class="tag">Python</span> <span class="tag">Javascript</span>
             </header>
             <p>This small Django app makes specified fields in the Django admin editable via AJAX. This is useful when users need to update certain
           properties on a number of items, and don't want to have to click through to the object detail page each time.</p>
-          </article>
+          </div>
 
-          <article>
+          <div class="project">
             <header>
               <h3><a href="https://github.com/bregenspan/jewnicorn">Jewnicorn</a></h3>
               <span class="tag">Python</span> <span class="tag">bad jokes carried too far</span>
@@ -56,9 +57,9 @@
           of gunicorn's features, but prevents it from serving content on Shabbos. (<a href="https://github.com/bregenspan/jewnicorn/commit/0244c15b3aab39a180b4ddc577fe1298e628aab0">"astral" is used</a> for finding local
           sun-up/sun-down times).</p>
             <p>While this project exists entirely as a dumb joke, it should be noted that some sites do close down on the Jewish day of rest, <a href="http://gadgetopia.com/post/6799">B&amp;H likely being</a> the most prominent example.  There is an <a href="http://judaism.stackexchange.com/questions/2671/do-you-have-to-close-your-blog-website-on-shabbos">interesting discussion of this subject</a> over on StackExchange.</p>
-          </article>
+          </div>
 
-          <article>
+          <div class="project">
             <header>
             <h3><a href="https://github.com/bregenspan/fight-for-your-right-to-pay-with-a-credit-card">Fight For Your Right (To Pay With a Credit Card)</a></h3><br/>
             <span class="tag">Javascript</span> <span class="tag">Chrome extension</span> <span class="tag">Frustration with Paypal</span>
@@ -67,18 +68,18 @@
             <img src="img/nade.png" class="square" src="Credit Card" title="Libertas et Notabilia">
           </figure>
           <p>This simple Chrome extension defaults Paypal's payment option to credit card.</p>
-          </article>
+          </div>
 
-          <article>
+          <div class="project">
           <header>
             <h3><a href="https://github.com/bregenspan/one-plus-forward-two-plus-backward">One Plus Forward, Two Plus Backward</a></h3>
             <span class="tag">Chrome extension</span>
           </header>
           <p>This Chrome extension adds a limit of 140 characters to Google Plus and hides the buttons for doing fancy things that wouldn't be possible on Twitter, like recording video. In the interests of exceptional yet subtle UX, the HTML5 Audio API (via <a href="http://buzz.jaysalvat.com/">Buzz!</a>) is used to play an airhorn effect when the user exceeds the character limit, and an image of the Dalai Lama flashes on the screen to remind the user of the beauty that can be found in simplicity.</p>
           <p><em>(Sadly, some updates are required to make this work again after the latest Google+ redesign)</em></p>
-          </article>
+          </div>
 
-          <article>
+          <div class="project">
             <header>
               <h3><a href="https://github.com/bregenspan/live-twitter-background">Live Twitter Background</a></h3>
               <span class="tag">PHP</span> <span class="tag">Twitter API</span> <span class="tag">Imagemagick</span>
@@ -87,45 +88,36 @@
               <img src="img/php.png" alt="PHP">
             </figure>
             <p>This is an old project and there are a number of things I'd clean up about the code. Nevertheless, if you'd like to use something written in PHP to periodically update your Twitter background to show a highly unecessary list of recent followers + your current Skype status, this could be a good fit.</p>
-          </article>
+          </div>
 
         </section>
 
         <section id="experiments">
           <header><h2>Experiments</h2></header>
 
-          <article>
+          <div class="project">
             <header>
             <h3><a href="http://techcrunch.com/2011/04/01/in-baffling-move-huffington-post-erects-paywall-solely-for-nyt-employees/">April Fools' Reverse Paywall</a></h3>
             <span class="tag">Akamai ESI</span>
             </header>
             <figure><img src="img/huffpost.png" alt="April Fools Paywall"></figure>
             <p>I built a fun little April Fools joke at Huffington Post - a paywall that only targeted visitors with New York Times IP addresses. There were some interesting challenges to the project due to CDN-level caching, so the IP detection was written using Akamai ESI.</p>
-          </article>
+          </div>
 
-          <article>
+          <div class="project">
             <header>
             <h3><a href="http://www.totalshite.com/captcha_philharmonic/">Captcha Philharmonic</a></h3>
             </header>
           <p>A series of audio Captchas are added one by one, then slowly removed, creating a chorus of strange voices and an impossible Captcha challenge. This sounded a lot prettier before Google last revised its audio Captcha format to defeat automatic solutions. I do consider this to be Art and my artists' statement can be found <a href="http://www.artybollocks.com/#abg_full">here</a>.</p>
-          </article>
+          </div>
 
-          <article id="comicSans">
+          <div class="project" id="comicSans">
             <header>
               <h3><a href="http://www.totalshite.com/comic_insanity/">Weaponized Comic Sans</a></h3>
               <span class="tag">Web Security</span> <span class="tag comic-sans">Comic Sans</span>
             </header>
           <p>Relying on a minor security issue in About.me (which I reported and has since been fixed), this permitted users to change the font on their About.me profile to Comic Sans.</p>
-          </article>
-
-          <article id="thisSite">
-            <header>
-              <h3>This Site</h3>
-              <span class="tag">HTML5</span> <span class="tag">CSS3</span> <span class="tag">Animated GIF</span>
-            </header>
-            <p>This site uses a number of HTML5 features, mostly to pointless ends. CSS transforms and transitions are used to provide excessive visual effects, animated GIFs and &laquo;canvas&raquo; are used to draw the rainbow unicorn and line he (or she) draws behind her (or him). There is right now an epidemic of cleanly-styled "flat" design and it is important that we fight against it (where appropriate and when not being paid to do otherwise). It is hosted on GitHub Pages.
-          </article>
-
+          </div>
         </section>
 
         <section id="scarves">
