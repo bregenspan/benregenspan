@@ -1,3 +1,6 @@
+$sans: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
+$serif: 'Noto Serif', serif;
+
 /* Mixin defining our media query types
       http://css-tricks.com/media-queries-sass-3-2-and-codekit/
  */
@@ -30,8 +33,6 @@
   font-style: normal;
 }
 
-
-
 /* Nicholas Gallagher's clearfix */
 %clearfix {
   &:before,
@@ -61,7 +62,7 @@ html, body {
 
 body {
   background: url(img/pipetile.png);
-  font-family: 'Noto Serif', serif;
+  font-family: $serif;
   color: #080f17;
 }
 
@@ -104,7 +105,7 @@ footer {
 /* Headings */ 
 h1, h2, h3 {
   font-weight: bold;
-  font-family: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: $sans;
   display: inline-block;
 }
 
@@ -122,6 +123,10 @@ h3 {
   font-size: 1.05em;
 }
 
+.tag {
+  font-family: $sans;
+}
+
 section {
   clear: both;
   padding: 70px 0 70px;
@@ -131,74 +136,67 @@ section {
   }
 }
 
-section, article {
+figure {
+  opacity: 0;
+  @include vendor-prefix(transition, opacity 2s);
+  visibility: hidden;
+  position: absolute;
+  right: 20px;
 
-  figure {
-    opacity: 0;
+  // this will get overridden via JS:
+  top: -1000px;
 
-    @include vendor-prefix(transition, opacity 2s);
+  width: 200px;
+  height: 200px;
 
-    visibility: hidden;
-    position: absolute;
-    right: 20px;
-
-    // this will get overridden via JS:
-    top: -1000px;
-
-    width: 200px;
-    height: 200px;
-
+  @include breakpoint(narrow) {
+    visibility: visible;
+    opacity: 1.0;
+    width: 30%;
+    height: auto;
+    float: left;
+    position: static;
     & > img {
-      border-radius: 150px;
-      width: 100%;
-      margin: 25px;
-      border: 75px double #2e1404;
-      @include vendor-prefix(transition, border-width 3s ease-in, border-radius 3s ease-in);
-    }
-
-    @include breakpoint(narrow) {
-      visibility: visible;
-      opacity: 1.0;
-      width: 30%;
-      height: auto;
-      float: left;
-      position: static;
-      & > img {
-        border: 0px;
-        margin: 0px;
-      }
-    }
-
-    @include breakpoint(mobile) {
-      visibility: visible;
-      display: block;
-      opacity: 1.0;
-      width: 30%;
-      height: auto;
-      float: right;
-      & > img {
-        border: 0px;
-        margin: 0px;
-      }
-      position: static;
-    }
-
-  }
-
-  &.active {
-    figure {
-      opacity: 1.0;
-      visibility: visible;
-      & > img {
-        border-width: 0px;
-        &.square {
-          border-radius: 0px;
-        }
-      }
+      border: 0px;
+      margin: 0px;
     }
   }
 
+  @include breakpoint(mobile) {
+    visibility: visible;
+    display: block;
+    opacity: 1.0;
+    width: 30%;
+    height: auto;
+    float: right;
+    & > img {
+      border: 0px;
+      margin: 0px;
+    }
+    position: static;
+  }
 }
+
+figure > img {
+  border-radius: 150px;
+  width: 100%;
+  margin: 25px;
+  border: 75px double #2e1404;
+  @include vendor-prefix(transition, border-width 3s ease-in, border-radius 3s ease-in);
+
+  .active & {
+      border-width: 0px;
+      &.square {
+          border-radius: 0px;
+      }
+  }
+}
+
+.active figure {
+  opacity: 1.0;
+  visibility: visible;
+}
+
 
 #unicorn {
   width: 120px;
