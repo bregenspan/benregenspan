@@ -147,14 +147,6 @@ figure {
 section, .project {
 
   figure {
-    opacity: 0;
-
-    @include vendor-prefix(transition, opacity 2s);
-
-    visibility: hidden;
-    position: absolute;
-    right: 20px;
-
     // this will get overridden via JS:
     top: -1000px;
 
@@ -401,7 +393,6 @@ figure > img {
 
 h1, h2, h3, p {
   @include vendor-prefix(transition, opacity 2s); 
-  opacity: 1.0;
 }
 
 /* Some handling of FOUC */
