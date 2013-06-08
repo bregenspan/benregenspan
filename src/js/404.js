@@ -44,8 +44,6 @@
         var paddingTop,
             paddingLeft;
 
-        canvas.className += ' loaded';
-
         // IE 8 and below
         if (canvas.currentStyle) {
             paddingTop = parseInt(canvas.currentStyle.paddingTop, 10);
@@ -93,8 +91,16 @@
                 animateAmount: 2,
                 lineWidth: 8
             });
-            polylines[i].draw(true);
         }
+
+        // Have unicorns draw our 404 after some delay
+        window.setTimeout(function () {
+            canvas.className += ' loaded';
+            for (var j = 0, jlen = polylines.length; j < jlen; j++) {
+                polylines[j].draw(true);
+            }
+        }, 500);
+
     };
     if (unicorn.offsetHeight) {
         unicorn.onload();
