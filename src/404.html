@@ -3,11 +3,9 @@
 
   <head>
     <meta charset="utf-8">    
-    <title>Ben Regenspan</title>
+    <title>404 Not Found</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="A full-stack web developer, he is generally well-dressed and fairly hygienic.">
-    <link rel="stylesheet" href="main.css?3">
-    <link id="favicon" rel="icon" type="image/png" href="favicon.png">
+    <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
     <style>
 
       body, html {
@@ -20,6 +18,9 @@
       }
 
       .unicorn404 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
         width: 100%;
         height: 100%;
         padding: 42px;
@@ -60,9 +61,19 @@
 
   <body>
 
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.4 (Unix) OpenSSL/1.0.1e Server at ben.regenspan.com Port 80</address>
+</body></html>
+
+
     <img id="unicorn" src="img/rainbow_unicorn.gif" id="unicorn" class="rainbow-unicorn">
 
-    <canvas width="500" height="500" id="canvas" class="unicorn404">
+    <canvas id="canvas" class="unicorn404">
 
     <script type="text/javascript" src="404.js?2"></script>
 
