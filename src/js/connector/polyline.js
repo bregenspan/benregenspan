@@ -1,10 +1,20 @@
-/*global window*/
+/*global window, _*/
 
 var AnimatedPolyline = (function () {
     'use strict';
 
     var AnimatedPolyline = function (options) {
-        this.animated = true;
+        options = options || {};
+        this.options = {
+            lineCap: 'round',
+            strokeStyle: '#f1dbce',
+            lineWidth: 4,
+            
+            animated: true,
+            animateAmount: 4
+        };
+        _.extend(this.options, options);
+
         this.finished = false;
         this.segments = options.segments;
         this.ctx = options.ctx;
@@ -43,7 +53,7 @@ var AnimatedPolyline = (function () {
 
     AnimatedPolyline.prototype.draw = function (animated) {
         if (typeof animated !== 'undefined') {
-            this.animated = animated;
+            this.options.animated = animated;
         }
         this.finished = false;
         this.loop();
@@ -90,7 +100,7 @@ var AnimatedPolyline = (function () {
         var pos = this.currentPoint.clone(),
             targetPos = this.nextPoint.clone();
 
-        if (!this.animated) {
+        if (!this.options.animated) {
             return targetPos;
         }
 
@@ -120,20 +130,22 @@ var AnimatedPolyline = (function () {
     AnimatedPolyline.prototype.renderTick = function (delta) {
 
         if (this.finished) return;
+
+        var options = this.options;
         var interval = 60 / 1000;
         var ctx = this.ctx;
         var targetPos = this.nextPoint;
 
-        // 2px / frame @ 60 target fps
-        var moveAmount = delta * interval * 4;
+        // `options.animateAmount`px / frame @ 60 target fps
+        var moveAmount = delta * interval * options.animateAmount;
 
         var pos = this.currentPoint;
 
         if (!targetPos.equals(pos)) {
             ctx.save();
             ctx.beginPath();
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = '#f1dbce';
+            ctx.lineCap = options.lineCap;
+            ctx.strokeStyle = options.strokeStyle;
             ctx.moveTo(pos.x, pos.y);
 
             pos = this.currentPoint = this.getNextPosition(moveAmount);
@@ -146,14 +158,14 @@ var AnimatedPolyline = (function () {
 
 
             ctx.lineTo(pos.x, pos.y);
-            ctx.lineWidth = 4;
+            ctx.lineWidth = options.lineWidth;
             ctx.stroke();
             ctx.restore();
 
             this.moveCallback({
                 x: pos.x,
                 y: pos.y,
-                animated: this.animated
+                animated: options.animated
             });
 
         } else if (targetPos.equals(pos)) {

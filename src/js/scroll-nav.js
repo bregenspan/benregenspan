@@ -67,12 +67,14 @@ var ScrollNav;
         }
     };
 
+    // Return the main figure for the specified section
     ScrollNav.prototype.getFigureForSection = function (section) {
         var figure = section.getElementsByTagName('figure');
         if (!figure.length) return false;
         return figure[0];
     };
 
+    // Get first child of the active section with the specified tag name
     ScrollNav.prototype.getChildByTagName = function (tagName) {
         var els = this.activeSection.getElementsByTagName(tagName);
         if (!els.length) return false;

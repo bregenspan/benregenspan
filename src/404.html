@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="wf-loading">
+
+  <head>
+    <meta charset="utf-8">    
+    <title>404 Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link id="favicon" rel="icon" type="image/ico" href="favicon.ico">
+    <style>
+
+      body, html {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .unicorn404 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        padding: 42px;
+
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+
+        background-color: rgba(0, 0, 0, 0.0);
+
+        transition: background-color 4s;
+        -moz-transition: background-color 4s;
+        -webkit-transition: background-color 4s;
+        -ms-transition: background-color 4s;
+        box-orient: vertical;
+        -moz-box-orient: vertical;
+        -webkit-box-orient: vertical;
+        -ms-box-orient-vertical;
+        box-align: center;
+        -moz-box-align: center;
+        -webkit-box-align: center;
+        -ms-box-align: center;
+      }
+
+      .rainbow-unicorn.go-away-unicorn {
+        transition: top 4s, left 4s;
+        -webkit-transition: top 4s, left 4s;
+        -moz-transition: top 4s, left 4s;
+        -ms-transition: top 4s, left 4s;
+      }
+
+      .unicorn404.loaded {
+        background-color: rgba(0, 0, 0, 0.9);
+      }
+
+      .rainbow-unicorn {
+        position: absolute;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.4 (Unix) OpenSSL/1.0.1e Server at ben.regenspan.com Port 80</address>
+</body></html>
+
+
+    <img id="unicorn" src="img/rainbow_unicorn.gif" id="unicorn" class="rainbow-unicorn">
+
+    <canvas id="canvas" class="unicorn404">
+
+    <script type="text/javascript" src="404.js?3"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-41489908-1', 'regenspan.com');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
