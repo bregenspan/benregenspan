@@ -64,6 +64,7 @@ body {
   background: url(img/pipetile.png);
   font-family: $serif;
   color: #080f17;
+  @include vendor-prefix(text-size-adjust, 100%);
 }
 
 a {
