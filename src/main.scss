@@ -96,6 +96,10 @@ footer {
   margin-bottom: 80px;
 }
 
+.footer-link {
+  float: right;
+}
+
 #container {
   @extend %clearfix;
   margin-left: 15%;
