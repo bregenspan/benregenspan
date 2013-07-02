@@ -1,5 +1,6 @@
 $sans: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
 $serif: 'Noto Serif', serif;
+$link-color: #115588;
 
 /* Mixin defining our media query types
       http://css-tricks.com/media-queries-sass-3-2-and-codekit/
@@ -67,7 +68,7 @@ body {
 }
 
 a {
-  color: #115588;
+  color: $link-color;
 }
 
 .icon {
@@ -183,7 +184,7 @@ section, .project {
 }
 
 figure > img {
-  border-radius: 150px;
+  @include vendor-prefix(border-radius, 50%);
   width: 100%;
   margin: 25px;
   border: 75px double #2e1404;
@@ -305,13 +306,16 @@ figure > img {
   }
 
   .icon {
-    @include vendor-prefix(transition, color 1s);
-    text-shadow: 0px 0px 3px #fff;
-    -webkit-transition: text-shadow 1.5s, color 0.5s;
-    
+    //@include vendor-prefix(transition, color 1s, text-shadow 1.5s);
+    //@include vendor-prefix(-moz-transition, color 1s, -moz-tex-shadow 1.5s);
+    @include vendor-prefix(text-shadow, 0);
+
     &:hover {
       color: #fff;
-      text-shadow: 0px 0px 15px #115588;
+      @include vendor-prefix(text-shadow, -1px -1px 0 $link-color, 
+                                          1px -1px 0 $link-color,
+                                          -1px 1px 0 $link-color,
+                                          1px 1px 0 $link-color);
     }
   }
 }
