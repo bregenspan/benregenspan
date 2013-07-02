@@ -65,6 +65,7 @@ body {
   background: url(img/pipetile.png);
   font-family: $serif;
   color: #080f17;
+  @include vendor-prefix(text-size-adjust, 100%);
 }
 
 a {
@@ -74,6 +75,10 @@ a {
 .icon {
   font-family: fontello;
   text-decoration: none;
+}
+
+.no-icon {
+  font-size: 12px;
 }
 
 #container, #content {
@@ -90,6 +95,10 @@ footer {
   color: #666;
   font-size: 0.8em;
   margin-bottom: 80px;
+}
+
+.footer-link {
+  float: right;
 }
 
 #container {
