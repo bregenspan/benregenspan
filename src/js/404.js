@@ -1,6 +1,18 @@
-/* global Point */
+/* global require, define */
 
-(function () {
+require.config({
+    shim: {
+        "underscore": {
+            exports: "_"
+        }
+    },
+    paths: {
+        "underscore": "lib/underscore"
+    }
+});
+
+define(['underscore', 'connector/point', 'connector/polyline'], function (_, Point, AnimatedPolyline) {
+    'use strict';
 
     function offsetLetter(letter, offset) {
         var shiftedLetter = [];
@@ -29,13 +41,14 @@
 
     var word = [FOUR, ZERO, FOUR];
     var polylines = [];
-    
+
     // amount to offset each letter
     var SPACING = 20;
     var LETTER_WIDTH = 100;
     var LETTER_HEIGHT = 100;
 
-    var ctx = document.getElementById('canvas').getContext('2d');
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
     canvas.setAttribute('width', (LETTER_WIDTH + SPACING) * word.length - SPACING);
     canvas.setAttribute('height', LETTER_HEIGHT);
 
@@ -59,13 +72,13 @@
         var widthRatio = (canvas.offsetWidth - paddingLeft * 2) / canvas.width;
         var heightRatio = (canvas.offsetHeight - paddingTop * 2) / canvas.height;
 
-        moveCallback = function (unicorn, o) {
+        var moveCallback = function (unicorn, o) {
             unicorn.style.top = (paddingTop + (heightRatio * o.y)) - unicorn.offsetHeight / 2 + 'px';
             unicorn.style.left = (paddingLeft + (widthRatio * o.x)) - unicorn.offsetWidth / 2 + 'px';
             unicorn.style.visibility = 'visible';
         };
 
-        endCallback = function (unicorn) {
+        var endCallback = function (unicorn) {
             unicorn.style.top = '110%';
             unicorn.style.left = '75%';
             unicorn.className += ' go-away-unicorn';
@@ -107,4 +120,4 @@
         unicorn.onload = null;
     }
 
-}());
+});

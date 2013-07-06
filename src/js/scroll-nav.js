@@ -1,8 +1,6 @@
-/*global DomUtil, FuncUtil, Connector, document, window*/
+/*global define, document, window*/
 
-var ScrollNav;
-
-(function () {
+define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, Connector) {
     'use strict';
 
     var doc = document,
@@ -14,7 +12,7 @@ var ScrollNav;
     var MARGIN = 20;
 
     // Custom scroll-driven effects
-    ScrollNav = function (sections) {
+    var ScrollNav = function (sections) {
         var self = this;
         this.sections = sections;
         this.activeSection = undefined;
@@ -35,7 +33,7 @@ var ScrollNav;
                 self.activateSection($('about'));
         }, 1000);
 
-        window.addEventListener("scroll", FuncUtil.debounce(function () {
+        window.addEventListener("scroll", _.debounce(function () {
             var position = self.position();
             var height = self.browserHeight();
             var activatePosition = position + (height / 2.5);
@@ -44,7 +42,7 @@ var ScrollNav;
                 var section = self.sections[i];
                 var posTop = getRelPosition(section, document.body)[1];
                 var posBottom = posTop + section.clientHeight;
-  
+
                 if (activatePosition < posBottom && activatePosition > posTop) {
                     if (self.activateSection(section))
                         break;
@@ -90,7 +88,7 @@ var ScrollNav;
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return false;
 
-        // don't listen on sections that contain project sub-sections (we listen to the sub-sections themselves)
+        // don't listen on sections that contain project sub-sections (we listen to the sub-sections)
         if (section.tagName.toLowerCase() === 'section' &&
                 section.getElementsByClassName('project').length) {
             return false;
@@ -182,4 +180,5 @@ var ScrollNav;
         this.activeConnector.draw();
     };
 
-}());
+    return ScrollNav;
+});

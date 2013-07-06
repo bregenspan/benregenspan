@@ -9,10 +9,15 @@
  *   TODO: support choice of source and target edges. For now, left and right edges are used.
  */
 
-/*global DomUtil, EventTarget, Point, AnimatedPolyline, document, window, console*/
+/*global define */
 
-var Connector = (function (DomUtil, EventTarget, Point, AnimatedPolyline) {
+define(function (require) {
     'use strict';
+
+    var DomUtil = require('dom-util'),
+        EventTarget = require('lib/event_target'),
+        Point = require('connector/point'),
+        AnimatedPolyline = require('connector/polyline');
 
     var style = {
         'marginLeft': 5,
@@ -148,4 +153,4 @@ var Connector = (function (DomUtil, EventTarget, Point, AnimatedPolyline) {
 
     return C;
 
-}(DomUtil, EventTarget, Point, AnimatedPolyline));
+});
