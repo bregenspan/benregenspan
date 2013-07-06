@@ -33,7 +33,7 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     { expand: true, cwd: 'src/', src: [
-                        '**.html', '**.ico', '**.png', '*.css', 'fonts', 'fonts/**', 'img', 'img/**'
+                        '**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'
                     ], dest: 'build/'}
                 ]
             }
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                     banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
                 },
                 files: {
-                    'src/main.min.css': ['src/main.css']
+                    'build/main.css': ['src/main.css']
                 }
             }
         }

@@ -393,20 +393,17 @@ figure > img {
 
 }
 
-
 .comic-sans, .comic-sans * {
   font-family: "Comic Sans MS", "Comic Sans", Arial, Verdana, sans-serif !important;
 }
 
-h1, h2, h3, p, section {
+/* handle webfont FOUC */
+h1, h2, h3, p, .tag {
   @include vendor-prefix(transition, opacity 2s); 
-}
+  opacity: 1.0;
 
-/* Some handling of FOUC */
-.wf-loading {
-
-  h1, h2, h3, p {
-    opacity: 0;
+  .wf-loading & {
+      opacity: 0;
+      visibility: hidden;
   }
-
 }
