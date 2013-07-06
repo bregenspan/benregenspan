@@ -8,14 +8,15 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         getRelPosition = DomUtil.getRelPosition,
         $ = DomUtil.$;
 
-    var ACTIVE = 'active';
-    var MARGIN = 20;
+    var ACTIVE = 'active',
+        ACTIVE_REGEX = new RegExp(ACTIVE),
+        MARGIN = 20;
 
     // Custom scroll-driven effects
     var ScrollNav = function (sections) {
         var self = this;
         this.sections = sections;
-        this.activeSection = undefined;
+        this.currentSection = undefined;
         this.activeConnector = undefined;
 
         this.sectionActivateHandlers = {};
@@ -29,7 +30,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         });
 
         window.setTimeout(function () {
-            if (!self.activeSection)
+            if (!self.currentSection && !document.body.scrollTop)
                 self.activateSection($('about'));
         }, 1000);
 
@@ -74,17 +75,21 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
 
     // Get first child of the active section with the specified tag name
     ScrollNav.prototype.getChildByTagName = function (tagName) {
-        var els = this.activeSection.getElementsByTagName(tagName);
+        var els = this.currentSection.getElementsByTagName(tagName);
         if (!els.length) return false;
         return els[0];
     };
 
     ScrollNav.prototype.activateSection = function (section) {
 
-        // let's consider this a success; the section was already activated
-        if (section === this.activeSection) return true;
+        // let's consider this a success; the section is already current
+        if (section === this.currentSection) return true;
 
-        if (!section) return false;
+        // skip if section wasn't found or is already active
+        if (!section || ACTIVE_REGEX.test(section.className)) {
+            return false;
+        }
+
         var figure = this.getFigureForSection(section);
         if (!figure && !this.hasHandlerForSection(section)) return false;
 
@@ -95,11 +100,11 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         }
 
         // Deactivate last section
-        if (this.activeSection) {
+        if (this.currentSection) {
             this.callSectionHandler(true);
         }
 
-        this.activeSection = section;
+        this.currentSection = section;
 
         section.className = section.className.replace(ACTIVE, '');
         section.className += ' ' + ACTIVE;
@@ -127,7 +132,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     };
 
     ScrollNav.prototype.callSectionHandler = function (deactivate) {
-        var section = this.activeSection,
+        var section = this.currentSection,
             id = section.id;
 
         var handlers = this.sectionActivateHandlers;
@@ -140,10 +145,10 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     };
 
     ScrollNav.prototype.getConnector = function () {
-        var section = this.activeSection,
+        var section = this.currentSection,
             self = this,
             title = this.getChildByTagName('h3') || this.getChildByTagName('h2'),
-            figure = this.getFigureForSection(this.activeSection),
+            figure = this.getFigureForSection(this.currentSection),
             connector = section.getAttribute('data-connector');
 
         if (connector) {
@@ -174,11 +179,11 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
 
         connector.addListener("cleared", function () {
             unicorn.style.visibility = 'hidden';
-            if (!self.activeSection) return;
-            self.activeSection.className = self.activeSection.className.replace('active', '');
+            if (!self.currentSection) return;
+            self.currentSection.className = self.currentSection.className.replace('active', '');
         });
 
-        self.activeSection.setAttribute('data-connector', connector);
+        self.currentSection.setAttribute('data-connector', connector);
         return connector;
     };
 
