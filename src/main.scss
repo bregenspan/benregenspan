@@ -151,10 +151,7 @@ figure {
   visibility: hidden;
   position: absolute;
   right: 20px;
-}
-
-
-figure {
+  
   // this will get overridden via JS:
   top: -1000px;
 
@@ -194,6 +191,8 @@ figure > img {
   width: 100%;
   margin: 25px;
   border: 75px double #2e1404;
+  position: relative;
+  z-index: 2;
   @include vendor-prefix(transition, border-width 3s ease-in);
 
   .active & {
