@@ -215,6 +215,7 @@ figure > img {
   height: 68px;
   position: absolute;
   visibility: hidden;
+  z-index: 3;
 
   @include breakpoint(narrow) {
     display: none;
@@ -397,11 +398,17 @@ figure > img {
   font-family: "Comic Sans MS", "Comic Sans", Arial, Verdana, sans-serif !important;
 }
 
-/* handle webfont FOUC */
+canvas {
+  z-index: 1;
+}
+
 h1, h2, h3, p, .tag {
   @include vendor-prefix(transition, opacity 2s); 
   opacity: 1.0;
+  position: relative;
+  z-index: 2;
 
+  /* handle webfont FOUC */
   .wf-loading & {
       opacity: 0;
       visibility: hidden;

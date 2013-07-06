@@ -101,9 +101,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
 
         this.activeSection = section;
 
-        this.foreachSection(function (section) {
-            section.className = section.className.replace(ACTIVE, '');
-        });
+        section.className = section.className.replace(ACTIVE, '');
         section.className += ' ' + ACTIVE;
 
         if (figure) {
@@ -141,16 +139,18 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         }
     };
 
-    ScrollNav.prototype.drawConnector = function () {
-        var self = this;
-        var title = this.getChildByTagName('h3') || this.getChildByTagName('h2');
-        var figure = this.getFigureForSection(this.activeSection);
+    ScrollNav.prototype.getConnector = function () {
+        var section = this.activeSection,
+            self = this,
+            title = this.getChildByTagName('h3') || this.getChildByTagName('h2'),
+            figure = this.getFigureForSection(this.activeSection),
+            connector = section.getAttribute('data-connector');
 
-        if (this.activeConnector) {
-            this.activeConnector.line.stopDrawing();
+        if (connector) {
+            return connector;
         }
 
-        this.activeConnector = new Connector({
+        connector = new Connector({
             parentEl: $('content'),
             src: title,
             dest: figure,
@@ -164,19 +164,26 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
             unicornHeight = unicorn.offsetHeight,
             unicornWidth = unicorn.offsetWidth;
 
-        this.activeConnector.addListener("move", function (e) {
+        connector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';
             }
             unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
             unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
         });
-        this.activeConnector.addListener("cleared", function (e) {
+
+        connector.addListener("cleared", function () {
             unicorn.style.visibility = 'hidden';
             if (!self.activeSection) return;
             self.activeSection.className = self.activeSection.className.replace('active', '');
         });
 
+        self.activeSection.setAttribute('data-connector', connector);
+        return connector;
+    };
+
+    ScrollNav.prototype.drawConnector = function () {
+        this.activeConnector = this.getConnector();
         this.activeConnector.draw();
     };
 
