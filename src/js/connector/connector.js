@@ -53,6 +53,13 @@ define(function (require) {
         });
     };
 
+    C.prototype.clear = function () {
+        this.line = null;
+        this.canvas.parentNode.removeChild(this.canvas);
+        this.canvas = null;
+        this.ctx = null;
+    };
+
     C.prototype.draw = function (animated) {
 
         if (typeof animated === 'undefined') {

@@ -71,7 +71,26 @@ module.exports = function(grunt) {
                     'build/main.css': ['src/main.css']
                 }
             }
+        },
+
+        hashres: {
+          // Global options
+          options: {
+            // Optional. Encoding used to read/write files. Default value 'utf8'
+            encoding: 'utf8',
+            // Optional. Format used to name the files specified in 'files' property.
+            fileNameFormat: '${name}.${hash}.${ext}',
+            matchFormat: '${ext}/${name}',
+            replaceFormat: '${ext}/${name}.${hash}',
+            renameFiles: true
+          },
+          js: {
+            src: ['build/js/main.js', 'build/js/404.js'],
+            dest: 'build/index.html'
+          }
         }
+
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -80,6 +99,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-shell-spawn');
+    grunt.loadNpmTasks('grunt-hashres');
 
-    grunt.registerTask('default', ['requirejs', 'sass', 'cssmin', 'copy']);
+    grunt.registerTask('default', ['requirejs', 'sass', 'cssmin', 'copy', 'hashres']);
 };

@@ -15,7 +15,7 @@ require.config({
     }
 });
 
-require(["dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(DomUtil, ScrollNav) {
+require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav) {
     'use strict';
 
     var doc = document,
@@ -51,6 +51,8 @@ require(["dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfill/addEventLis
     var sections = slice.call(doc.getElementsByTagName('section')).concat(
             slice.call(doc.getElementsByClassName('project')));
     var nav = new ScrollNav(sections);
+
+    window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
 
     nav.addHandler('comicSans', function (section) {
         section.className += ' comic-sans';

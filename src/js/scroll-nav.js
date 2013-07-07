@@ -18,6 +18,9 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     // Custom scroll-driven effects
     var ScrollNav = function (sections) {
         var self = this;
+
+        _.bindAll(this, 'redrawConnectors');
+
         this.sections = sections;
         this.currentSection = undefined;
         this.activeConnector = undefined;
@@ -163,7 +166,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
             self = this,
             title = this.getChildByTagName('h3') || this.getChildByTagName('h2'),
             figure = this.getFigureForSection(this.currentSection),
-            connector = section.getAttribute('data-connector');
+            connector = section.connector;
 
         if (connector) {
             return connector;
@@ -201,7 +204,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
             self.currentSection.className = self.currentSection.className.replace('active', '');
         });
 
-        self.currentSection.setAttribute('data-connector', connector);
+        section.connector = connector;
         return connector;
     };
 
@@ -209,6 +212,17 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         this.activeConnector = this.getConnector();
         unicorn.className = unicorn.className.replace(COMPLETED, STARTED);
         this.activeConnector.draw();
+    };
+
+    ScrollNav.prototype.redrawConnectors = function () {
+        this.foreachSection(function (section) {
+            var connector = section.connector;
+            if (!connector) {
+                return;
+            }
+            connector.clear();
+            connector.draw();
+        });
     };
 
     return ScrollNav;
