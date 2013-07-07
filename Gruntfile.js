@@ -80,13 +80,19 @@ module.exports = function(grunt) {
             encoding: 'utf8',
             // Optional. Format used to name the files specified in 'files' property.
             fileNameFormat: '${name}.${hash}.${ext}',
-            matchFormat: '${ext}/${name}',
-            replaceFormat: '${ext}/${name}.${hash}',
             renameFiles: true
           },
           js: {
+            options: {
+                matchFormat: '${ext}/${name}',
+                replaceFormat: '${ext}/${name}.${hash}'
+            },
             src: ['build/js/main.js', 'build/js/404.js'],
-            dest: 'build/index.html'
+            dest: ['build/index.html', 'build/404.html']
+          },
+          css: {
+            src: ['build/main.css'],
+            dest: ['build/index.html']
           }
         }
 
