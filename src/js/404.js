@@ -11,7 +11,7 @@ require.config({
     }
 });
 
-define(['underscore', 'connector/point', 'connector/polyline'], function (_, Point, AnimatedPolyline) {
+define(['underscore', 'connector/point', 'connector/polyline', "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function (_, Point, AnimatedPolyline) {
     'use strict';
 
     function offsetLetter(letter, offset) {

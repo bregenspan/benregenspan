@@ -77,7 +77,7 @@ define(function (require) {
         var top = Math.min(destY, srcY);
         var left = Math.min(destX, srcX);
        
-        var MARGIN = 5;
+        var MARGIN = 25;
 
         srcX -= left - MARGIN;
         destX -= left;

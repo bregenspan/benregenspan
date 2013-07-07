@@ -15,7 +15,7 @@ require.config({
     }
 });
 
-require(["dom-util", "scroll-nav"], function(DomUtil, ScrollNav) {
+require(["dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(DomUtil, ScrollNav) {
     'use strict';
 
     var doc = document,

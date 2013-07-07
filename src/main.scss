@@ -7,7 +7,7 @@ $link-color: #115588;
  */
 @mixin breakpoint($point) {
   @if $point == narrow {
-    @media (min-width: 600px) and (max-width: 790px) { @content; }
+    @media (min-width: 600px) and (max-width: 850px) { @content; }
   }
   @else if $point == mobile {
     @media (max-width: 600px)  { @content; }
@@ -58,7 +58,7 @@ $link-color: #115588;
 
 /* Fix the box model */
 * {
-  box-sizing: border-box;
+  @include vendor-prefix(box-sizing, border-box);
 }
 
 
@@ -152,6 +152,10 @@ section {
   clear: both;
   padding: 70px 0 70px;
 
+  &:last-of-type {
+    padding-bottom: 140px;
+  }
+
   @include breakpoint(mobile) {
     padding: 20px 0 20px;
   }
@@ -178,7 +182,9 @@ figure {
     width: 30%;
     height: auto;
     float: left;
-    position: static;
+    position: relative;
+    top: auto !important;
+
     & > img {
       border: 0px;
       margin: 0px;
@@ -196,7 +202,8 @@ figure {
       border: 0px;
       margin: 0px;
     }
-    position: static;
+    position: relative;
+    top: auto !important;
   }
 }
 
