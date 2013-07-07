@@ -371,35 +371,6 @@ figure > img {
 
 }
 
-
-.doodad-track {
-  display: none;
-}
-
-/* Mobile: show horizontal scrolling pipe on bottom, for some reason */
-@include breakpoint(mobile) {
-
-  .doodad-track {
-    position:fixed;
-    bottom:0px;
-    background: #888;
-    background: rgba(0,0,0,0.5);
-    height:15px;
-    width:100%;
-  }
-
-  .doodad {
-    position: absolute;
-    width: 50px;
-    height: 20px;
-    margin-top: -8px;
-    margin-left: -25px;
-    background: transparent url(img/pipe.png);
-  }
-
-}
-
-
 .comic-sans, .comic-sans * {
   font-family: "Comic Sans MS", "Comic Sans", Arial, Verdana, sans-serif !important;
 }

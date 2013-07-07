@@ -2,7 +2,7 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global document:false, Connector:false, DomUtil:false, skrollr:false, ScrollNav:false, window:true*/
+/*global document:false, Connector:false, DomUtil:false, ScrollNav:false, window:true*/
 
 (function () {
     'use strict';
@@ -35,49 +35,38 @@
         f.parentNode.insertBefore(p, f);
     }(doc));
 
-    // Pointless bottom progress bar, shows in mobile view
-    var progressBar = doc.createElement('div');
-    progressBar.className = 'doodad-track';
-    var progressBarNub = doc.createElement('div');
-    progressBarNub.className = 'doodad';
-    progressBar.appendChild(progressBarNub);
-    $('container').appendChild(progressBar);
-
-
-
-    // Nifty on-scroll effects
-    var title = $('title');
-    title.setAttribute('data-0', 'opacity:1; top:22px; transform:rotate(9deg)');
-    title.setAttribute('data-200', 'opacity:0; top:500px; transform:rotate(130deg);');
-
-    var sidebar = $('sidebar');
-    sidebar.setAttribute('data-0', 'top:120px');
-    sidebar.setAttribute('data-200', 'top:10px');
-
-    progressBarNub.setAttribute('data-0', 'left:0%');
-    progressBarNub.setAttribute('data-end', 'left:100%');
-
-    skrollr.init();
-
-
 
 
     var slice = Array.prototype.slice;
-    var sections = slice.call(document.getElementsByTagName('section')).concat(slice.call(document.getElementsByClassName('project')));
+    var sections = slice.call(doc.getElementsByTagName('section')).concat(slice.call(doc.getElementsByClassName('project')));
     var nav = new ScrollNav(sections);
+
     nav.addHandler('comicSans', function (section) {
         section.className += ' comic-sans';
     }, function (section) {
         section.className = section.className.replace('comic-sans', '');   
     });
 
+    nav.addStyleChanges([
+        {
+            el: $('sidebar'),
+            0: 'top:120px',
+            200: 'top:10px'
+        },
+        {
+            el: $('title'),
+            0: 'opacity:1; top:22px; transform:rotate(9deg)',
+            200: 'opacity:0; top:500px; transform:rotate(130deg)'
+        }
+    ]);
+
 
 
     /* Animate Abe Lincoln favicon */
     (function () {
-        var canvas = document.createElement('canvas'),
+        var canvas = doc.createElement('canvas'),
             ctx,
-            img = document.createElement('img');
+            img = doc.createElement('img');
 
         if (canvas.getContext && typeof canvas.toDataURL === 'function') {
           canvas.height = canvas.width = 16;
@@ -85,7 +74,7 @@
           img.onload = function () {
             var img = this,
                 position = canvas.height,
-                link = document.getElementById('favicon'),
+                link = doc.getElementById('favicon'),
                 newLink;
 
             var loop = function () {

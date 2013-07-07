@@ -21,7 +21,6 @@ module.exports = function(grunt) {
                   'src/js/connector/connector.js',
                   'src/js/lib/polyfill/RaF.js',
                   'src/js/lib/polyfill/addEventListener.js',
-                  'src/js/lib/skrollr.min.js',
                   
                   'src/js/scroll-nav.js',
 
@@ -38,14 +37,10 @@ module.exports = function(grunt) {
                   'src/js/connector/connector.js',
                   'src/js/lib/polyfill/RaF.js',
                   'src/js/lib/polyfill/addEventListener.js',
-                  'src/js/lib/skrollr.min.js',
                   
                   'src/js/scroll-nav.js',
 
                   'src/js/404.js'
-              ],
-              'build/mobile-only.js': [
-                  'src/js/lib/skrollr.mobile.min.js'
               ]
           }
       }

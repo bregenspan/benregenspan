@@ -1,4 +1,4 @@
-/*global DomUtil, FuncUtil, Connector, document, window*/
+/*global _, DomUtil, FuncUtil, Connector, document, window*/
 
 var ScrollNav;
 
@@ -116,6 +116,17 @@ var ScrollNav;
 
         this.callSectionHandler();
         return true;
+    };
+
+    ScrollNav.prototype.addStyleChanges = function (elements) {
+        var processPref = function (element, styles, offset) {
+           
+        };
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            var elementPref = elements[i];
+            var element = elementPref.el;
+            _.each(elementPref, _.partial(processPref, element));
+        }
     };
 
     ScrollNav.prototype.addHandler = function (sectionId, activateHandler, deactivateHandler) {
