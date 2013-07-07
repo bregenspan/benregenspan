@@ -22,6 +22,14 @@ $link-color: #115588;
   -moz-#{$name}: $argument;
 }
 
+/* For case where both the property name and value need prefixing */
+@mixin vendor-prefix-prefix($name, $argument...) {
+  #{$name}: $argument;
+  -webkit-#{$name}: -webkit-#{$argument};
+  -ms-#{$name}: -ms-$argument;
+  -moz-#{$name}: -moz-$argument;
+}
+
 /* Icon font for link-out sidebar */
 @font-face {
   font-family: 'fontello';
@@ -68,6 +76,25 @@ body {
   @include vendor-prefix(text-size-adjust, 100%);
 }
 
+#container, #content {
+  min-height: 100%;
+}
+
+#container {
+  @extend %clearfix;
+  margin-left: 15%;
+  background: #fefafa;
+  overflow: hidden;
+  @include breakpoint(mobile) {
+    margin: 0;
+  }
+}
+
+#content {
+  position: relative;
+  padding: 56px 66px 0;
+}
+
 a {
   color: $link-color;
 }
@@ -81,15 +108,6 @@ a {
   font-size: 12px;
 }
 
-#container, #content {
-  min-height: 100%;
-}
-
-#content {
-  position: relative;
-  padding: 56px 66px 0;
-}
-
 footer {
   clear: both;
   color: #666;
@@ -99,15 +117,6 @@ footer {
 
 .footer-link {
   float: right;
-}
-
-#container {
-  @extend %clearfix;
-  margin-left: 15%;
-  background: #fefafa;
-  @include breakpoint(mobile) {
-    margin: 0;
-  }
 }
 
 
@@ -137,6 +146,8 @@ h3 {
   font-family: $sans;
 }
 
+
+/* Sections */
 section {
   clear: both;
   padding: 70px 0 70px;
@@ -158,6 +169,8 @@ figure {
 
   width: 200px;
   height: 200px;
+
+  z-index: 2;
 
   @include breakpoint(narrow) {
     visibility: visible;
@@ -194,9 +207,10 @@ figure > img {
   border: 75px double #2e1404;
   position: relative;
   z-index: 2;
-  @include vendor-prefix(transition, border-width 3s ease-in);
-
+  @include vendor-prefix(filter, grayscale(100%));
+  @include vendor-prefix(transition, all 3s ease-in);
   .active & {
+      @include vendor-prefix(filter, grayscale(0%));
       border-width: 0px;
       &.square {
           border-radius: 0px;
@@ -216,12 +230,24 @@ figure > img {
   position: absolute;
   visibility: hidden;
   z-index: 3;
+  @include vendor-prefix(opacity, 1);
+
+  @include vendor-prefix-prefix(transition, filter 3s, opacity 5s);
 
   @include breakpoint(narrow) {
     display: none;
   }
   @include breakpoint(mobile) {
     display: none;
+  }
+
+  &.journey-started {
+    @include vendor-prefix(transition, none);
+  }
+
+  &.journey-completed {
+    @include vendor-prefix(filter, blur(10px));
+    @include vendor-prefix(opacity, 0);
   }
 
   &::selection { background: transparent }

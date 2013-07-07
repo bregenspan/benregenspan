@@ -6,10 +6,13 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     var doc = document,
         win = window,
         getRelPosition = DomUtil.getRelPosition,
-        $ = DomUtil.$;
+        $ = DomUtil.$,
+        unicorn = $('unicorn');
 
     var ACTIVE = 'active',
-        ACTIVE_REGEX = new RegExp(ACTIVE),
+        ACTIVE_REGEX = new RegExp(ACTIVE + '\\w*'),
+        COMPLETED = 'journey-completed',
+        STARTED = 'journey-started',
         MARGIN = 20;
 
     // Custom scroll-driven effects
@@ -176,16 +179,20 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
             }
         });
 
-        var unicorn = $('unicorn'),
-            unicornHeight = unicorn.offsetHeight,
+        var unicornHeight = unicorn.offsetHeight,
             unicornWidth = unicorn.offsetWidth;
 
         connector.addListener("move", function (e) {
             if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
                 unicorn.style.visibility = 'visible';
             }
+            unicorn.className = unicorn.className.replace(STARTED, '');
             unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
             unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
+        });
+
+        connector.addListener("completed", function (e) {
+            unicorn.className = unicorn.className + ' ' + COMPLETED;
         });
 
         connector.addListener("cleared", function () {
@@ -200,6 +207,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
 
     ScrollNav.prototype.drawConnector = function () {
         this.activeConnector = this.getConnector();
+        unicorn.className = unicorn.className.replace(COMPLETED, STARTED);
         this.activeConnector.draw();
     };
 

@@ -39,48 +39,16 @@ define(function (require) {
         this.src = src;
         this.dest = dest;
         this.parentEl = parentEl;
-
-        // TODO: handle browser resize
-        var de = document.documentElement,
-            canvasWidth = de.clientWidth,
-            canvasHeight = this.canvasHeight = de.clientHeight * 2;
-
-        var canvas = this.canvas = document.createElement('canvas');
-        canvas.height = canvasHeight;
-        canvas.width = canvasWidth;
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0px';
-        canvas.style.left = '0px';
-        parentEl.appendChild(canvas);
-        this.ctx = canvas.getContext('2d');
-
-        this.setCanvasOffset();
     };
 
     C.prototype = new EventTarget();
     C.prototype.constructor = C;
 
-    C.prototype.setCanvasOffset = function () {
-        //this.fire('cleared');
-        if (this.line) {
-            this.line.stopDrawing();
-        }
-        this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
-        this.canvasOffset = document.body.scrollTop;
-        this.canvas.style.top = this.canvasOffset + "px";
-
-        if (this.line) {
-            this.draw(false);
-        }
-    };
-
     C.prototype.fireMoveEvent = function (x, y) {
-
         // adjust from canvas-relative coordinates to div#content -relative coordinates
         this.fire({
-            x: x,
-            y: y + this.canvasOffset,
+            x: x + parseInt(this.canvas.style.left, 10),
+            y: y + parseInt(this.canvas.style.top, 10),
             type: 'move'
         });
     };
@@ -93,18 +61,37 @@ define(function (require) {
 
         var src = this.src,
             dest = this.dest,
-            ctx = this.ctx,
+            parentEl = this.parentEl,
             me = this,
             getRelPosition = DomUtil.getRelPosition;
 
-        var srcPosition = getRelPosition(src, this.parentEl),
-            destPosition = getRelPosition(dest, this.parentEl);
+        var srcPosition = getRelPosition(src, parentEl),
+            destPosition = getRelPosition(dest, parentEl);
 
         var srcX = srcPosition[0] + src.offsetWidth + style.marginLeft;
-        var srcY = (srcPosition[1] + (src.offsetHeight / 2)) - this.canvasOffset;
+        var srcY = srcPosition[1] + (src.offsetHeight / 2);
 
-        var destX = destPosition[0] - style.marginRight;
-        var destY = (destPosition[1] + (dest.offsetHeight / 2)) - this.canvasOffset;
+        var destX = destPosition[0] + (dest.offsetWidth / 2);
+        var destY = destPosition[1] + (dest.offsetHeight / 2);
+
+        var top = Math.min(destY, srcY);
+        var left = Math.min(destX, srcX);
+       
+        var MARGIN = 5;
+
+        srcX -= left - MARGIN;
+        destX -= left;
+        srcY -= top - MARGIN;
+        destY -= top;
+
+        var canvas = this.canvas = document.createElement('canvas');
+        canvas.height = Math.abs(destY - srcY) + (MARGIN * 2);
+        canvas.width = Math.abs(destX - srcX) + (MARGIN * 2);
+        canvas.style.position = 'absolute';
+        canvas.style.top = top - MARGIN + 'px';
+        canvas.style.left = left - MARGIN + 'px';
+        parentEl.appendChild(canvas);
+        this.ctx = canvas.getContext('2d');
 
         this.line = new AnimatedPolyline({
             segments: [
@@ -112,8 +99,10 @@ define(function (require) {
                 new Point(srcX + 20, srcY),
                 new Point(destX, destY)
             ],
-            ctx: ctx,
-            callback: null,
+            ctx: this.ctx,
+            callback: function(o) {
+                me.fire('completed');  
+            },
             moveCallback: function (o) {
                 if (o.animated) {
                     me.fireMoveEvent(o.x, o.y);
