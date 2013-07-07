@@ -11,3 +11,5 @@ node_modules
 
 
 build
+src/main.css
+src/main.min.css

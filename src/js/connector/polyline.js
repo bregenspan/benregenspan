@@ -1,6 +1,6 @@
-/*global window, _*/
+/*global define */
 
-var AnimatedPolyline = (function () {
+define(['underscore'], function (_) {
     'use strict';
 
     var AnimatedPolyline = function (options) {
@@ -9,7 +9,6 @@ var AnimatedPolyline = (function () {
             lineCap: 'round',
             strokeStyle: '#f1dbce',
             lineWidth: 4,
-            
             animated: true,
             animateAmount: 4
         };
@@ -176,4 +175,4 @@ var AnimatedPolyline = (function () {
 
     return AnimatedPolyline;
 
-}());
+});

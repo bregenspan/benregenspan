@@ -1,92 +1,85 @@
+/* global module */
+
 module.exports = function(grunt) {
+    'use strict';
 
-  // Project configuration.
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        sourceMap: 'debug/source-map.js'
-      },
-      my_target: {
-          files: {
-              'build/main.js': [
-                  'src/js/lib/underscore.js',
-                  'src/js/lib/event_target.js',
-                  'src/js/dom-util.js',
-                  'src/js/func-util.js',
+    // Project configuration.
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
 
-                  'src/js/connector/point.js',
-                  'src/js/connector/polyline.js',
-                  'src/js/connector/connector.js',
-                  'src/js/lib/polyfill/RaF.js',
-                  'src/js/lib/polyfill/addEventListener.js',
-                  
-                  'src/js/scroll-nav.js',
-
-                  'src/js/index.js'
-              ],
-              'build/404.js': [
-                  'src/js/lib/underscore.js',
-                  'src/js/lib/event_target.js',
-                  'src/js/dom-util.js',
-                  'src/js/func-util.js',
-
-                  'src/js/connector/point.js',
-                  'src/js/connector/polyline.js',
-                  'src/js/connector/connector.js',
-                  'src/js/lib/polyfill/RaF.js',
-                  'src/js/lib/polyfill/addEventListener.js',
-                  
-                  'src/js/scroll-nav.js',
-
-                  'src/js/404.js'
-              ]
-          }
-      }
-    },
-    copy: {
-      main: {
-        files: [
-            { expand: true, cwd: 'src/', src: ['**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'], dest: 'build/'}
-        ]
-      }
-    },
-    watch: {
-        js: {
-            files: ['src/**.js', 'src/*/*.js'],
-            tasks: ['uglify']
+        shell: {
+            serve: {
+                command: 'cd src; python -m SimpleHTTPServer 8080'
+            }
         },
-        other: {
-            files: 'src/**',
-            tasks: ['copy']
-        }
-     },
-     sass: {
-        dist: {
-            files: {
-                'build/main.css': 'src/main.scss'
+
+        requirejs: {
+            compile: {
+                options: {
+                    baseUrl: "./src/js/",
+                    mainConfigFile: "./src/js/main.js",
+                    dir: "./build/js/",
+                    modules: [{
+                        name: 'main'
+                    },
+                    {
+                        name: '404'
+                    }]
+                }
+            }
+        },
+
+        copy: {
+            main: {
+                files: [
+                    { expand: true, cwd: 'src/', src: [
+                        '**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'
+                    ], dest: 'build/'}
+                ]
+            }
+        },
+        watch: {
+            options: {
+                livereload: true
+            },
+            js: {
+                files: ['src/**.js', 'src/*/*.js'],
+                tasks: ['requirejs']
+            },
+            css: {
+                files: ['src/*.scss'],
+                tasks: ['sass', 'cssmin']
+            },
+            other: {
+                files: 'src/**',
+                tasks: ['copy']
+            }
+        },
+        sass: {
+            dist: {
+                files: {
+                    'src/main.css': 'src/main.scss'
+                }
+            }
+        },
+        cssmin: {
+            add_banner: {
+                options: {
+                    banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
+                },
+                files: {
+                    'build/main.css': ['src/main.css']
+                }
             }
         }
-     },
-     cssmin: {
-        add_banner: {
-            options: {
-                banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
-            },
-        files: {
-            'build/main.css': ['build/main.css']
-        }
-    }
-}
-     
-  });
+    });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-shell-spawn');
 
-  grunt.registerTask('default', ['uglify', 'copy', 'sass', 'cssmin']);
+    grunt.registerTask('default', ['requirejs', 'sass', 'cssmin', 'copy']);
 };

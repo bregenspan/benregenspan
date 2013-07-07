@@ -1,4 +1,6 @@
-var Point = (function () {
+/*global define*/
+
+define(function () {
     'use strict';
 
     var Point = function (x, y) {
@@ -20,4 +22,4 @@ var Point = (function () {
 
     return Point;
 
-}());
+});

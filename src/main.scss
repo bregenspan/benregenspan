@@ -154,41 +154,39 @@ figure {
   right: 20px;
 }
 
-section, .project {
 
-  figure {
-    // this will get overridden via JS:
-    top: -1000px;
+figure {
+  // this will get overridden via JS:
+  top: -1000px;
 
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
 
-    @include breakpoint(narrow) {
-      visibility: visible;
-      opacity: 1.0;
-      width: 30%;
-      height: auto;
-      float: left;
-      position: static;
-      & > img {
-        border: 0px;
-        margin: 0px;
-      }
+  @include breakpoint(narrow) {
+    visibility: visible;
+    opacity: 1.0;
+    width: 30%;
+    height: auto;
+    float: left;
+    position: static;
+    & > img {
+      border: 0px;
+      margin: 0px;
     }
+  }
 
-    @include breakpoint(mobile) {
-      visibility: visible;
-      display: block;
-      opacity: 1.0;
-      width: 30%;
-      height: auto;
-      float: right;
-      & > img {
-        border: 0px;
-        margin: 0px;
-      }
-      position: static;
+  @include breakpoint(mobile) {
+    visibility: visible;
+    display: block;
+    opacity: 1.0;
+    width: 30%;
+    height: auto;
+    float: right;
+    & > img {
+      border: 0px;
+      margin: 0px;
     }
+    position: static;
   }
 }
 
@@ -197,7 +195,7 @@ figure > img {
   width: 100%;
   margin: 25px;
   border: 75px double #2e1404;
-  @include vendor-prefix(transition, border-width 3s ease-in, border-radius 3s ease-in);
+  @include vendor-prefix(transition, border-width 3s ease-in);
 
   .active & {
       border-width: 0px;
@@ -375,26 +373,13 @@ figure > img {
   font-family: "Comic Sans MS", "Comic Sans", Arial, Verdana, sans-serif !important;
 }
 
-h1, h2, h3, p {
+/* handle webfont FOUC */
+h1, h2, h3, p, .tag {
   @include vendor-prefix(transition, opacity 2s); 
-}
+  opacity: 1.0;
 
-/* Some handling of FOUC */
-.wf-loading {
-
-  /* Noto Serif is a bit big, so while it's loading, size up default font */
-  section {
-    font-size: 1.17em;
+  .wf-loading & {
+      opacity: 0;
+      visibility: hidden;
   }
-
-  h1, h2, h3, p {
-    opacity: 0;
-  }
-
-  /* And size up headings just a bit, re: Open Sans */
-  h1, h2, h3 {
-    font-size: 1.1em;
-    font-weight: normal;
-  }
-
 }
