@@ -7,6 +7,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        clean: ["build/*"],
+
         shell: {
             serve: {
                 command: 'cd src; python -m SimpleHTTPServer 8080'
@@ -99,6 +101,7 @@ module.exports = function(grunt) {
 
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
@@ -107,5 +110,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-hashres');
 
-    grunt.registerTask('default', ['requirejs', 'sass', 'cssmin', 'copy', 'hashres']);
+    grunt.registerTask('default', ['clean', 'requirejs', 'sass', 'cssmin', 'copy', 'hashres']);
 };

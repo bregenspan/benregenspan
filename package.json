@@ -12,6 +12,7 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-shell-spawn": "~0.2.4",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-hashres": "git://github.com/bregenspan/grunt-hashres"
+    "grunt-hashres": "git://github.com/bregenspan/grunt-hashres",
+    "grunt-contrib-clean": "~0.4.1"
   }
 }
