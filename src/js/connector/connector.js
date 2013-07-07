@@ -43,52 +43,24 @@ define(function (require) {
         // TODO: handle browser resize
         var de = document.documentElement,
             canvasWidth = de.clientWidth,
-            canvasHeight = this.canvasHeight = de.clientHeight * 3;
+            canvasHeight = this.canvasHeight = de.clientHeight * 2;
 
-        // TODO: fallback to imageURL for older browsers / IE
-        if (document.getCSSCanvasContext) {
-            // Webkit
-            this.ctx = document.getCSSCanvasContext('2d', 'connectorCtx',
-                    canvasWidth, canvasHeight);
-            parentEl.style.background = '-webkit-canvas(connectorCtx)';
-            parentEl.style.backgroundRepeat = 'no-repeat';
-        } else {
-            // Mozilla
-            var canvas = document.createElement('canvas');
-            canvas.id = 'connectorCanvas';
-            canvas.height = canvasHeight;
-            canvas.width = canvasWidth;
+        var canvas = this.canvas = document.createElement('canvas');
+        canvas.height = canvasHeight;
+        canvas.width = canvasWidth;
 
-            // For some reason, the element that's used as background has to be added
-            // to the DOM.  So we add, but position offscreen.
-            canvas.style.position = 'absolute';
-            canvas.style.top = '-10000px';
-            canvas.style.left = '-10000px';
-
-            document.body.appendChild(canvas);
-            this.ctx = canvas.getContext('2d');
-            parentEl.style.background = '-moz-element(#connectorCanvas)';
-            parentEl.style.backgroundRepeat = 'no-repeat';
-        }
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0px';
+        canvas.style.left = '0px';
+        parentEl.appendChild(canvas);
+        this.ctx = canvas.getContext('2d');
 
         this.setCanvasOffset();
-
-        var me = this;
-
-        var screensScrolled = 0;
-        window.onscroll = function () {
-            var scrolledOld = screensScrolled;
-            screensScrolled = Math.floor(document.body.scrollTop / (de.clientHeight * 2));
-            if (screensScrolled !== scrolledOld) {
-                me.setCanvasOffset();
-            }
-        };
     };
 
     C.prototype = new EventTarget();
     C.prototype.constructor = C;
 
-    // TODO - set on scroll every time full viewport * 2 is scrolled
     C.prototype.setCanvasOffset = function () {
         //this.fire('cleared');
         if (this.line) {
@@ -96,7 +68,7 @@ define(function (require) {
         }
         this.ctx.clearRect(0, 0, document.documentElement.clientWidth, this.canvasHeight);
         this.canvasOffset = document.body.scrollTop;
-        this.parentEl.style.backgroundPosition = "0 " + this.canvasOffset + "px";
+        this.canvas.style.top = this.canvasOffset + "px";
 
         if (this.line) {
             this.draw(false);
