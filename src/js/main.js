@@ -21,9 +21,41 @@ require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfi
     var doc = document,
         $ = DomUtil.$;
 
+
+    function initialize() {
+        var slice = Array.prototype.slice;
+        var sections = slice.call(doc.getElementsByTagName('section')).concat(
+                slice.call(doc.getElementsByClassName('project')));
+        var nav = new ScrollNav(sections);
+
+        window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
+
+        nav.addHandler('comicSans', function (section) {
+            section.className += ' comic-sans';
+        }, function (section) {
+            section.className = section.className.replace('comic-sans', '');
+        });
+
+        nav.addStyleChanges([
+            {
+                el: $('sidebar'),
+                0: 'top:120px',
+                200: 'top:10px'
+            },
+            {
+                el: $('title'),
+                0: 'opacity:1; top:22px; transform:rotate(9deg)',
+                200: 'opacity:0; top:500px; transform:rotate(130deg)'
+            }
+        ]);
+    }
+
+
     // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
     window.WebFontConfig = {
-        google: { families: [ 'Open+Sans:400,600', 'Noto+Serif::latin'] }
+        google: { families: [ 'Open+Sans:400,600', 'Noto+Serif::latin'] },
+        active: initialize,
+        inactive: initialize
     };
     (function() {
         var wf = doc.createElement('script');
@@ -44,35 +76,6 @@ require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfi
         p.src = '//assets.pinterest.com/js/pinit.js';
         f.parentNode.insertBefore(p, f);
     }(doc));
-
-
-
-    var slice = Array.prototype.slice;
-    var sections = slice.call(doc.getElementsByTagName('section')).concat(
-            slice.call(doc.getElementsByClassName('project')));
-    var nav = new ScrollNav(sections);
-
-    window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
-
-    nav.addHandler('comicSans', function (section) {
-        section.className += ' comic-sans';
-    }, function (section) {
-        section.className = section.className.replace('comic-sans', '');
-    });
-
-    nav.addStyleChanges([
-        {
-            el: $('sidebar'),
-            0: 'top:120px',
-            200: 'top:10px'
-        },
-        {
-            el: $('title'),
-            0: 'opacity:1; top:22px; transform:rotate(9deg)',
-            200: 'opacity:0; top:500px; transform:rotate(130deg)'
-        }
-    ]);
-
 
 
     /* Animate Abe Lincoln favicon */

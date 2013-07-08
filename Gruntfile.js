@@ -89,8 +89,8 @@ module.exports = function(grunt) {
                 matchFormat: '${ext}/${name}',
                 replaceFormat: '${ext}/${name}.${hash}'
             },
-            src: ['build/js/main.js', 'build/js/404.js'],
-            dest: ['build/index.html', 'build/404.html']
+            src: ['build/js/main.js'],
+            dest: ['build/index.html']
           },
           css: {
             src: ['build/main.css'],
