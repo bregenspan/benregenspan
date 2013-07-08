@@ -16,17 +16,21 @@ module.exports = function(grunt) {
         },
 
         requirejs: {
-            compile: {
+            options: {
+                baseUrl: "./src/js"
+            },
+            main: {
                 options: {
-                    baseUrl: "./src/js/",
+                    name: "main",
                     mainConfigFile: "./src/js/main.js",
-                    dir: "./build/js/",
-                    modules: [{
-                        name: 'main'
-                    },
-                    {
-                        name: '404'
-                    }]
+                    out: "./build/js/main.js"
+                }
+            },
+            404: {
+                options: {
+                    name: "404",
+                    mainConfigFile: "./src/js/404.js",
+                    out: "./build/js/404.js"
                 }
             }
         },
@@ -35,7 +39,7 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     { expand: true, cwd: 'src/', src: [
-                        '**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'
+                        'js/lib/require.js', '**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**'
                     ], dest: 'build/'}
                 ]
             }
