@@ -51,6 +51,28 @@ require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfi
     }
 
 
+
+    /* Make background go crazy for psychedelic unicorns on-hover */
+    var body = document.body,
+        annoyingMode = false;
+    body.addEventListener('mouseover', function (e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        if (typeof e.cancelBubble != "undefined") {
+            e.cancelBubble = true;
+        }
+        if (e.target === body && !annoyingMode) {
+            annoyingMode = true;
+            body.className += ' annoying';
+        } else if (annoyingMode) {
+            annoyingMode = false; 
+            body.className = body.className.replace(/\w*annoying/, '');
+        }
+    });
+
+
+
     // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
     window.WebFontConfig = {
         google: { families: [ 'Open+Sans:400,600', 'Noto+Serif::latin'] },
