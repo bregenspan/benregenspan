@@ -53,7 +53,7 @@ module.exports = function(grunt) {
                 tasks: ['requirejs']
             },
             css: {
-                files: ['src/*.scss'],
+                files: ['src/scss/*.scss'],
                 tasks: ['sass', 'cssmin']
             },
             other: {
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 files: {
-                    'src/main.css': 'src/main.scss'
+                    'src/main.css': 'src/scss/main.scss'
                 }
             }
         },

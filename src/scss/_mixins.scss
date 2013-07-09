@@ -1,0 +1,35 @@
+// Mixin defining our media query types
+// http://css-tricks.com/media-queries-sass-3-2-and-codekit/
+
+@mixin breakpoint($point) {
+  @if $point == narrow {
+    @media (min-width: 600px) and (max-width: 850px) { @content; }
+  }
+  @else if $point == mobile {
+    @media (max-width: 600px)  { @content; }
+  }
+}
+
+// http://stefanwienert.net/blog/2012/05/18/easy-css-vendor-prefix-mixin-for-sass/
+@mixin vendor-prefix($name, $argument...) {
+  #{$name}: $argument;
+  -webkit-#{$name}: $argument;
+  -ms-#{$name}: $argument;
+  -moz-#{$name}: $argument;
+}
+
+// For case where both the property name and value need prefixing
+@mixin vendor-prefix-prefix($name, $argument...) {
+  #{$name}: $argument;
+  -webkit-#{$name}: -webkit-#{$argument};
+  -ms-#{$name}: -ms-$argument;
+  -moz-#{$name}: -moz-$argument;
+}
+
+@mixin keyframes($name) {
+  @-o-keyframes $name { @content };
+  @-moz-keyframes $name { @content };
+  @-webkit-keyframes $name { @content }; 
+  @-keyframes $name { @content };
+}
+

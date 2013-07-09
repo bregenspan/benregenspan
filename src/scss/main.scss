@@ -1,43 +1,11 @@
+@import 'mixins';
+
 $sans: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
 $serif: 'Noto Serif', serif;
 $link-color: #115588;
 
-/* Mixin defining our media query types
-      http://css-tricks.com/media-queries-sass-3-2-and-codekit/
- */
-@mixin breakpoint($point) {
-  @if $point == narrow {
-    @media (min-width: 600px) and (max-width: 850px) { @content; }
-  }
-  @else if $point == mobile {
-    @media (max-width: 600px)  { @content; }
-  }
-}
 
-@mixin keyframes($name) {
-  @-o-keyframes $name { @content };
-  @-moz-keyframes $name { @content };
-  @-webkit-keyframes $name { @content }; 
-  @-keyframes $name { @content };
-}
-
-/* http://stefanwienert.net/blog/2012/05/18/easy-css-vendor-prefix-mixin-for-sass/ */
-@mixin vendor-prefix($name, $argument...) {
-  #{$name}: $argument;
-  -webkit-#{$name}: $argument;
-  -ms-#{$name}: $argument;
-  -moz-#{$name}: $argument;
-}
-
-/* For case where both the property name and value need prefixing */
-@mixin vendor-prefix-prefix($name, $argument...) {
-  #{$name}: $argument;
-  -webkit-#{$name}: -webkit-#{$argument};
-  -ms-#{$name}: -ms-$argument;
-  -moz-#{$name}: -moz-$argument;
-}
-
-/* Icon font for link-out sidebar */
+// Icon font for link-out sidebar
 @font-face {
   font-family: 'fontello';
   src: url('fonts/fontello.eot?27200950');
@@ -50,21 +18,36 @@ $link-color: #115588;
 }
 
 @include keyframes(ken-burns) {
-  from {
+  0% {
     background-size: 300px;
   }
 
-  to {
+  25% {
     background-size: 800px;
+  }
+
+  50% {
+    background-position-y: -100%;
+    background-size: 300px;
+  }
+
+  75% {
+    background-position-x: 100%;
+    background-size: 300px;
+  }
+
+  100% {
+    background-position-x: -50%;
+    background-size: 150px;
   }
 }
 
-/* Nicholas Gallagher's clearfix */
+// Nicholas Gallagher's clearfix
 %clearfix {
   &:before,
   &:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+    content: " "; // 1
+    display: table; // 2
   }
 
   &:after {
@@ -73,7 +56,7 @@ $link-color: #115588;
 }
 
 
-/* Fix the box model */
+// Fix the box model
 * {
   @include vendor-prefix(box-sizing, border-box);
 }
@@ -96,11 +79,12 @@ body {
     background-attachment: fixed;
     -webkit-background-size: stretch;
     background-size: 631px;
-    background-position: -50%;
-    @include vendor-prefix(animation-duration, 3s);
+    background-position: -75%;
+    @include vendor-prefix(animation-timing-function, ease-in);
+    @include vendor-prefix(animation-duration, 9s);
     @include vendor-prefix(animation-name, ken-burns);
-    @include vendor-prefix(animation-iteration-count, infinite);
     @include vendor-prefix(animation-direction, alternate);
+    @include vendor-prefix(animation-iteration-count, infinite);
   }
 }
 
@@ -149,7 +133,7 @@ footer {
 
 
 
-/* Headings */ 
+// *Headings*
 h1, h2, h3 {
   font-weight: bold;
   font-family: $sans;
@@ -175,7 +159,7 @@ h3 {
 }
 
 
-/* Sections */
+// *Sections*
 section {
   clear: both;
   padding: 70px 0 70px;
@@ -420,7 +404,7 @@ figure > img {
   display: block;
   float: left;
 
-  /* Only display initials of name when view is narrow */
+  // Only display initials of name when view is narrow
   @include breakpoint(narrow) {
     font-size: 0px;
     &::first-letter {
@@ -444,7 +428,7 @@ h1, h2, h3, p, .tag {
   position: relative;
   z-index: 2;
 
-  /* handle webfont FOUC */
+  // handle webfont FOUC
   .wf-loading & {
       opacity: 0;
       visibility: hidden;
