@@ -28,8 +28,6 @@ define(['lib/xdr'], function(xdr) {
     };
 
     G.prototype._getRandomGIF = function (callback) {
-        console.log(this.data);
-
         if (!this.data && this.data.data) {
             console.error('No GIFS found :(');
             return;
