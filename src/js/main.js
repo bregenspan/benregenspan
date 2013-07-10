@@ -60,7 +60,9 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
 
     /* Make background go crazy for psychedelic unicorns on-hover */
     var annoyingMode = false,
-        imageCredit;
+        imageCredit,
+        imageCreditText,
+        expandLink;
 
     // Wrap event handler to match exact element and not bubble
     function eventHandlerFor(element, handler, otherElHandler) {
@@ -106,11 +108,32 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
                 imageCredit = doc.createElement('div');
                 imageCredit.id = 'imageCredit';
                 imageCredit.className = 'image-credit';
+
+                expandLink = doc.createElement('a');
+                expandLink.className = 'expand-link';
+                expandLink.innerHTML = '&rarr;';
+                expandLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (expandLink.expanded) {
+                        expandLink.expanded = false;
+                        bod.className = bod.className.replace('hugely-annoying', '');
+                    } else {
+                        expandLink.expanded = true;
+                        bod.className += ' hugely-annoying';
+                    }
+                    return false;
+                });
+                imageCredit.appendChild(expandLink);
+
+                imageCreditText = doc.createElement('span');
+                imageCredit.appendChild(imageCreditText);
+
+
                 bod.appendChild(imageCredit);
             }
-            var text = 'Credit: mr. div' + '<br>' +
+            var text = 'GIF by: mr. div' + '<br>' +
                        'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
-            imageCredit.innerHTML = text;
+            imageCreditText.innerHTML = text;
         });
     }));
     

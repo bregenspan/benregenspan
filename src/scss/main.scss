@@ -17,6 +17,24 @@ $link-color: #115588;
   font-style: normal;
 }
 
+@include keyframes(throb) {
+  from {
+    @include vendor-prefix(transform, scaleX(1.0));
+  }
+  to {
+    @include vendor-prefix(transform, scaleX(1.2));
+  }
+}
+
+@include keyframes(throb-flipped) {
+  from {
+    @include vendor-prefix(transform, scaleX(-1.0));
+  }
+  to {
+    @include vendor-prefix(transform, scaleX(-1.2));
+  }
+}
+
 @include keyframes(ken-burns) {
   0% {
     background-size: 300px;
@@ -99,6 +117,39 @@ body {
   a {
     color: #f58fff;
   }
+  .expand-link {
+    display: block;
+    font-size: 7em;
+    @include vendor-prefix-prefix(transition, all 3s);
+    &:hover {
+      color: #fff;
+      //@include vendor-prefix(animation-duration, 1s);
+      //@include vendor-prefix(animation-name, throb);
+      //@include vendor-prefix(animation-direction, alternate);
+      //@include vendor-prefix(animation-iteration-count, infinite);
+    }
+  }
+}
+
+.hugely-annoying {
+  .expand-link {
+    @include vendor-prefix(transform, scaleX(-1));
+    &:hover {
+      //@include vendor-prefix(animation-duration, 1s);
+      //@include vendor-prefix(animation-name, throb-flipped);
+      //@include vendor-prefix(animation-direction, alternate);
+      //@include vendor-prefix(animation-iteration-count, infinite);
+    }
+  }
+
+  #container {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  section, canvas {
+    @include vendor-prefix(opacity, 0);
+  }
+
 }
 
 #container, #content {
@@ -109,8 +160,10 @@ body {
   cursor: auto;
   @extend %clearfix;
   margin-left: 15%;
-  background: #fefafa;
+  background-color: #fefafa;
+  background-color: rgba(255, 255, 255, 1.0);
   overflow: hidden;
+  @include vendor-prefix(transition, background-color 3s);
   @include breakpoint(mobile) {
     margin: 0;
   }
@@ -181,6 +234,8 @@ section {
   &:last-of-type {
     padding-bottom: 140px;
   }
+
+  @include vendor-prefix-prefix(transition, opacity 3s);
 
   @include breakpoint(mobile) {
     padding: 20px 0 20px;
@@ -433,6 +488,7 @@ figure > img {
 }
 
 canvas {
+  @include vendor-prefix-prefix(transition, opacity 5s);
   z-index: 1;
 }
 
