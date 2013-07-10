@@ -73,6 +73,7 @@ body {
   background: #000 url(img/pipetile.png);
   font-family: $serif;
   color: #080f17;
+  cursor: pointer;
   @include vendor-prefix(text-size-adjust, 100%);
   &.annoying {
     background: #000 url(img/unicorn-glitch.gif);
@@ -105,6 +106,7 @@ body {
 }
 
 #container {
+  cursor: auto;
   @extend %clearfix;
   margin-left: 15%;
   background: #fefafa;
