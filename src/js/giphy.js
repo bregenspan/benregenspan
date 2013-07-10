@@ -36,8 +36,12 @@ define(['lib/xdr'], function(xdr) {
         var count = this.data.data.length;
         var min = 0,
             max = count - 1,
-            randIndex = Math.floor(Math.random() * (max - min) + min);
-        var gif = this.data.data[randIndex].images.original.url;
+            randIndex = Math.floor(Math.random() * (max - min) + min),
+            result = this.data.data[randIndex];
+        var gif = {
+            'img': result.images.original.url,
+            'url': result.url
+        };
         callback(gif);
     };
 

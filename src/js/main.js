@@ -95,7 +95,7 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
                 annoyingMode = true;
                 bod.className += ' annoying';
             }
-            bod.style.backgroundImage = 'url(' + o + ')';
+            bod.style.backgroundImage = 'url(' + o.img + ')';
 
             if (!imageCredit) {
                 imageCredit = doc.createElement('div');
@@ -103,12 +103,9 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
                 imageCredit.className = 'image-credit';
                 bod.appendChild(imageCredit);
             }
-            var text = 'Credit: mr. div';
-            if (imageCredit.innerText) {
-                imageCredit.innerText = text;
-            } else {
-                imageCredit.textContent = text;
-            }
+            var text = 'Credit: mr. div' + '<br>' +
+                       'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
+            imageCredit.innerHTML = text;
         });
     }));
     
