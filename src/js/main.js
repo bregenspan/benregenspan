@@ -11,6 +11,9 @@ require.config({
         },
         "lib/xdr": {
             exports: "xdr"
+        },
+        "lib/webfont": {
+            exports: "WebFont"
         }
     },
     paths: {
@@ -18,7 +21,7 @@ require.config({
     }
 });
 
-require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy) {
+require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy, WebFont) {
     'use strict';
 
     var doc = document,
@@ -111,12 +114,11 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/polyfill/RaF", "l
     
 
     // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
-    window.WebFontConfig = {
+    WebFont.load({
         google: { families: [ 'Open+Sans:400,600', 'Noto+Serif::latin'] },
         active: initialize,
         inactive: initialize
-    };
-    require(['lib/webfont']);
+    });
 
 
     // Stupid Pinterest widget
