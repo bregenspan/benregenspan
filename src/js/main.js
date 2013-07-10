@@ -2,12 +2,15 @@
  *  Perform any initialization of scripts we need, specific to homepage
  */
 
-/*global require, window:true*/
+/*global require, window:true, document*/
 
 require.config({
     shim: {
         "underscore": {
             exports: "_"
+        },
+        "lib/xdr": {
+            exports: "xdr"
         }
     },
     paths: {
@@ -15,12 +18,12 @@ require.config({
     }
 });
 
-require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav) {
+require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy) {
     'use strict';
 
     var doc = document,
+        bod = doc.body,
         $ = DomUtil.$;
-
 
     function initialize() {
         var slice = Array.prototype.slice;
@@ -53,25 +56,59 @@ require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfi
 
 
     /* Make background go crazy for psychedelic unicorns on-hover */
-    var body = document.body,
-        annoyingMode = false;
-    body.addEventListener('mouseover', function (e) {
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        }
-        if (typeof e.cancelBubble != "undefined") {
-            e.cancelBubble = true;
-        }
-        if (e.target === body && !annoyingMode) {
+    var annoyingMode = false,
+        imageCredit;
+
+    // Wrap event handler to match exact element and not bubble
+    function eventHandlerFor(element, handler) {
+        return function (e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            if (typeof e.cancelBubble != "undefined") {
+                e.cancelBubble = true;
+            }
+            if (e.target !== element) {
+                return;
+            }
+            handler(e);
+        };
+    }
+
+    bod.addEventListener('mouseover', eventHandlerFor(bod, function () {
+        if (!annoyingMode) {
             annoyingMode = true;
-            body.className += ' annoying';
+            bod.className += ' annoying';
         } else if (annoyingMode) {
             annoyingMode = false; 
-            body.className = body.className.replace(/\w*annoying/, '');
+            bod.className = bod.className.replace(/\w*annoying/, '');
         }
-    });
+    }));
 
+    bod.addEventListener('click', eventHandlerFor(bod, function () {
+        var g = new Giphy('dc6zaTOxFJmzC');
+        g.getRandomMrDiv(function (o) {
+            if (!annoyingMode) {
+                annoyingMode = true;
+                bod.className += ' annoying';
+            }
+            bod.style.backgroundImage = 'url(' + o + ')';
 
+            if (!imageCredit) {
+                imageCredit = doc.createElement('div');
+                imageCredit.id = 'imageCredit';
+                imageCredit.className = 'image-credit';
+                bod.appendChild(imageCredit);
+            }
+            var text = 'Credit: mr. div';
+            if (imageCredit.innerText) {
+                imageCredit.innerText = text;
+            } else {
+                imageCredit.textContent = text;
+            }
+        });
+    }));
+    
 
     // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
     window.WebFontConfig = {
@@ -79,15 +116,7 @@ require(["underscore", "dom-util", "scroll-nav", "lib/polyfill/RaF", "lib/polyfi
         active: initialize,
         inactive: initialize
     };
-    (function() {
-        var wf = doc.createElement('script');
-        wf.src = ('https:' === doc.location.protocol ? 'https' : 'http') +
-          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = doc.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-    })();
+    require(['lib/webfont']);
 
 
     // Stupid Pinterest widget

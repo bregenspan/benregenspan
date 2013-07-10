@@ -70,15 +70,15 @@ html, body {
 }
 
 body {
-  background: url(img/pipetile.png);
+  background: #000 url(img/pipetile.png);
   font-family: $serif;
   color: #080f17;
   @include vendor-prefix(text-size-adjust, 100%);
   &.annoying {
-    background: url(img/unicorn-glitch.gif);
+    background: #000 url(img/unicorn-glitch.gif);
     background-attachment: fixed;
     -webkit-background-size: stretch;
-    background-size: 631px;
+    background-size: 200px;
     background-position: -75%;
     @include vendor-prefix(animation-timing-function, ease-in);
     @include vendor-prefix(animation-duration, 9s);
@@ -86,6 +86,15 @@ body {
     @include vendor-prefix(animation-direction, alternate);
     @include vendor-prefix(animation-iteration-count, infinite);
   }
+}
+
+.image-credit {
+  position: fixed;
+  bottom: 10px;
+  font-size: 0.6em;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+  left: 10px;
 }
 
 #container, #content {
