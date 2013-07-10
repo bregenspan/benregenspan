@@ -77,8 +77,8 @@ body {
   &.annoying {
     background: #000 url(img/unicorn-glitch.gif);
     background-attachment: fixed;
-    -webkit-background-size: stretch;
-    background-size: 200px;
+
+    @include vendor-prefix(background-size, 200px);
     background-position: -75%;
     @include vendor-prefix(animation-timing-function, ease-in);
     @include vendor-prefix(animation-duration, 9s);

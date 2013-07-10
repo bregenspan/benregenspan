@@ -63,7 +63,7 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         imageCredit;
 
     // Wrap event handler to match exact element and not bubble
-    function eventHandlerFor(element, handler) {
+    function eventHandlerFor(element, handler, otherElHandler) {
         return function (e) {
             if (e.stopPropagation) {
                 e.stopPropagation();
@@ -72,6 +72,9 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
                 e.cancelBubble = true;
             }
             if (e.target !== element) {
+                if (otherElHandler) {
+                    otherElHandler(e);
+                }
                 return;
             }
             handler(e);
@@ -82,8 +85,10 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         if (!annoyingMode) {
             annoyingMode = true;
             bod.className += ' annoying';
-        } else if (annoyingMode) {
-            annoyingMode = false; 
+        }
+    }, function () {
+        if (annoyingMode) {
+            annoyingMode = false;
             bod.className = bod.className.replace(/\w*annoying/, '');
         }
     }));
