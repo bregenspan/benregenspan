@@ -88,8 +88,8 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         }
     }));
 
+    var g = new Giphy('dc6zaTOxFJmzC');
     bod.addEventListener('click', eventHandlerFor(bod, function () {
-        var g = new Giphy('dc6zaTOxFJmzC');
         g.getRandomMrDiv(function (o) {
             if (!annoyingMode) {
                 annoyingMode = true;
