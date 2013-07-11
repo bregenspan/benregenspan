@@ -60,6 +60,7 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
 
     /* Make background go crazy for psychedelic unicorns on-hover */
     var annoyingMode = false,
+        veryAnnoyingMode = false,
         imageCredit,
         imageCreditText,
         expandLink;
@@ -70,7 +71,7 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-            if (typeof e.cancelBubble != "undefined") {
+            if (typeof e.cancelBubble !== "undefined") {
                 e.cancelBubble = true;
             }
             if (e.target !== element) {
@@ -83,25 +84,40 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         };
     }
 
+    function toggleAnnoyingMode(on) {
+        if (!annoyingMode && on) {
+            annoyingMode = true;
+            bod.className += ' annoying';
+        } else if (!on && !veryAnnoyingMode) {
+            annoyingMode = false;
+            bod.className = bod.className.replace(' annoying', '');
+        }
+    }
+
+    function toggleVeryAnnoyingMode(on) {
+        toggleAnnoyingMode(on);
+        if (!veryAnnoyingMode && on) {
+            veryAnnoyingMode = true;
+            bod.className += ' hugely-annoying';
+        } else if (!on) {
+            veryAnnoyingMode = false;
+            bod.className = bod.className.replace('hugely-annoying', '');
+        }
+    }
+
     bod.addEventListener('mouseover', eventHandlerFor(bod, function () {
         if (!annoyingMode) {
             annoyingMode = true;
             bod.className += ' annoying';
         }
     }, function () {
-        if (annoyingMode) {
-            annoyingMode = false;
-            bod.className = bod.className.replace(/\w*annoying/, '');
-        }
+        toggleAnnoyingMode(false);
     }));
 
     var g = new Giphy('dc6zaTOxFJmzC');
     bod.addEventListener('click', eventHandlerFor(bod, function () {
         g.getRandomMrDiv(function (o) {
-            if (!annoyingMode) {
-                annoyingMode = true;
-                bod.className += ' annoying';
-            }
+            toggleAnnoyingMode(true);
             bod.style.backgroundImage = 'url(' + o.img + ')';
 
             if (!imageCredit) {
@@ -110,16 +126,16 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
                 imageCredit.className = 'image-credit';
 
                 expandLink = doc.createElement('a');
-                expandLink.className = 'expand-link';
+                expandLink.className = 'expand-link hidden';
                 expandLink.innerHTML = '&rarr;';
                 expandLink.addEventListener('click', function (e) {
                     e.preventDefault();
                     if (expandLink.expanded) {
                         expandLink.expanded = false;
-                        bod.className = bod.className.replace('hugely-annoying', '');
+                        toggleVeryAnnoyingMode(false);
                     } else {
                         expandLink.expanded = true;
-                        bod.className += ' hugely-annoying';
+                        toggleVeryAnnoyingMode(true);
                     }
                     return false;
                 });
@@ -130,13 +146,16 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
 
 
                 bod.appendChild(imageCredit);
+                window.setTimeout(function () {
+                    expandLink.className = expandLink.className.replace('hidden', '');
+                }, 0);
             }
-            var text = 'GIF by: mr. div' + '<br>' +
-                       'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
+            var text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
+                       'mr. div</a>' + '<br>' +
+                        'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
             imageCreditText.innerHTML = text;
         });
     }));
-    
 
     // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
     WebFont.load({
