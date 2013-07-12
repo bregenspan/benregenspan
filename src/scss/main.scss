@@ -114,13 +114,20 @@ body {
   color: #fff;
   text-shadow: 1px 1px #000;
   left: 10px;
+  @include vendor-prefix(opacity, 1);
+  @include vendor-prefix-prefix(transition, transform 3s, opacity 1s);
+  @include vendor-prefix(transform-origin, bottom left);
   a {
     color: #f58fff;
+  }
+  &.hidden {
+    @include vendor-prefix(translate, -100px, 100px);
+    @include vendor-prefix(opacity, 0);
   }
   .expand-link {
     display: block;
     font-size: 7em;
-    @include vendor-prefix-prefix(transition, all 3s);
+    @include vendor-prefix(transition, all 3s);
     &:hover {
       color: #fff;
       //@include vendor-prefix(animation-duration, 1s);
@@ -140,6 +147,10 @@ body {
       //@include vendor-prefix(animation-direction, alternate);
       //@include vendor-prefix(animation-iteration-count, infinite);
     }
+  }
+
+  .image-credit {
+    @include vendor-prefix(transform, scale(2));
   }
 
   #container {
