@@ -154,6 +154,7 @@ body {
   }
 
   #container {
+    @include vendor-prefix(transform, translate3d(1000px, 0, 0));
     background-color: rgba(255, 255, 255, 0);
   }
 
@@ -173,7 +174,7 @@ body {
   margin-left: 15%;
   background-color: rgba(255, 255, 255, 0.95);
   overflow: hidden;
-  @include vendor-prefix(transition, background-color 3s);
+  @include vendor-prefix(transition, all 3s);
   @include breakpoint(mobile) {
     margin: 0;
   }
