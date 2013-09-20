@@ -8,14 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="A full-stack web developer, he is generally well-dressed and fairly hygienic.">
     <link rel="stylesheet" href="main.css">
+    <link rel="canonical" href="http://ben.regenspan.com">
     <link id="favicon" rel="icon" type="image/png" href="favicon.png">
     <script>
-      // If JS is enabled, hide text while fonts are loading
+      // Hide text while fonts are loading
       document.getElementsByTagName('html')[0].className += ' wf-loading';
     </script>
   </head>
 
   <body>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=510636025692161";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <div id="container">
       <div id="content">
@@ -35,10 +46,13 @@
 
         <section id="about" itemscope itemtype="http://schema.org/Person">
         <header><h2>About Me</h2></header>
-          <figure>
+        <figure>
+            <div class="pipe-like">    
+              <div class="fb-like" data-href="http://ben.regenspan.com" data-width="200" data-layout="button_count" data-show-faces="false" data-send="false"></div>
+            </div>
             <img src="img/ben.jpg" itemprop="image" alt="Photograph of Ben Regenspan">
           </figure>
-          <p>I (<span itemprop="name">Ben Regenspan</span> of <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="addressLocality">New York</span>, <span itemprop="addressRegion">NY</span></span>), am a <span itemprop="jobTitle">full-stack web developer</span>. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun. I was Lead Social Developer for <a href="http://www.huffingtonpost.com/">Huffington Post</a> for a few years, which gave me insight into scaling features for an Alexa Top 100 site, and most recently I work at <a href="http://www.sohotechlabs.com" itemprop="worksFor">Soho Tech Labs</a>, building apps and web products.</p>
+          <p>I (<span itemprop="name">Ben Regenspan</span> of <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="addressLocality">New York</span>, <span itemprop="addressRegion">NY</span></span>), am a <span itemprop="jobTitle">full-stack web developer</span>. My current languages of choice are Python and Javascript. I love web technology and think it should be used for purposes that are good and/or fun. I was Lead Social Developer for <a href="http://www.huffingtonpost.com/">Huffington Post</a> for a few years, which gave me insight into scaling features for an Alexa Top 100 site, and most recently I work at <a href="http://www.rebelmouse.com" itemprop="worksFor">RebelMouse</a>, an awesome social site creator.</p>
         </section>
 
         <section id="projects">

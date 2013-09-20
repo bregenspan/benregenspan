@@ -56,7 +56,7 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         ]);
     }
 
-
+    require(['//connect.facebook.net/en_US/all.js#xfbml=0']);
 
     /* Make background go crazy for psychedelic unicorns on-hover */
     var annoyingMode = false,
