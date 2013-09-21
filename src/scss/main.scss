@@ -37,24 +37,23 @@ $link-color: #115588;
 
 @include keyframes(pipe-smoke) {
   0% {
-    bottom: 38%;
+    bottom: 26%;
     @include vendor-prefix(opacity, 0);
     @include vendor-prefix(transform, rotate(66deg));
   }
   50% {
-    left: 5%;
-    @include vendor-prefix(opacity, 1);
+    bottom: 60%;
+    @include vendor-prefix(opacity, 0.75);
     @include vendor-prefix(transform, rotate(35deg));
   }
   75% {
-    bottom: 55%;
-    @include vendor-prefix(opacity, 0.5);
+    z-index: 3000;
+    @include vendor-prefix(opacity, 1);
   }
   100% {
-    left: 0;
     bottom: 110%;
     @include vendor-prefix(opacity, 0);
-    @include vendor-prefix(transform, rotate(66deg));
+    @include vendor-prefix(transform, rotate(66deg) scale(2.0));
   }
 }
 
@@ -347,11 +346,24 @@ figure > img {
 
 .pipe-like {
   position: absolute;
-  left: 0px;
+  left: 3%;
   z-index: 200;
-  @include vendor-prefix(animation-duration, 9s);
+  width: 78px;
+  height: 22px;
+  @include vendor-prefix(animation-duration, 4s);
   @include vendor-prefix(animation-name, pipe-smoke);
   @include vendor-prefix(animation-iteration-count, infinite);
+}
+
+/* Make Like button behave when transformed */
+.fb_iframe_widget {
+  span {
+    height: 100% !important;
+    width: 100% !important;
+  }
+  iframe {
+    position: static !important;
+  }
 }
 
 #unicorn {
