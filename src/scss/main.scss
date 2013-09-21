@@ -288,7 +288,7 @@ figure {
   width: 200px;
   height: 200px;
 
-  z-index: 2;
+  z-index: 3;
 
   @include breakpoint(narrow) {
     visibility: visible;
@@ -371,7 +371,7 @@ figure > img {
   height: 68px;
   position: absolute;
   visibility: hidden;
-  z-index: 3;
+  z-index: 4;
   @include vendor-prefix(opacity, 1);
 
   @include vendor-prefix-prefix(transition, filter 3s, opacity 5s);
