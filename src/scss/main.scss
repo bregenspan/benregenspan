@@ -35,6 +35,15 @@ $link-color: #115588;
   }
 }
 
+@include keyframes(pipe-dance) {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -175px 217px;
+  }
+}
+
 @include keyframes(pipe-smoke) {
   0% {
     bottom: 26%;
@@ -115,6 +124,14 @@ body {
   color: #080f17;
   cursor: pointer;
   @include vendor-prefix(text-size-adjust, 100%);
+
+  &.sickening {
+    @include vendor-prefix(animation-name, pipe-dance);
+    @include vendor-prefix(animation-duration, 1s);
+    @include vendor-prefix(animation-iteration-count, infinite);
+    @include vendor-prefix(animation-timing-function, linear);
+  }
+
   &.annoying {
     background: #000 url(img/unicorn-glitch.gif);
     background-attachment: fixed;
