@@ -56,7 +56,12 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "lib/webfont", "lib/po
         ]);
     }
 
-    require(['//connect.facebook.net/en_US/all.js#xfbml=0']);
+    require(['//connect.facebook.net/en_US/all.js'], function () {
+        FB.init({
+            async: true,
+            xfbml: true
+        });
+    });
 
     /* Make background go crazy for psychedelic unicorns on-hover */
     var annoyingMode = false,
