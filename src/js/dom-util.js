@@ -1,12 +1,16 @@
-/*global define*/
+/*global define, document*/
 
-define([], function () {
+define(['underscore'], function (_) {
     'use strict';
+
+    var doc = document,
+        body = doc.body;
+
     return {
         /*
-         * Alias document.getElementById
+         * Alias doc.getElementById
          */
-        $: function (id) { return document.getElementById(id); },
+        $: function (id) { return doc.getElementById(id); },
 
         /* 
          * Get position of `node` relative to a specified
@@ -30,6 +34,24 @@ define([], function () {
             }
 
             return [left, top];
-        }
+        },
+
+        /*
+         * Get prefixed or un-prefixed name of "transform" property
+         * in this browser.
+         */
+        getTransformPropertyName: _.memoize(function () {
+            var prefixes = ['', 'webkit', 'moz', 'ms'],
+                prefix,
+                propertyName;
+            for (var i = 0, ilen = prefixes.length; i < ilen; i++) {
+                prefix = prefixes[i];
+                propertyName = prefix + (prefix ? 'T' : 't') + 'ransform';
+                if (typeof body.style[propertyName] !== 'undefined') {
+                    return propertyName;
+                }
+            }
+            return;
+        })
     };
 });

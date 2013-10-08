@@ -387,6 +387,8 @@ figure > img {
   width: 120px;
   height: 68px;
   position: absolute;
+  top: 0px;
+  left: 0px;
   visibility: hidden;
   z-index: 4;
   @include vendor-prefix(opacity, 1);

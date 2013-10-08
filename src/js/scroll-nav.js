@@ -4,6 +4,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     'use strict';
 
     var doc = document,
+        bod = doc.body,
         win = window,
         getRelPosition = DomUtil.getRelPosition,
         $ = DomUtil.$,
@@ -36,7 +37,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         });
 
         window.setTimeout(function () {
-            if (!self.currentSection && !document.body.scrollTop)
+            if (!self.currentSection && !bod.scrollTop)
                 self.activateSection($('about'));
         }, 1000);
 
@@ -47,7 +48,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
 
             for (var i = 0, ilen = self.sections.length; i < ilen; i++) {
                 var section = self.sections[i];
-                var posTop = getRelPosition(section, document.body)[1];
+                var posTop = getRelPosition(section, bod)[1];
                 var posBottom = posTop + section.clientHeight;
 
                 if (activatePosition < posBottom && activatePosition > posTop) {
@@ -59,11 +60,11 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     };
 
     ScrollNav.prototype.position = function () {
-        return win.pageYOffset || doc.body.scrollTop;
+        return win.pageYOffset || bod.scrollTop;
     };
 
     ScrollNav.prototype.browserHeight = function () {
-        return win.innerHeight|| doc.documentElement.clientHeight|| doc.body.clientHeight;
+        return win.innerHeight|| doc.documentElement.clientHeight|| bod.clientHeight;
     };
 
     ScrollNav.prototype.foreachSection = function (func) {
@@ -190,8 +191,10 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
                 unicorn.style.visibility = 'visible';
             }
             unicorn.className = '';
-            unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
-            unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
+            var translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px)';
+            unicorn.style[DomUtil.getTransformPropertyName()] = translate;
+            //unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
+            //unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
         });
 
         connector.addListener("completed", function (e) {
