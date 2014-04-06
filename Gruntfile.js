@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
         shell: {
             serve: {
-                command: 'cd src; python -m SimpleHTTPServer 8080'
+                command: 'cd build; python -m SimpleHTTPServer 8080'
             }
         },
 
@@ -141,6 +141,9 @@ module.exports = function(grunt) {
 
     // build
     grunt.registerTask('default', ['clean', 'requirejs', 'sass', 'cssmin', 'copy', 'hashres']);
+ 
+    // build + serve local
+    grunt.registerTask('local', ['default', 'shell:serve']);
 
     // build + deploy
     grunt.registerTask('deploy', ['default', 'gitRemoteTag', 'gh-pages']);
