@@ -8,7 +8,9 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         win = window,
         getRelPosition = DomUtil.getRelPosition,
         $ = DomUtil.$,
-        unicorn = $('unicorn');
+        unicorn = $('unicorn'),
+        unicornHeight = unicorn.offsetHeight,
+        unicornWidth = unicorn.offsetWidth;
 
     var ACTIVE = 'active',
         ACTIVE_REGEX = new RegExp(ACTIVE + '\\w*'),
@@ -41,22 +43,34 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
                 self.activateSection($('about'));
         }, 1000);
 
+        // Cache DOM positioning and size properties for sections
+        function calculateSectionProperties () {
+            for (var i = 0, ilen = self.sections.length; i < ilen; i++) {
+                var section = self.sections[i],
+                    posTop = section.offsetTop;
+                section.setAttribute('data-offset-top', posTop);
+                section.setAttribute('data-client-height', section.clientHeight);
+            }
+        }
+        window.addEventListener("resize", _.debounce(calculateSectionProperties), 60);
+        calculateSectionProperties();
+
         window.addEventListener("scroll", _.debounce(function () {
-            var position = self.position();
-            var height = self.browserHeight();
-            var activatePosition = position + (height / 2.5);
+            var position = self.position(),
+                height = self.browserHeight(),
+                activatePosition = position + (height / 2.5);
 
             for (var i = 0, ilen = self.sections.length; i < ilen; i++) {
-                var section = self.sections[i];
-                var posTop = getRelPosition(section, bod)[1];
-                var posBottom = posTop + section.clientHeight;
+                var section = self.sections[i],
+                    posTop = parseInt(section.getAttribute('data-offset-top'), 10),
+                    posBottom = posTop + parseInt(section.getAttribute('data-client-height'), 10);
 
                 if (activatePosition < posBottom && activatePosition > posTop) {
                     if (self.activateSection(section))
                         break;
                 }
             }
-        }, 30));
+        }, 90));
     };
 
     ScrollNav.prototype.position = function () {
@@ -162,11 +176,10 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
         }
     };
 
-    ScrollNav.prototype.getConnector = function () {
-        var section = this.currentSection,
-            self = this,
+    ScrollNav.prototype.getConnector = function (section) {
+        var self = this,
             title = this.getChildByTagName('h3') || this.getChildByTagName('h2'),
-            figure = this.getFigureForSection(this.currentSection),
+            figure = this.getFigureForSection(section),
             connector = section.connector;
 
         if (connector) {
@@ -183,18 +196,15 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
             }
         });
 
-        var unicornHeight = unicorn.offsetHeight,
-            unicornWidth = unicorn.offsetWidth;
-
         connector.addListener("move", function (e) {
-            if (window.getComputedStyle(unicorn).getPropertyValue('visibility') === 'hidden') {
+            if (unicorn.style.visibility === 'hidden') {
                 unicorn.style.visibility = 'visible';
             }
-            unicorn.className = '';
-            var translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px) translateZ(0)';
+            if (unicorn.className) {
+                unicorn.className = '';
+            }
+            var translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px) translateY(0)';
             unicorn.style[DomUtil.getTransformPropertyName()] = translate;
-            //unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
-            //unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
         });
 
         connector.addListener("completed", function (e) {
@@ -227,7 +237,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
     };
 
     ScrollNav.prototype.drawConnector = function () {
-        this.activeConnector = this.getConnector();
+        this.activeConnector = this.getConnector(this.currentSection);
         this.showUnicorn();
         this.activeConnector.draw();
     };

@@ -383,10 +383,10 @@ figure > img {
   position: absolute;
   top: 0px;
   left: 0px;
-  visibility: hidden;
   z-index: 4;
+ 
   @include vendor-prefix(opacity, 1);
-
+  @include vendor-prefix-prefix(transform, translate3d(0, 0, 0));
   @include vendor-prefix-prefix(transition, filter 3s, opacity 5s);
 
   @include breakpoint(narrow) {
