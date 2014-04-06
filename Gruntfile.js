@@ -3,6 +3,10 @@
 module.exports = function(grunt) {
     'use strict';
 
+    // Semitic versioning?! What kind of anti-Semite would force
+    // the Jews to use their own versioning?  --Sarah Palin
+    var releaseTag = new Date().toISOString().replace(/\..+/, '').replace(/-/g, '.').replace(/:/g, '.').replace(/T/, '-');  // YYYY.MM.DD-HH.MM.SS
+
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -100,6 +104,25 @@ module.exports = function(grunt) {
             src: ['build/main.css'],
             dest: ['build/index.html']
           }
+        },
+
+        gitRemoteTag: {
+            release: {
+                options: {
+                    tag: releaseTag
+                }
+            }
+        },
+
+        'gh-pages': {
+            options: {
+                base: 'build',
+                branch: 'master',
+                message: 'Auto-generated commit',
+                repo: 'git@github.com:bregenspan/bregenspan.github.io.git',
+                tag: releaseTag 
+            },
+            src: '**'
         }
 
 
@@ -113,6 +136,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-hashres');
+    grunt.loadNpmTasks('grunt-git-remote-tag');
+    grunt.loadNpmTasks('grunt-gh-pages');
 
+    // build
     grunt.registerTask('default', ['clean', 'requirejs', 'sass', 'cssmin', 'copy', 'hashres']);
+
+    // build + deploy
+    grunt.registerTask('deploy', ['default', 'gitRemoteTag', 'gh-pages']);
 };
