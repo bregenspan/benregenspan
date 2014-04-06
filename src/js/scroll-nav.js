@@ -191,7 +191,7 @@ define(['underscore', 'dom-util', 'connector/connector'], function (_, DomUtil, 
                 unicorn.style.visibility = 'visible';
             }
             unicorn.className = '';
-            var translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px)';
+            var translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px) translateZ(0)';
             unicorn.style[DomUtil.getTransformPropertyName()] = translate;
             //unicorn.style.top = e.y - (unicornHeight / 2) + 'px';
             //unicorn.style.left = e.x - (unicornWidth / 2) + 'px';
