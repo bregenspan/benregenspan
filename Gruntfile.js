@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     { expand: true, cwd: 'src/', src: [
-                        'js/lib/require.js', '**.html', '**.ico', '**.png', 'fonts', 'fonts/**', 'img', 'img/**', 'CNAME'
+                        'js/lib/require.js', '**.html', '**.ico', '**.png', 'fonts', 'bing/**', 'fonts/**', 'img', 'img/**', 'CNAME'
                     ], dest: 'build/'}
                 ]
             }
