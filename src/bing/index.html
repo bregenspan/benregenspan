@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
     <style>
 
       html, body {
@@ -39,13 +40,17 @@
         height: 0;
         padding-bottom: 40%;
         z-index: 1;
+        position: relative;
       }
 
       .frame-container iframe {
         width: 100%;
         height: 100%;
-        left: 0;
-        top: 0;
+        position: absolute;
+      }
+
+      .stupid-extra-wrapper-needed-by-firefox {
+        width: 100%;
       }
 
       .bing {
@@ -76,8 +81,10 @@
 
     <!-- Background content -->
     <div class="container">
-      <div class="frame-container">
-        <iframe class="bing" src="http://bing.com"></iframe>
+      <div class="stupid-extra-wrapper-needed-by-firefox">
+        <div class="frame-container">
+          <iframe class="bing" src="http://bing.com"></iframe>
+        </div>
       </div>
     </div>
 
@@ -89,7 +96,10 @@
     <!-- Hidden input video and temporary canvas -->
     <canvas id="helper" class="invisible-helper" width="400" height="180"/>
     <div class="invisible-helper">
-      <video id="video" src="hug.mp4" />
+      <video id="video">
+        <source src="hug.webm" type="video/webm"/>
+        <source src="hug.mp4" type="video/mp4"/>
+      </video>
     </div>
 
   </body>
