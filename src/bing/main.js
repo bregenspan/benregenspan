@@ -36,21 +36,41 @@ var processor = {
   },
 
   computeFrame: function() {
-    this.helperCtx.drawImage(this.video, 0, 0, this.width, this.height);
-    var frame = this.helperCtx.getImageData(0, 0, this.width, this.height);
-	var l = frame.data.length / 4;
+	var seemsBlank = false,
+		frame;
 
-    for (var i = 0; i < l; i++) {
+    this.helperCtx.drawImage(this.video, 0, 0, this.width, this.height);
+
+    frame = this.helperCtx.getImageData(0, 0, this.width, this.height);
+
+    for (var i = 0, l = frame.data.length / 4; i < l; i++) {
+
       var r = frame.data[i * 4 + 0];
       var g = frame.data[i * 4 + 1];
       var b = frame.data[i * 4 + 2];
+
+	  // Check for values near black - we're using them as our chroma-key
       if (g < 5 && r < 5 && b < 5) {
+
+		// Treat the first pixel of the first frame being near-black as an indication
+		// that that frame is totally blank.
+		if (i === 0) {
+			seemsBlank = true;
+			break;
+		}
+
+		// Treat black as transparent
         frame.data[i * 4 + 3] = 0;
 	  }
     }
-    this.displayCtx.putImageData(frame, 0, 0);
+
+	if (!seemsBlank) {
+	    this.displayCtx.putImageData(frame, 0, 0);
+	}
+
     return;
   }
+
 };
 
 /* We use UA-based detection for non-tablet mobile browsers here,
