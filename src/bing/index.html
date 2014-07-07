@@ -55,6 +55,7 @@
 
       .bing {
         margin-left: 25%;
+        border: 0;
       }
 
       header {
@@ -69,13 +70,24 @@
         color: #666;
       }
 
+      .unsupported-banner {
+        display: none;
+      }
+      .unsupported-browser * {
+        display: none;
+      }
+      .unsupported-browser .unsupported-banner {
+        display: block;
+        margin: 10px;
+      }
+
     </style>
 
     <script type="text/javascript" src="main.js"></script>
 
   </head>
 
-  <body onload="processor.doLoad()">
+  <body onload="init()">
 
     <header><h1>HugOS</h1></header>
 
@@ -94,12 +106,17 @@
     </div>
 
     <!-- Hidden input video and temporary canvas -->
-    <canvas id="helper" class="invisible-helper" width="400" height="180"/>
+    <canvas id="helper" class="invisible-helper" width="400" height="180"></canvas>
     <div class="invisible-helper">
       <video id="video">
         <source src="hug.webm" type="video/webm"/>
         <source src="hug.mp4" type="video/mp4"/>
       </video>
+    </div>
+
+    <div class="unsupported-banner">
+      I'm terribly sorry, but it looks like your browser doesn't support displaying videos in the weird and 
+      largely pointless way this page needs in order to work. Please try Chrome or Firefox on desktop.
     </div>
 
   </body>
