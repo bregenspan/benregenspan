@@ -2,7 +2,7 @@
 
 $sans: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
 $serif: 'Noto Serif', serif;
-$link-color: #115588;
+$link-color: #158;
 $dark: #666;
 
 // Icon font for link-out sidebar
@@ -19,8 +19,9 @@ $dark: #666;
 
 @include keyframes(throb) {
   from {
-    @include vendor-prefix(transform, scaleX(1.0));
+    @include vendor-prefix(transform, scaleX(1));
   }
+  
   to {
     @include vendor-prefix(transform, scaleX(1.2));
   }
@@ -28,8 +29,9 @@ $dark: #666;
 
 @include keyframes(throb-flipped) {
   from {
-    @include vendor-prefix(transform, scaleX(-1.0));
+    @include vendor-prefix(transform, scaleX(-1));
   }
+
   to {
     @include vendor-prefix(transform, scaleX(-1.2));
   }
@@ -39,6 +41,7 @@ $dark: #666;
   from {
     background-position: 0 0;
   }
+
   to {
     background-position: -175px 217px;
   }
@@ -49,17 +52,20 @@ $dark: #666;
     @include vendor-prefix(opacity, 0);
     @include vendor-prefix(transform, translateY(-26px) translateZ(0) rotate(66deg));
   }
+
   50% {
-    @include vendor-prefix(opacity, 0.75);
+    @include vendor-prefix(opacity, .75);
     @include vendor-prefix(transform, translateY(-50px) translateZ(0) rotate(35deg));
   }
+
   75% {
     z-index: 3000;
     @include vendor-prefix(opacity, 1);
   }
+
   100% {
     @include vendor-prefix(opacity, 0);
-    @include vendor-prefix(transform, translateY(-160px) translateZ(0) rotate(66deg) scale(2.0));
+    @include vendor-prefix(transform, translateY(-160px) translateZ(0) rotate(66deg) scale(2));
   }
 }
 
@@ -92,7 +98,7 @@ $dark: #666;
 %clearfix {
   &:before,
   &:after {
-    content: " "; // 1
+    content: ' '; // 1
     display: table; // 2
   }
 
@@ -107,20 +113,19 @@ $dark: #666;
   @include vendor-prefix(box-sizing, border-box);
 }
 
-
-
-html, body {
-  margin: 0px;
-  padding: 0px;
+html,
+body {
+  margin: 0;
   min-height: 100%;
+  padding: 0;
 }
 
 body {
-  background: #ab8771 url(img/pipetile.png);
-  font-family: $serif;
+  @include vendor-prefix(text-size-adjust, 100%);
+  background: #ab8771 url('img/pipetile.png');
   color: #080f17;
   cursor: pointer;
-  @include vendor-prefix(text-size-adjust, 100%);
+  font-family: $serif;
 
   &.sickening {
     @include vendor-prefix(animation-name, pipe-dance);
@@ -130,36 +135,38 @@ body {
   }
 
   &.annoying {
-    background: #000 url(img/unicorn-glitch.gif);
-    background-attachment: fixed;
-
     @include vendor-prefix(background-size, 200px);
-    background-position: -75%;
     @include vendor-prefix(animation-timing-function, ease-in);
     @include vendor-prefix(animation-duration, 9s);
     @include vendor-prefix(animation-name, ken-burns-acid-test);
     @include vendor-prefix(animation-direction, alternate);
     @include vendor-prefix(animation-iteration-count, infinite);
+    background: #000 url('img/unicorn-glitch.gif');
+    background-attachment: fixed;
+    background-position: -75%;
   }
 }
 
 .image-credit {
-  position: fixed;
-  bottom: 10px;
-  font-size: 0.6em;
-  color: #fff;
-  text-shadow: 1px 1px #000;
-  left: 10px;
   @include vendor-prefix(opacity, 1);
   @include vendor-prefix-prefix(transition, transform 3s, opacity 1s);
   @include vendor-prefix(transform-origin, bottom left);
+  bottom: 10px;
+  color: #fff;
+  font-size: .6em;
+  left: 10px;
+  position: fixed;
+  text-shadow: 1px 1px #000;
+
   a {
     color: #f58fff;
   }
+
   &.hidden {
     @include vendor-prefix(translate, -100px, 100px);
     @include vendor-prefix(opacity, 0);
   }
+
   .expand-link {
     display: block;
     font-size: 7em;
@@ -194,45 +201,47 @@ body {
     background-color: rgba(255, 255, 255, 0);
   }
 
-  section, canvas {
+  section,
+  canvas {
     @include vendor-prefix(opacity, 0);
   }
 
 }
 
-#container, #content {
+#container,
+#content {
   min-height: 100%;
 }
 
 #container {
-  cursor: auto;
   @extend %clearfix;
-  margin-left: 15%;
-  background-color: #fff;
-  overflow: hidden;
   @include vendor-prefix(transition, all 3s);
   @include breakpoint(mobile) {
     margin: 0;
   }
+
+  background-color: #fff;
+  cursor: auto;
+  margin-left: 15%;
+  overflow: hidden;
+
+  a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+      background: $dark;
+      color: #fff;
+      margin: -2px -5px;
+      padding: 2px 5px;
+      text-shadow: none;
+    }
+  }
 }
 
 #content {
-  position: relative;
   padding: 56px 66px 0;
-}
-
-#container a {
-  color: $link-color;
-  text-decoration: none;
-
-  &:hover {
-    background: $dark;
-    padding: 2px 5px 2px 5px;
-    margin: -2px -5px -2px -5px;
-    color: #fff;
-    text-shadow: none;
-  }
-
+  position: relative;
 }
 
 .icon {
@@ -247,17 +256,19 @@ body {
 footer {
   clear: both;
   color: $dark;
-  font-size: 0.8em;
+  font-size: .8em;
   margin-bottom: 80px;
 }
 
 
-
 // *Headings*
-h1, h2, h3 {
-  font-weight: bold;
-  font-family: $sans;
+h1,
+h2,
+h3 {
   display: inline-block;
+  font-family: $sans;
+  font-weight: bold;
+
   a {
     display: inline-block;
   }
@@ -272,20 +283,35 @@ h2 {
 }
 
 h3 {
-  margin-bottom: 0px;
+  font-size: 1.4em;
+  margin-bottom: 0;
   margin-right: 10px;
-  font-size: 1.05em;
 }
 
 .tag {
+  background: $dark;
+  color: #fff;
+  display: inline-block;
   font-family: $sans;
+  font-size: .6em;
+  opacity: .5;
+  padding: 0 5px 1px 6px;
+  text-transform: uppercase;
+  -moz-transition: opacity .5s, -moz-transform .5s;
+  -ms-transition: opacity .5s, -ms-transform .5s;
+  -webkit-transition: opacity .5s, -webkit-transform .5s;
+  transition: opacity .5s, transform .5s;
+
+  .project:hover & {
+    opacity: 1;
+  }
 }
 
 
 // *Sections*
 section {
   clear: both;
-  padding: 70px 0 70px;
+  padding: 70px 0;
 
   &:last-of-type {
     padding-bottom: 140px;
@@ -294,108 +320,112 @@ section {
   @include vendor-prefix-prefix(transition, opacity 3s);
 
   @include breakpoint(mobile) {
-    padding: 20px 0 20px;
+    padding: 20px 0;
   }
 }
 
 figure {
-  opacity: 0;
   @include vendor-prefix(transition, opacity 2s);
-  visibility: hidden;
+  height: 200px;
+  opacity: 0;
   position: absolute;
   right: 20px;
   
   // this will get overridden via JS:
   top: -1000px;
 
+  visibility: hidden;
   width: 200px;
-  height: 200px;
 
   z-index: 3;
 
+  > img {
+    border: 75px double #2e1404;
+    @include vendor-prefix(border-radius, 50%);
+    margin: 25px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    @include vendor-prefix(filter, grayscale(100%));
+    @include vendor-prefix(transition, all 3s ease-in);
+
+    .active & {
+      @include vendor-prefix(filter, grayscale(0%));
+      border-width: 0;
+
+      &.square {
+        border-radius: 0;
+      }
+    }
+  }
+
   @include breakpoint(narrow) {
-    visibility: visible;
-    opacity: 1.0;
-    width: 30%;
-    height: auto;
     float: left;
+    height: auto;
+    opacity: 1;
     position: relative;
     top: auto !important;
+    visibility: visible;
+    width: 30%;
 
-    & > img {
-      border: 0px;
-      margin: 0px;
+    img {
+      border: 0;
+      margin: 0;
     }
   }
 
   @include breakpoint(mobile) {
-    visibility: visible;
     display: block;
-    opacity: 1.0;
-    width: 30%;
-    height: auto;
     float: right;
-    & > img {
-      border: 0px;
-      margin: 0px;
-    }
+    height: auto;
+    opacity: 1;
     position: relative;
     top: auto !important;
-  }
-}
+    visibility: visible;
+    width: 30%;
 
-figure > img {
-  @include vendor-prefix(border-radius, 50%);
-  width: 100%;
-  margin: 25px;
-  border: 75px double #2e1404;
-  position: relative;
-  z-index: 2;
-  @include vendor-prefix(filter, grayscale(100%));
-  @include vendor-prefix(transition, all 3s ease-in);
-  .active & {
-      @include vendor-prefix(filter, grayscale(0%));
-      border-width: 0px;
-      &.square {
-          border-radius: 0px;
-      }
+    > img {
+      border: 0;
+      margin: 0;
+    }
   }
 }
 
 .active figure {
-  opacity: 1.0;
+  opacity: 1;
   visibility: visible;
 }
 
 .pipe-like {
-  position: absolute;
-  left: 3%;
-  bottom: 20%;
-  z-index: 200;
-  width: 78px;
-  height: 22px;
   @include vendor-prefix(animation-duration, 4s);
   @include vendor-prefix(animation-name, pipe-smoke);
   @include vendor-prefix(animation-iteration-count, infinite);
+  bottom: 20%;
+  height: 22px;
+  left: 3%;
+  position: absolute;
+  width: 78px;
+  z-index: 200;
 }
 
-/* Make Like button behave when transformed */
+// Make Like button behave when transformed
 .fb_iframe_widget {
   span {
     height: 100% !important;
     width: 100% !important;
   }
+
   iframe {
     position: static !important;
   }
 }
 
 #unicorn {
-  width: 120px;
   height: 68px;
+  left: 0;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  width: 120px;
   z-index: 4;
  
   @include vendor-prefix(opacity, 1);
@@ -405,6 +435,7 @@ figure > img {
   @include breakpoint(narrow) {
     display: none;
   }
+
   @include breakpoint(mobile) {
     display: none;
   }
@@ -418,12 +449,15 @@ figure > img {
     @include vendor-prefix(opacity, 0);
   }
 
-  &::selection { background: transparent }
-  &::-moz-selection { background: transparent }
+  &::selection,
+  &::-moz-selection {
+    background: transparent;
+  }
 }
 
 @include breakpoint(mobile) {
-  #top, aside {
+  #top,
+  aside {
     float: left;
   }
 
@@ -438,16 +472,20 @@ figure > img {
 
 #top h1 {
   @extend %clearfix;
-  margin: 0;
   background: #ab8771;
   color: #fff;
+  margin: 0;
   padding: 3px 6px 4px;
-  @include vendor-prefix(transform, rotate(9deg));
-  text-align: right;
-  width: 162px;
   position: fixed;
   right: 10px;
+  text-align: right;
   top: 22px;
+  @include vendor-prefix(transform, translate(0, 0) rotate(9deg));
+  -moz-transition: -moz-transform 3s;
+  -ms-transition: -ms-transform 3s;
+  -webkit-transition: -webkit-transform 3s;
+  transition: transform 3s;
+  width: 162px;
 
   @include breakpoint(mobile) {
     margin-right: 20px;
@@ -456,19 +494,13 @@ figure > img {
   }
 
   @include breakpoint(narrow) {
-    width: 1.5em;
     text-align: center;
+    width: 1.5em;
   }
-
-  @include vendor-prefix(transform, translate(0px, 0px) rotate(9deg));
-  -webkit-transition: -webkit-transform 3s;
-  -moz-transition: -moz-transform 3s;
-  transition: transform 3s;
-  -ms-transition: -ms-transform 3s;
 
   .wf-loading & {
     visibility: hidden;
-    @include vendor-prefix(transform, translate(0px, -160px) rotate(-50deg));
+    @include vendor-prefix(transform, translate(0, -160px) rotate(-50deg));
   }
 }
 
@@ -477,33 +509,33 @@ figure > img {
 }
 
 #sidebar {
+  font-size: 2em;
   position: fixed;
   right: 10px;
-  top: 120px;
-  width: 3em;
-  font-size: 2em;
   text-align: center;
+  top: 120px;
+  @include vendor-prefix(transform, scale(1) rotate(0deg));
+  -moz-transition: -moz-transform 3s;
+  -ms-transition: -ms-transform 3s;
+  -webkit-transition: -webkit-transform 3s;
+  transition: transform 3s;
+  width: 3em;
   z-index: 10;
 
-  -webkit-transition: -webkit-transform 3s;
-  -moz-transition: -moz-transform 3s;
-  transition: transform 3s;
-  -ms-transition: -ms-transform 3s;
-  @include vendor-prefix(transform, scale(1.0) rotate(0deg));
 
   .wf-loading & {
-    @include vendor-prefix(transform, scale(0.0) rotate(-180deg));
+    @include vendor-prefix(transform, scale(0) rotate(-180deg));
   }
 
   @include breakpoint(mobile) {
+    margin-top: 20px;
     position: static;
     width: auto;
-    margin-top: 20px;
   }
 
   @include breakpoint(narrow) {
-    width: 1.5em;
     font-size: 1.5em;
+    width: 1.5em;
   }
 
   .icon {
@@ -517,29 +549,12 @@ figure > img {
   }
 }
 
-.project, section {
-  p, h2, h3 {
+.project,
+section {
+  p,
+  h2,
+  h3 {
     max-width: 424px;
-  }
-}
-
-.tag {
-  background: $dark;
-  opacity: 0.5;
-  color: #fff;
-  padding: 0px 5px 1px 6px;
-  text-transform: uppercase;
-  font-size: 0.6em;
-
-  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-  -ms-transition: opacity 0.5s, -ms-transform 0.5s;
-  -moz-transition: opacity 0.5s, -moz-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  
-  display: inline-block;
-
-  .project:hover & {
-    opacity: 1;
   }
 }
 
@@ -549,7 +564,8 @@ figure > img {
 
   // Only display initials of name when view is narrow
   @include breakpoint(narrow) {
-    font-size: 0px;
+    font-size: 0;
+
     &::first-letter {
       font-size: 20px;
     }
@@ -557,7 +573,8 @@ figure > img {
 
 }
 
-.comic-sans, .comic-sans * {
+.comic-sans,
+.comic-sans * {
   font-family: "Comic Sans MS", "Comic Sans", Arial, Verdana, sans-serif !important;
 }
 
@@ -566,15 +583,19 @@ canvas {
   z-index: 1;
 }
 
-h1, h2, h3, p, .tag {
+h1,
+h2,
+h3,
+p,
+.tag {
   @include vendor-prefix(transition, opacity 2s); 
-  opacity: 1.0;
+  opacity: 1;
   position: relative;
   z-index: 2;
 
   // handle webfont FOUC
   .wf-loading & {
-      opacity: 0;
-      visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
   }
 }

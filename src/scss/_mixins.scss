@@ -4,8 +4,7 @@
 @mixin breakpoint($point) {
   @if $point == narrow {
     @media (min-width: 600px) and (max-width: 850px) { @content; }
-  }
-  @else if $point == mobile {
+  } @else if $point == mobile {
     @media (max-width: 600px)  { @content; }
   }
 }
@@ -26,10 +25,17 @@
   -moz-#{$name}: -moz-$argument;
 }
 
-@mixin keyframes($name) {
-  @-o-keyframes $name { @content };
-  @-moz-keyframes $name { @content };
-  @-webkit-keyframes $name { @content }; 
-  @-keyframes $name { @content };
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
 }
-
