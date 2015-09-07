@@ -5,15 +5,15 @@
   "author": "Ben Regenspan",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.1",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-watch": "~0.4.3",
-    "grunt-contrib-sass": "~0.3.0",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-shell-spawn": "~0.2.4",
     "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-uglify": "~0.2.1",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-gh-pages": "^0.9.1",
     "grunt-hashres": "git://github.com/bregenspan/grunt-hashres",
-    "grunt-contrib-clean": "~0.4.1",
-    "grunt-gh-pages": "^0.9.1"
+    "grunt-contrib-clean": "~0.4.1"
   }
 }
