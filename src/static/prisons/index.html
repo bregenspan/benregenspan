@@ -1,0 +1,392 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="nv.d3.css">
+
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        font-family: Helvetica, Arial, Verdana, sans-serif;
+       overflow-x: hidden;
+      }
+      
+      h3 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 10px;
+      }
+
+      .chart-controls {
+        position: absolute;
+        max-width: 70%;
+        top: 0;
+          right: 0;
+      }
+
+      .chart-controls li {
+        cursor: pointer;
+        display: inline-block;
+        list-style: none;
+        padding: 4px 8px;
+        background: #ccc;
+        border-radius: 4px;
+        margin: 2px 3px;
+      }
+
+      .chart-controls li.active {
+        cursor: default;
+        background: #000;
+        color: #fff;
+      }
+
+      .filter-selector {
+        text-align: right;
+      }
+
+      .nv-xtext {
+        transition: 0.5s opacity;
+        -webkit-transition: 0.5 opacity;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 100%;
+      }
+      .nvtooltip {
+        max-width: 400px;
+        white-space: normal;
+      }
+      #chart {
+        min-height: 400px;
+        height: 100%;
+      }
+
+      footer {
+        background: rgba(255,255,255,0.5);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 10px;
+        font-size: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="chart-container" class="chart-container">
+      <div class="chart-controls">
+
+        <ul class="filter-selector">
+          <li data-filter-stat="displayRate">Incarceration rate (per 100,000)</li>
+          <li data-filter-stat="prisonPopulation">Total incarcerated population</li>
+        </ul>
+
+        <ul class="filter-selector">
+          <li data-filter-group="OECD">OECD</li>
+          <li data-filter-group="NATO">NATO</li>
+          <li data-filter-group="biggest">Biggest population</li>
+        </ul>
+
+      </div>
+
+      <div id="chart">
+        <svg style="height:99%; width: 100%"> </svg>
+      </div>
+    </div>
+    <script src="d3.js" charset="utf-8"></script>
+    <script src="nv.d3.js" charset="utf-8"></script>
+
+
+
+    <footer>
+      Source: <a target="_blank" href="http://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_10.pdf">World Prison Population List (10th Edition)</a>, Oct 2013, Roy Walmsley/International Centre for Prison Studies
+    </footer>
+
+<script>
+
+var groups = {
+  OECD: [
+    'USA',
+    'United Kingdom',
+    'Australia',
+    'Austria',
+    'Belgium',
+    'Canada',
+    'Chile',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Israel',
+    'Italy',
+    'Japan',
+    'Korea',
+    'Luxembourg',
+    'Mexico',
+    'Netherlands',
+    'New Zealand',
+    'Norway',
+    'Poland',
+    'Portugal',,
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Sweden',
+    'Switzerland',
+    'Turkey'
+  ],
+  NATO: ["Albania", "Belgium", "Bulgaria", "Canada", "Croatia", "Czech Republic", "Denmark", "Estonia", "France", "Germany", "Greece", "Hungary", "Iceland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Turkey", "United Kingdom", "USA"],
+  biggest: [
+    'China',
+    'India',
+    'USA',
+    'Indonesia',
+    'Brazil',
+    'Pakistan',
+    'Bangladesh',
+    'Nigeria',
+    'Russian Federation',
+    'Japan',
+    'Mexico',
+    'Philippines',
+    'Vietnam',
+    'Egypt',
+    'Ethiopia'
+  ]
+};
+
+var circaRegex = /c\.\s*(\d+)/,
+    noteRegex = /^(\d+)\s*\*/;
+
+d3.xhr('prisonpop.csv', function (error, xhr) {
+
+  var allCountries = d3.csv.parse(xhr.responseText, function (row) {
+    var rateCol = 'Prison population rate (per 100,000 of national population)',
+        popCol = 'Estimated national population',
+        prisonPopCol = 'Prison population total (no. in penal institutions incl. pre-trial detainees)';
+
+    // This column might contain some value like "c. 4535" or "34534636*". Handle this...
+    function handleWorldPrisonPopNumber(row, columnName, newName) {
+      var valString = row[columnName];
+      delete row[columnName];
+      columnName = newName || columnName;
+      valString = valString.replace(/,/g, '');
+      var circaMatch = valString.match(circaRegex),
+          noteMatch = valString.match(noteRegex);
+      if (circaMatch) {
+        row[columnName] = Number(circaMatch[1]);
+        row.isEstimate = true;
+      } else if (noteMatch) {
+        row[columnName] = Number(noteMatch[1]);
+      } else {
+        row[columnName] = Number(valString);
+      }
+    }
+
+    handleWorldPrisonPopNumber(row, rateCol, 'rate');
+    handleWorldPrisonPopNumber(row, popCol, 'population');
+    handleWorldPrisonPopNumber(row, prisonPopCol, 'prisonPopulation');
+    row.country = row.Country;
+    delete row.Country;
+    return row;
+  });
+
+  // Sort by prison population per capita ascending
+  allCountries.sort(function (a, b) {
+    return a.rate > b.rate ? 1 : -1;
+  }) ;
+
+  var FilterableGraph = function (data, groups) {
+    var self = this;
+
+    function initChart() {
+        var chart = nv.models.multiBarHorizontalChart()
+          .margin({top: 50, right: 20, bottom: 40, left: 120})
+          .showControls(false)
+          .x(function(d,i) { return d[self.idField]; })
+          .y(function(d,i) { return d[self.graphStat]; });
+
+        //chart.legend.maxKeyLength(100);
+
+        chart.showLegend(false);
+        chart.yAxis
+          .tickFormat(d3.format(',f'))
+          .ticks(1);
+
+        chart.tooltip
+          .contentGenerator(function (item) {
+            var table = document.createElement('table');
+            table.innerHTML = '<tr><td>Incarcerated per 100K</td><td>' + item.data.rate.toLocaleString() + ' ' + (item.data.isEstimate ? '(Estimated)' : '') + '</td></tr>' +
+                              '<tr><td>Total # incarcerated</td><td>' + item.data.prisonPopulation.toLocaleString() + '</td></tr>';
+            return table.outerHTML + item.data.Notes; 
+          })
+          .chartContainer(document.getElementById('chart-container'))
+          .gravity('e')
+          .enabled(true);
+      return chart;
+    }
+
+    this.chart = initChart();
+
+    this.groups = groups;
+    this.records = data;
+    this.idField = 'country';
+    this.title = 'Prison Population';
+    this.setGroup('NATO');
+    this.graphStat = 'displayRate';
+  };
+
+  FilterableGraph.prototype.setGroup = function (group) {
+    this.group = group;
+    this.filteredRecords = this.records.filter(function (row) {
+        return (this.groups[group].indexOf(row[this.idField]) > -1);
+    }.bind(this));
+  };
+
+  FilterableGraph.prototype.getGraphData = function () {
+      var data = [{
+        values: this.filteredRecords,
+        title: this.title,
+        key: 'Incarceration Rate (per 100,000)',
+        bar: true,
+        color: '#ccf'
+      }];
+
+      // For display purposes, initially set all rates at 0 (we'll animate up)
+      data[0].values = data[0].values.map(function (row) {
+        //row.displayRate = 0;
+        row.displayRate = row.rate;
+        return row;
+      });
+
+      return data;
+  };
+
+  FilterableGraph.prototype.refresh = function () {
+
+      if (this.activeAnimation) {
+        window.clearTimeout(this.activeAnimation);
+        delete this.activeAnimation;
+      }
+
+      var data = this.getGraphData(),
+          chart = this.chart,
+          self = this,
+          index = 0;
+
+      d3.select('#chart svg')
+        .datum(data)
+        .transition()
+        .duration(0)
+        .call(chart);
+
+      var index = 0;
+      //var XAxisLabels = d3.selectAll('#chart svg .nv-x text');
+
+      // Animate-in chart data
+      function showValue(isLast) {
+        var item = data[0].values[index];
+        item.displayRate = item.rate;
+        d3.selectAll('#chart svg')
+          .datum(data)
+          .transition()
+          .duration(0)
+          .call(chart);
+        
+        var labels = d3.selectAll('#chart svg .nv-x text')
+            .attr('fill', 'black');
+
+        /*
+        if (isLast) {
+          var rowLabel = labels
+            .filter(function (d, i) {
+              return i === index;
+            })
+            .attr('fill', 'red');
+
+          // Not working...
+          d3
+            .select('#chart .nv-barsWrap rect')
+            .filter(function (d, i) {
+              return i === index;
+            })
+            .attr('fill', 'red');
+        }*/
+
+        index++;
+
+        if (data[0].values[index]) {
+          var isLast = (index ===  data[0].values.length - 1); // delay display of last, biggest value for dramatic effect
+          self.activeAnimation = window.setTimeout(showValue.bind(null, isLast), 100);
+        }
+      }
+      showValue();
+
+      // Update filter controls
+      Array.prototype.slice.call(document.querySelectorAll('.filter-selector li')).forEach(function (el) {
+        el.classList.toggle('active', (self.graphStat === el.dataset.filterStat || self.group === el.dataset.filterGroup));
+      });
+
+  };
+
+  /**
+   * Perform initial render of graph. You should only need to do this once -- use refresh() for subsequent renders
+   * after e.g. changing data.
+   */
+  FilterableGraph.prototype.render = function () {
+    nv.addGraph(function() {
+      var chart = this.chart,
+        self = this;
+      this.refresh();
+      // var maxRate = Math.max.apply(null, data[0].values.map(function (d) { return d.rate }));
+
+      var chartEl = document.getElementById('chart');
+      var title = document.createElement('h3');
+      title.innerText = this.title;
+      chartEl.insertBefore(title, chartEl.firstElementChild);
+
+      nv.utils.windowResize(chart.update);
+
+      Array.prototype.slice.call(document.querySelectorAll('.filter-selector')).forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          if (e.target.dataset.filterGroup) {
+            self.setGroup(e.target.dataset.filterGroup);
+            self.refresh();
+          }
+          if (e.target.dataset.filterStat) {
+            self.graphStat = e.target.dataset.filterStat;
+            self.refresh();
+          }
+        });
+      });
+
+      return chart;
+  }.bind(this));
+  }
+
+  var graph = new FilterableGraph(allCountries, groups);
+  graph.render();
+
+  window.graph = graph;
+});
+
+</script>
+ 
+  </body>
+</html>
+
