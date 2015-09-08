@@ -206,11 +206,6 @@ d3.xhr('prisonpop.csv', function (error, xhr) {
     return row;
   });
 
-  // Sort by prison population per capita ascending
-  allCountries.sort(function (a, b) {
-    return a.rate > b.rate ? 1 : -1;
-  }) ;
-
   var FilterableGraph = function (data, groups) {
     var self = this;
 
@@ -289,6 +284,10 @@ d3.xhr('prisonpop.csv', function (error, xhr) {
           self = this,
           index = 0;
 
+      data[0].values.sort(function (a, b) {
+        return a[self.graphStat] > b[self.graphStat] ? 1 : -1;
+      }) ;
+
       d3.select('#chart svg')
         .datum(data)
         .transition()
@@ -352,7 +351,9 @@ d3.xhr('prisonpop.csv', function (error, xhr) {
     nv.addGraph(function() {
       var chart = this.chart,
         self = this;
+
       this.refresh();
+
       // var maxRate = Math.max.apply(null, data[0].values.map(function (d) { return d.rate }));
 
       var chartEl = document.getElementById('chart');
