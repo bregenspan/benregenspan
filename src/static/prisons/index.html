@@ -1,7 +1,13 @@
 <!doctype html>
 <html>
-  <head>
-    <title></title>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <title>World Prison Population Graphs</title>
+    <meta property="og:image" content="thumbnail.png">
+    <meta property="og:title" content="World Prison Population Graphs">
+    <meta property="og:url" content="http://ben.regenspan.com/static/prisons/">
+    <meta property="og:type"   content="article">
+    <meta property="article:author" content="https://www.facebook.com/ben.j.r">
+
     <link rel="stylesheet" href="nv.d3.css">
 
     <style>
@@ -91,9 +97,9 @@
         </ul>
 
         <ul class="filter-selector">
-          <li data-filter-group="OECD">OECD</li>
-          <li data-filter-group="NATO">NATO</li>
-          <li data-filter-group="biggest">Biggest population</li>
+          <li data-filter-group="OECD" title="Organisation for Economic Co-operation and Development">OECD</li>
+          <li data-filter-group="NATO" title="North Atlantic Treaty Organization">NATO</li>
+          <li data-filter-group="biggest" title="Top 15 countries by total population">Biggest population</li>
         </ul>
 
       </div>
