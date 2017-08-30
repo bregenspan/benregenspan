@@ -11,7 +11,7 @@
  * @param callback {Function} to callback on completion
  * @param errback {Function} to callback on error
  */
-function xdr(url, method, data, callback, errback) {
+export default function xdr(url, method, data, callback, errback) {
     var req;
     
     if(XMLHttpRequest) {

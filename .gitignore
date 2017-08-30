@@ -5,11 +5,13 @@
 # Node
 node_modules
 
-
 # Other cruft
 *.orig
 .grunt
+.DS_Store
+*.map
 
 build
 src/main.css
 src/main.min.css
+

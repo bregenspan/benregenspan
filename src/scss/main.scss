@@ -8,11 +8,11 @@ $dark: #666;
 // Icon font for link-out sidebar
 @font-face {
   font-family: 'fontello';
-  src: url('fonts/fontello.eot?27200950');
-  src: url('fonts/fontello.eot?27200950#iefix') format('embedded-opentype'),
-       url('fonts/fontello.woff?27200950') format('woff'),
-       url('fonts/fontello.ttf?27200950') format('truetype'),
-       url('fonts/fontello.svg?27200950#fontello') format('svg');
+  src: url('../fonts/fontello.eot?27200950');
+  src: url('../fonts/fontello.eot?27200950#iefix') format('embedded-opentype'),
+       url('../fonts/fontello.woff?27200950') format('woff'),
+       url('../fonts/fontello.ttf?27200950') format('truetype'),
+       url('../fonts/fontello.svg?27200950#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -122,7 +122,7 @@ body {
 
 body {
   @include vendor-prefix(text-size-adjust, 100%);
-  background: #ab8771 url('img/pipetile.png');
+  background: #ab8771 url('../img/pipetile.png');
   color: #080f17;
   cursor: pointer;
   font-family: $serif;
@@ -141,7 +141,7 @@ body {
     @include vendor-prefix(animation-name, ken-burns-acid-test);
     @include vendor-prefix(animation-direction, alternate);
     @include vendor-prefix(animation-iteration-count, infinite);
-    background: #000 url('img/unicorn-glitch.gif');
+    background: #000 url('../img/unicorn-glitch.gif');
     background-attachment: fixed;
     background-position: -75%;
   }

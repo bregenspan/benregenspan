@@ -4,24 +4,9 @@
 
 /*global FB, require, window:true, document*/
 
-require.config({
-    shim: {
-        "underscore": {
-            exports: "_"
-        },
-        "lib/xdr": {
-            exports: "xdr"
-        },
-        "lib/webfont": {
-            exports: "WebFont"
-        }
-    },
-    paths: {
-        "underscore": "lib/underscore"
-    }
-});
+import 'main.scss';
 
-require(["underscore", "dom-util", "scroll-nav", "giphy", "animated-favicon", "lib/webfont", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy, animateFavicon, WebFont) {
+require(["underscore", "dom-util", "scroll-nav", "giphy", "animated-favicon", "webfontloader", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy, animateFavicon, WebFont) {
     'use strict';
 
     var doc = document,
@@ -55,16 +40,6 @@ require(["underscore", "dom-util", "scroll-nav", "giphy", "animated-favicon", "l
             }
         ]);
     }
-
-    require(['//connect.facebook.net/en_US/all.js'], function () {
-        FB.init({
-            async: true,
-            xfbml: true
-        });
-        FB.Event.subscribe('edge.create', function () {
-            bod.className += ' sickening';
-        });
-    });
 
     var annoyingMode = false,
         veryAnnoyingMode = false,

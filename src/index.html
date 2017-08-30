@@ -7,7 +7,6 @@
     <title>Ben Regenspan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="A full-stack web developer, he is generally well-dressed and fairly hygienic.">
-    <link rel="stylesheet" href="main.css">
     <link rel="canonical" href="http://ben.regenspan.com">
     <link id="favicon" rel="icon" type="image/png" href="favicon.png">
     <link rel="author" href="https://plus.google.com/105319962076958410545?rel=author">
@@ -22,7 +21,7 @@
     <div id="container">
       <div id="content">
 
-        <img id="unicorn" style="visibility:hidden" alt="Magic Unicorn" src="img/rainbow_unicorn.gif">
+        <img id="unicorn" style="visibility:hidden" alt="Magic Unicorn" src="./img/rainbow_unicorn.gif">
 
         <header id="top">
           <h1 id="title"><span>Ben</span> <span>Regenspan</span></h1>
@@ -42,7 +41,7 @@
             <div class="pipe-like">    
               <div class="fb-like" data-href="http://ben.regenspan.com" data-width="200" data-layout="button_count" data-show-faces="false" data-send="false"></div>
             </div>
-            <img src="img/ben.jpg" itemprop="image" alt="Photograph of Ben Regenspan">
+            <img src="./img/ben.jpg" itemprop="image" alt="Photograph of Ben Regenspan">
           </figure>
           <p>I (<span itemprop="name">Ben Regenspan</span> of <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="addressLocality">New York</span>, <span itemprop="addressRegion">NY</span></span>), am a (mostly frontend) <span itemprop="jobTitle">web developer</span>. My current language of choice is Javascript. I love web technology and think it should be used for purposes that are good and/or fun. I started my career at <a href="http://huffingtonpost.com">Huffington Post</a> and most recently worked at <a href="http://gizmodo.com">Gizmodo</a> Media Group (formerly Gawker Media Group).</p>
           <p>[<a href="resume.pdf">RESUME</a>]</p>
@@ -132,8 +131,6 @@
 
     </div>
 
-    <script data-main="js/main" src="js/lib/require.js"></script>
-
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -142,6 +139,17 @@
       ga('create', 'UA-41489908-1', 'regenspan.com');
       ga('send', 'pageview');
     </script>
+
+		<script src="//connect.facebook.net/en_US/all.js"></script>
+		<script>
+        FB.init({
+            async: true,
+            xfbml: true
+        });
+        FB.Event.subscribe('edge.create', function () {
+            bod.className += ' sickening';
+        });
+		</script>
 
   </body>
 </html>

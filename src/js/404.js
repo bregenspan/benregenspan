@@ -1,16 +1,3 @@
-/* global require, define */
-
-require.config({
-    shim: {
-        "underscore": {
-            exports: "_"
-        }
-    },
-    paths: {
-        "underscore": "lib/underscore"
-    }
-});
-
 define(['underscore', 'connector/point', 'connector/polyline', "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function (_, Point, AnimatedPolyline) {
     'use strict';
 
