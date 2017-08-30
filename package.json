@@ -1,9 +1,10 @@
 {
   "name": "benregenspan",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Ben Regenspan Personal Internet Homepage",
   "author": "Ben Regenspan",
   "scripts": {
+    "build": "rm -rf dist && webpack",
     "lint": "eslint ./src/js",
     "serve": "webpack-dev-server --open",
     "analyze": "webpack --profile --json > stats.json && ./node_modules/.bin/webpack-bundle-analyzer stats.json"
