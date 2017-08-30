@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import debounce from 'lodash/debounce';
 import WebFont from 'webfontloader';
 
 import { $ } from './dom-util';
@@ -17,7 +17,7 @@ function initialize () {
     slice.call(doc.getElementsByClassName('project')));
   const nav = new ScrollNav(sections);
 
-  window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
+  window.addEventListener('resize', debounce(nav.redrawConnectors, 500));
 
   nav.addHandler('comicSans', function (section) {
     section.className += ' comic-sans';

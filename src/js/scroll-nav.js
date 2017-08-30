@@ -1,4 +1,5 @@
-import _ from 'underscore';
+import debounce from 'lodash/debounce';
+
 import {
   $,
   getTransformPropertyName
@@ -56,10 +57,10 @@ export default class ScrollNav {
       }
     };
 
-    window.addEventListener('resize', _.debounce(calculateSectionProperties), 60);
+    window.addEventListener('resize', debounce(calculateSectionProperties), 60);
     calculateSectionProperties();
 
-    window.addEventListener('scroll', _.debounce(() => {
+    window.addEventListener('scroll', debounce(() => {
       const position = this.position();
       const height = this.browserHeight();
       const activatePosition = position + (height / 2.5);
@@ -142,15 +143,17 @@ export default class ScrollNav {
     return true;
   };
 
+  // FIXME: this does nothing!
   addStyleChanges (elements) {
+    /*
     let processPref = function (element, styles, offset) {
-
     };
     for (let i = 0, ilen = elements.length; i < ilen; i++) {
       let elementPref = elements[i];
       let element = elementPref.el;
-      _.each(elementPref, _.partial(processPref, element));
+       elementPref.forEach((pref) => processPref(element, elementPref));
     }
+    */
   }
 
   addHandler (sectionId, activateHandler, deactivateHandler) {

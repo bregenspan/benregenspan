@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import Point from 'connector/point';
 import AnimatedPolyline from 'connector/polyline';
 
@@ -85,8 +84,8 @@ unicorn.onload = function () {
     polylines[i] = new AnimatedPolyline({
       segments: letter,
       ctx: ctx,
-      callback: _.partial(endCallback, unicorns[i]),
-      moveCallback: _.partial(moveCallback, unicorns[i]),
+      callback: data => endCallback(unicorns[i]),
+      moveCallback: data => moveCallback(unicorns[i], data),
       strokeStyle: '#ff00ff',
 
       animateAmount: 2,

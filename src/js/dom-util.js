@@ -1,4 +1,4 @@
-import { memoize } from 'underscore';
+import memoize from 'lodash/memoize';
 
 const doc = document;
 const body = doc.body;
