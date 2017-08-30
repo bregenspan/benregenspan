@@ -4,6 +4,7 @@
   "description": "Ben Regenspan Personal Internet Homepage",
   "author": "Ben Regenspan",
   "scripts": {
+    "lint": "eslint ./src/js",
     "serve": "webpack-dev-server --open",
     "analyze": "webpack --profile --json > stats.json && ./node_modules/.bin/webpack-bundle-analyzer stats.json"
   },
@@ -16,6 +17,11 @@
     "css-loader": "^0.28.6",
     "debounce": "^1.0.2",
     "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "fast-memoize": "^2.2.8",
     "file-loader": "^0.11.2",
