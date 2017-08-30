@@ -3,7 +3,6 @@ import WebFont from 'webfontloader';
 
 import { $ } from './dom-util';
 import ScrollNav from './scroll-nav';
-import Giphy from './giphy';
 import animateFavicon from './animated-favicon';
 
 import 'main.scss';
@@ -95,47 +94,57 @@ bod.addEventListener('mouseover', eventHandlerFor(bod, function () {
   toggleAnnoyingMode(false);
 }));
 
-const g = new Giphy('dc6zaTOxFJmzC');
+let giphyPromise;
+function initializeGiphy () {
+  if (giphyPromise) {
+    return giphyPromise;
+  }
+  giphyPromise = import(/* webpackChunkName: "giphy" */ 'giphy')
+    .then(Giphy => new Giphy.default('dc6zaTOxFJmzC')) // eslint-disable-line new-cap
+    .catch(error => console.log('Failed to load Giphy JS SDK', error));
+  return giphyPromise;
+}
 
 bod.addEventListener('click', eventHandlerFor(bod, function () {
-  g.getRandomMrDiv(function (o) {
-    toggleAnnoyingMode(true);
-    bod.style.backgroundImage = 'url(' + o.img + ')';
+  initializeGiphy()
+    .then(g => g.getRandomMrDiv(function (o) {
+      toggleAnnoyingMode(true);
+      bod.style.backgroundImage = 'url(' + o.img + ')';
 
-    if (!imageCredit) {
-      imageCredit = doc.createElement('div');
-      imageCredit.id = 'imageCredit';
-      imageCredit.className = 'image-credit';
+      if (!imageCredit) {
+        imageCredit = doc.createElement('div');
+        imageCredit.id = 'imageCredit';
+        imageCredit.className = 'image-credit';
 
-      expandLink = doc.createElement('a');
-      expandLink.className = 'expand-link hidden';
-      expandLink.innerHTML = '&rarr;';
-      expandLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (expandLink.expanded) {
-          expandLink.expanded = false;
-          toggleVeryAnnoyingMode(false);
-        } else {
-          expandLink.expanded = true;
-          toggleVeryAnnoyingMode(true);
-        }
-        return false;
-      });
-      imageCredit.appendChild(expandLink);
+        expandLink = doc.createElement('a');
+        expandLink.className = 'expand-link hidden';
+        expandLink.innerHTML = '&rarr;';
+        expandLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (expandLink.expanded) {
+            expandLink.expanded = false;
+            toggleVeryAnnoyingMode(false);
+          } else {
+            expandLink.expanded = true;
+            toggleVeryAnnoyingMode(true);
+          }
+          return false;
+        });
+        imageCredit.appendChild(expandLink);
 
-      imageCreditText = doc.createElement('span');
-      imageCredit.appendChild(imageCreditText);
+        imageCreditText = doc.createElement('span');
+        imageCredit.appendChild(imageCreditText);
 
-      bod.appendChild(imageCredit);
-      window.setTimeout(function () {
-        expandLink.className = expandLink.className.replace('hidden', '');
-      }, 0);
-    }
-    const text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
-                   'mr. div</a>' + '<br>' +
-                    'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
-    imageCreditText.innerHTML = text;
-  });
+        bod.appendChild(imageCredit);
+        window.setTimeout(function () {
+          expandLink.className = expandLink.className.replace('hidden', '');
+        }, 0);
+      }
+      const text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
+                       'mr. div</a>' + '<br>' +
+                        'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
+      imageCreditText.innerHTML = text;
+    }));
 }));
 
 WebFont.load({
