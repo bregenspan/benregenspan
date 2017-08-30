@@ -1,0 +1,34 @@
+diff --git a/src/bing/index.html b/src/bing/index.html
+index 3bf29e1..8b72bd7 100644
+--- a/src/bing/index.html
++++ b/src/bing/index.html
+@@ -39,11 +39,16 @@
+         height: 0;
+         padding-bottom: 40%;
+         z-index: 1;
++        position: relative;
++        flex: 0 1 auto;
++        display: flex;
++        justify-content: center;
+       }
+ 
+       .frame-container iframe {
+-        width: 100%;
++        flex: 0 1 auto;
+         height: 100%;
++        position: absolute;
+         left: 0;
+         top: 0;
+       }
+@@ -89,7 +94,10 @@
+     <!-- Hidden input video and temporary canvas -->
+     <canvas id="helper" class="invisible-helper" width="400" height="180"/>
+     <div class="invisible-helper">
+-      <video id="video" src="hug.mp4" />
++      <video id="video">
++        <source src="hug.webm" type="video/webm">
++        <source src="hug.mp4" type="video/mp4">
++      </video>
+     </div>
+ 
+   </body>

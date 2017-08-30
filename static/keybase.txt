@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/benregenspan
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://ben.regenspan.com
+  * I am benregenspan (https://keybase.io/benregenspan) on keybase.
+  * I have a public key ASAdPtWjLaMCcbJThOEa7jIdAmYO6LXnQA1QEAxakbrLTwo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01201d3ed5a32da30271b25384e11aee321d02660ee8b5e7400d50100c5a91bacb4f0a",
+            "host": "keybase.io",
+            "kid": "01201d3ed5a32da30271b25384e11aee321d02660ee8b5e7400d50100c5a91bacb4f0a",
+            "uid": "82154bf538101b3bcde38940aeeae319",
+            "username": "benregenspan"
+        },
+        "merkle_root": {
+            "ctime": 1499805320,
+            "hash": "ed8ed4ccba4b07c06c06a4cf8604c7755dc9ebfb48fd0f81b9a9fc9dbd6c211492b933784a5c5c7073e3e8a5520b0257c38dd3ca970c053c8c19940d1bb5cde3",
+            "hash_meta": "9b9924b0e2304c467977733d362837b46072508ddc158dcbbe90764d316fbe1e",
+            "seqno": 1226217
+        },
+        "service": {
+            "hostname": "ben.regenspan.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.24"
+    },
+    "ctime": 1499805343,
+    "expire_in": 504576000,
+    "prev": "9bee19730206bd30d64f3ac92f2a22b8138346e5e5ea79eee6a0778ec847e329",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgHT7Voy2jAnGyU4ThGu4yHQJmDui150ANUBAMWpG6y08Kp3BheWxvYWTFA0x7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMWQzZWQ1YTMyZGEzMDI3MWIyNTM4NGUxMWFlZTMyMWQwMjY2MGVlOGI1ZTc0MDBkNTAxMDBjNWE5MWJhY2I0ZjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMWQzZWQ1YTMyZGEzMDI3MWIyNTM4NGUxMWFlZTMyMWQwMjY2MGVlOGI1ZTc0MDBkNTAxMDBjNWE5MWJhY2I0ZjBhIiwidWlkIjoiODIxNTRiZjUzODEwMWIzYmNkZTM4OTQwYWVlYWUzMTkiLCJ1c2VybmFtZSI6ImJlbnJlZ2Vuc3BhbiJ9LCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTQ5OTgwNTMyMCwiaGFzaCI6ImVkOGVkNGNjYmE0YjA3YzA2YzA2YTRjZjg2MDRjNzc1NWRjOWViZmI0OGZkMGY4MWI5YTlmYzlkYmQ2YzIxMTQ5MmI5MzM3ODRhNWM1YzcwNzNlM2U4YTU1MjBiMDI1N2MzOGRkM2NhOTcwYzA1M2M4YzE5OTQwZDFiYjVjZGUzIiwiaGFzaF9tZXRhIjoiOWI5OTI0YjBlMjMwNGM0Njc5Nzc3MzNkMzYyODM3YjQ2MDcyNTA4ZGRjMTU4ZGNiYmU5MDc2NGQzMTZmYmUxZSIsInNlcW5vIjoxMjI2MjE3fSwic2VydmljZSI6eyJob3N0bmFtZSI6ImJlbi5yZWdlbnNwYW4uY29tIiwicHJvdG9jb2wiOiJodHRwOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4yNCJ9LCJjdGltZSI6MTQ5OTgwNTM0MywiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiI5YmVlMTk3MzAyMDZiZDMwZDY0ZjNhYzkyZjJhMjJiODEzODM0NmU1ZTVlYTc5ZWVlNmEwNzc4ZWM4NDdlMzI5Iiwic2Vxbm8iOjUsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAc/uw24f58LwpCh5yIDHO2ck5n9tEcwysYG4BTbQCHgbK6ZvhHS947KgWSTet2rC6uDz73to6KhGZ84fyrAgxAahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIGs53FzoUDNck0SEnAylzCs8eVbdVeuyEPF6Lq4wo6pso3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/benregenspan
+
+==================================================================

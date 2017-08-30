@@ -5,7 +5,7 @@
   "author": "Ben Regenspan",
   "scripts": {
     "analyze": "webpack --profile --json > stats.json && ./node_modules/.bin/webpack-bundle-analyzer stats.json",
-    "build": "rm -rf dist && webpack",
+    "build": "rm -rf dist && cp -r static dist && webpack",
     "deploy": "grunt deploy",
     "lint": "eslint ./src/js",
     "serve": "webpack-dev-server --open"
