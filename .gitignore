@@ -10,8 +10,10 @@ node_modules
 .grunt
 .DS_Store
 *.map
+.sass-cache
 
-build
-src/main.css
-src/main.min.css
+# Build output
+dist
 
+# Webpack bundle stats
+stats.json
