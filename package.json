@@ -4,7 +4,7 @@
   "description": "Ben Regenspan Personal Internet Homepage",
   "author": "Ben Regenspan",
   "scripts": {
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server --open"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
