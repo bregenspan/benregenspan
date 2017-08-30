@@ -1,151 +1,149 @@
-/*
- *  Perform any initialization of scripts we need, specific to homepage
- */
+import _ from 'underscore';
+import WebFont from 'webfontloader';
 
-/*global FB, require, window:true, document*/
+import { $ } from './dom-util';
+import ScrollNav from './scroll-nav';
+import Giphy from './giphy';
+import animateFavicon from './animated-favicon';
 
 import 'main.scss';
 
-require(["underscore", "dom-util", "scroll-nav", "giphy", "animated-favicon", "webfontloader", "lib/polyfill/RaF", "lib/polyfill/addEventListener"], function(_, DomUtil, ScrollNav, Giphy, animateFavicon, WebFont) {
-    'use strict';
+const doc = document;
+const bod = doc.body;
 
-    var doc = document,
-        bod = doc.body,
-        $ = DomUtil.$;
+function initialize () {
+  const slice = Array.prototype.slice;
+  const sections = slice.call(doc.getElementsByTagName('section')).concat(
+    slice.call(doc.getElementsByClassName('project')));
+  const nav = new ScrollNav(sections);
 
-    function initialize() {
-        var slice = Array.prototype.slice;
-        var sections = slice.call(doc.getElementsByTagName('section')).concat(
-                slice.call(doc.getElementsByClassName('project')));
-        var nav = new ScrollNav(sections);
+  window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
 
-        window.addEventListener('resize', _.debounce(nav.redrawConnectors, 500));
+  nav.addHandler('comicSans', function (section) {
+    section.className += ' comic-sans';
+  }, function (section) {
+    section.className = section.className.replace('comic-sans', '');
+  });
 
-        nav.addHandler('comicSans', function (section) {
-            section.className += ' comic-sans';
-        }, function (section) {
-            section.className = section.className.replace('comic-sans', '');
-        });
-
-        nav.addStyleChanges([
-            {
-                el: $('sidebar'),
-                0: 'top:120px',
-                200: 'top:10px'
-            },
-            {
-                el: $('title'),
-                0: 'opacity:1; top:22px; transform:rotate(9deg)',
-                200: 'opacity:0; top:500px; transform:rotate(130deg)'
-            }
-        ]);
+  nav.addStyleChanges([
+    {
+      el: $('sidebar'),
+      0: 'top:120px',
+      200: 'top:10px'
+    },
+    {
+      el: $('title'),
+      0: 'opacity:1; top:22px; transform:rotate(9deg)',
+      200: 'opacity:0; top:500px; transform:rotate(130deg)'
     }
+  ]);
+}
 
-    var annoyingMode = false,
-        veryAnnoyingMode = false,
-        imageCredit,
-        imageCreditText,
-        expandLink;
+let annoyingMode = false;
+let veryAnnoyingMode = false;
+let imageCredit;
+let imageCreditText;
+let expandLink;
 
-    // Wrap event handler to match exact element and not bubble
-    function eventHandlerFor(element, handler, otherElHandler) {
-        return function (e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            if (typeof e.cancelBubble !== "undefined") {
-                e.cancelBubble = true;
-            }
-            if (e.target !== element) {
-                if (otherElHandler) {
-                    otherElHandler(e);
-                }
-                return;
-            }
-            handler(e);
-        };
+// Wrap event handler to match exact element and not bubble
+function eventHandlerFor (element, handler, otherElHandler) {
+  return function (e) {
+    if (e.stopPropagation) {
+      e.stopPropagation();
     }
+    if (typeof e.cancelBubble !== 'undefined') {
+      e.cancelBubble = true;
+    }
+    if (e.target !== element) {
+      if (otherElHandler) {
+        otherElHandler(e);
+      }
+      return;
+    }
+    handler(e);
+  };
+}
 
-    /* Make background go crazy for psychedelic unicorns on-hover */
-    function toggleAnnoyingMode(on) {
-        if (!annoyingMode && on) {
-            annoyingMode = true;
-            bod.className += ' annoying';
-        } else if (!on && !veryAnnoyingMode) {
-            annoyingMode = false;
-            bod.className = bod.className.replace(' annoying', '');
+/* Make background go crazy for psychedelic unicorns on-hover */
+function toggleAnnoyingMode (on) {
+  if (!annoyingMode && on) {
+    annoyingMode = true;
+    bod.className += ' annoying';
+  } else if (!on && !veryAnnoyingMode) {
+    annoyingMode = false;
+    bod.className = bod.className.replace(' annoying', '');
+  }
+}
+
+function toggleVeryAnnoyingMode (on) {
+  toggleAnnoyingMode(on);
+  if (!veryAnnoyingMode && on) {
+    veryAnnoyingMode = true;
+    bod.className += ' hugely-annoying';
+  } else if (!on) {
+    veryAnnoyingMode = false;
+    bod.className = bod.className.replace('hugely-annoying', '');
+  }
+}
+
+bod.addEventListener('mouseover', eventHandlerFor(bod, function () {
+  if (!annoyingMode) {
+    annoyingMode = true;
+    bod.className += ' annoying';
+  }
+}, function () {
+  toggleAnnoyingMode(false);
+}));
+
+const g = new Giphy('dc6zaTOxFJmzC');
+
+bod.addEventListener('click', eventHandlerFor(bod, function () {
+  g.getRandomMrDiv(function (o) {
+    toggleAnnoyingMode(true);
+    bod.style.backgroundImage = 'url(' + o.img + ')';
+
+    if (!imageCredit) {
+      imageCredit = doc.createElement('div');
+      imageCredit.id = 'imageCredit';
+      imageCredit.className = 'image-credit';
+
+      expandLink = doc.createElement('a');
+      expandLink.className = 'expand-link hidden';
+      expandLink.innerHTML = '&rarr;';
+      expandLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (expandLink.expanded) {
+          expandLink.expanded = false;
+          toggleVeryAnnoyingMode(false);
+        } else {
+          expandLink.expanded = true;
+          toggleVeryAnnoyingMode(true);
         }
+        return false;
+      });
+      imageCredit.appendChild(expandLink);
+
+      imageCreditText = doc.createElement('span');
+      imageCredit.appendChild(imageCreditText);
+
+      bod.appendChild(imageCredit);
+      window.setTimeout(function () {
+        expandLink.className = expandLink.className.replace('hidden', '');
+      }, 0);
     }
+    const text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
+                   'mr. div</a>' + '<br>' +
+                    'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
+    imageCreditText.innerHTML = text;
+  });
+}));
 
-    function toggleVeryAnnoyingMode(on) {
-        toggleAnnoyingMode(on);
-        if (!veryAnnoyingMode && on) {
-            veryAnnoyingMode = true;
-            bod.className += ' hugely-annoying';
-        } else if (!on) {
-            veryAnnoyingMode = false;
-            bod.className = bod.className.replace('hugely-annoying', '');
-        }
-    }
-
-    bod.addEventListener('mouseover', eventHandlerFor(bod, function () {
-        if (!annoyingMode) {
-            annoyingMode = true;
-            bod.className += ' annoying';
-        }
-    }, function () {
-        toggleAnnoyingMode(false);
-    }));
-
-    var g = new Giphy('dc6zaTOxFJmzC');
-    bod.addEventListener('click', eventHandlerFor(bod, function () {
-        g.getRandomMrDiv(function (o) {
-            toggleAnnoyingMode(true);
-            bod.style.backgroundImage = 'url(' + o.img + ')';
-
-            if (!imageCredit) {
-                imageCredit = doc.createElement('div');
-                imageCredit.id = 'imageCredit';
-                imageCredit.className = 'image-credit';
-
-                expandLink = doc.createElement('a');
-                expandLink.className = 'expand-link hidden';
-                expandLink.innerHTML = '&rarr;';
-                expandLink.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (expandLink.expanded) {
-                        expandLink.expanded = false;
-                        toggleVeryAnnoyingMode(false);
-                    } else {
-                        expandLink.expanded = true;
-                        toggleVeryAnnoyingMode(true);
-                    }
-                    return false;
-                });
-                imageCredit.appendChild(expandLink);
-
-                imageCreditText = doc.createElement('span');
-                imageCredit.appendChild(imageCreditText);
-
-
-                bod.appendChild(imageCredit);
-                window.setTimeout(function () {
-                    expandLink.className = expandLink.className.replace('hidden', '');
-                }, 0);
-            }
-            var text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
-                       'mr. div</a>' + '<br>' +
-                        'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
-            imageCreditText.innerHTML = text;
-        });
-    }));
-
-    // Pretty Webfonts (TODO: drop Skrollr as dependency, use ScrollNav)
-    WebFont.load({
-        google: { families: [ 'Open+Sans:400,600', 'Noto+Serif::latin'] },
-        active: initialize,
-        inactive: initialize
-    });
-
-    animateFavicon();
+WebFont.load({
+  google: {
+    families: ['Open+Sans:400,600', 'Noto+Serif::latin']
+  },
+  active: initialize,
+  inactive: initialize
 });
+
+animateFavicon();
