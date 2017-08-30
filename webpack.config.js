@@ -47,15 +47,23 @@ module.exports = {
         })
       },
       {
-        test: /\.(png|jpg|gif|eot|woff|ttf|svg)$/,
+        test: /\.(png|jpg|gif|eot|woff|ttf|svg|pdf)$/,
         use: [
           {
             loader: 'file-loader',
-            options: {}
+            options: {
+              name: '[name].[hash].[ext]'
+            }
           }
         ]
       },
-      { test: /\.html$/, loader: 'html-loader' }
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+        options: {
+          interpolate: true
+        }
+      }
     ]
   },
 
