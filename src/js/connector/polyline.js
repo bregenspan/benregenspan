@@ -1,5 +1,4 @@
-// Object.assign still missing in a number of recent browser versions as of 2017/08 :
-import extend from 'lodash/extend';
+import objectAssign from 'object-assign'; // Object.assign is missing in e.g. IE11
 
 // TODO: just use ES6 class...
 const AnimatedPolyline = function (options) {
@@ -11,7 +10,7 @@ const AnimatedPolyline = function (options) {
     animated: true,
     animateAmount: 4
   };
-  extend(this.options, options);
+  objectAssign(this.options, options);
 
   this.finished = false;
   this.segments = options.segments;

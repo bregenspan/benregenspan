@@ -1,4 +1,4 @@
-import memoize from 'lodash/memoize';
+import memoize from 'fast-memoize';
 
 const doc = document;
 const body = doc.body;

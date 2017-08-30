@@ -1,4 +1,4 @@
-import debounce from 'lodash/debounce';
+import debounce from 'debounce';
 import WebFont from 'webfontloader';
 
 import { $ } from './dom-util';
