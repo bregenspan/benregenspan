@@ -2,9 +2,6 @@ import _ from 'underscore';
 import Point from 'connector/point';
 import AnimatedPolyline from 'connector/polyline';
 
-import 'lib/polyfill/RaF';
-import 'lib/polyfill/addEventListener';
-
 function offsetLetter (letter, offset) {
   const shiftedLetter = [];
   for (let i = 0, ilen = letter.length; i < ilen; i++) {
