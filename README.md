@@ -10,27 +10,33 @@ have been thinking at some time in the past.
 Building
 --------
 
-The page is built with Grunt. The procedure in a new checkout looks like:
+This page is built by Webpack. A tiny amount of Grunt use remains; it is used
+only to provide a deployment task.
 
  * Ensure that Node is installed
  * From the project directory, install dependencies: `npm install`
- * Now, build the project: `grunt`
+ * Now, build the project: `npm run build`
 
 
 Developing
 ----------
 
-Source is in the `src` folder; builds go to the `build` folder.
+### Useful commands:
+ * `npm run lint` - lint JS
+ * `npm run analyze` - analyze Webpack bundles with bundle analyzer
+ * `npm run serve` - run local development server
 
-CSS is managed via SCSS; it gets compiled by running `grunt` along with
-everything else.
+### Folders:
+ * `src` - source code
+ * `static` - static files that should be deployed verbatim to the root folder of the site
+ * `dist` - built files
 
 
 Releasing
 ---------
 
 After committing and pushing source changes, run:
-`grunt deploy`
+`npm run deploy`
 
 This will build and deploy to GitHub Pages, as well as create a matching
 tag in the source repository and pages repository.
