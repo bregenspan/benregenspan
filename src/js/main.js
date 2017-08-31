@@ -102,16 +102,17 @@ function initializeGiphy () {
     return giphyPromise;
   }
   giphyPromise = import(/* webpackChunkName: "giphy" */ 'giphy')
-    .then(Giphy => new Giphy.default('dc6zaTOxFJmzC')) // eslint-disable-line new-cap
+    .then(Giphy => new Giphy.default('edf9d49ffe4c45ed881c35edd4b14151')) // eslint-disable-line new-cap
     .catch(error => console.log('Failed to load Giphy JS SDK', error));
   return giphyPromise;
 }
 
 bod.addEventListener('click', eventHandlerFor(bod, function () {
   initializeGiphy()
-    .then(g => g.getRandomMrDiv(function (o) {
+    .then(g => g.randomGIF('abstract'))
+    .then((o) => {
       toggleAnnoyingMode(true);
-      bod.style.backgroundImage = 'url(' + o.img + ')';
+      bod.style.backgroundImage = 'url(' + o.images.original.url + ')';
 
       if (!imageCredit) {
         imageCredit = doc.createElement('div');
@@ -142,11 +143,20 @@ bod.addEventListener('click', eventHandlerFor(bod, function () {
           expandLink.className = expandLink.className.replace('hidden', '');
         }, 0);
       }
-      const text = 'GIF by: <a href="http://mrdiv.tumblr.com/" target="_blank">' +
-                       'mr. div</a>' + '<br>' +
-                        'Via <a href="' + o.url + '" target="_blank">Giphy</a>';
+
+      let creditURL = o.source_post_url || o.source;
+      if (creditURL.indexOf('http') !== 0) {
+        creditURL = o.url;
+      }
+
+      const text = `
+          GIF by:
+          <a href="${creditURL}" target="_blank">${o.username}</a><br>
+          Via <a href="${o.url}" target="_blank">Giphy</a>
+      `;
       imageCreditText.innerHTML = text;
-    }));
+    })
+    .catch(error => console.error('Error retrieving GIF', error));
 }));
 
 WebFont.load({

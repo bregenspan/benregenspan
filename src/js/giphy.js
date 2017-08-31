@@ -1,48 +1,41 @@
 import fetch from 'unfetch';
 
-const G = function (apiKey) {
-  this.apiKey = apiKey;
-};
+const ENDPOINT = 'https://api.giphy.com/v1/gifs/search';
+const LIMIT = 100;
 
-G.prototype.getRandomMrDiv = function (callback) {
-  if (this._requesting) {
-    return false;
+export default class GiphySearch {
+  constructor (apiKey) {
+    this.apiKey = apiKey;
+    this.queryMemo = {};
   }
-  if (!this.data) {
-    const ENDPOINT = 'http://api.giphy.com/v1/gifs/artists?api_key=' + this.apiKey + '&username=mrdiv&limit=100';
-    this._requesting = true;
-    fetch(ENDPOINT)
-      .then(response => response.json())
-      .then((data) => {
-        this.data = data;
-        this._requesting = false;
-        this._getRandomGIF(callback);
-      })
-      .catch((error) => {
-        console.error(error);
-        this._requesting = false;
+
+  searchMemoized (term) {
+    if (this.queryMemo[term]) {
+      return this.queryMemo[term];
+    }
+    this.queryMemo[term] = this.search(term);
+    return this.queryMemo[term];
+  }
+
+  search (term) {
+    const encodedTerm = encodeURIComponent(term);
+    const url = `${ENDPOINT}?api_key=${this.apiKey}&q=${encodedTerm}&limit=${LIMIT}`;
+    return fetch(url)
+      .then(response => response.json());
+  }
+
+  /**
+   * Gets a random GIF for the specified search term, drawing them from the
+   * list of results returned from a search for the term. (Really this is
+   * "random GIF from the X most recent search results").
+   */
+  randomGIF (term) {
+    return this.searchMemoized(term)
+      .then((results) => {
+        const count = results.data.length;
+        const max = count - 1;
+        const randIndex = Math.floor(Math.random() * max);
+        return results.data[randIndex];
       });
-  } else {
-    this._getRandomGIF(callback);
   }
-};
-
-G.prototype._getRandomGIF = function (callback) {
-  if (!this.data && this.data.data) {
-    console.error('No GIFS found :(');
-    return;
-  }
-
-  const count = this.data.data.length;
-  const min = 0;
-  const max = count - 1;
-  const randIndex = Math.floor(Math.random() * (max - min) + min);
-  const result = this.data.data[randIndex];
-  const gif = {
-    'img': result.images.original.url,
-    'url': result.url
-  };
-  callback(gif);
-};
-
-export default G;
+}
