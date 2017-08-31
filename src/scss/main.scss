@@ -17,27 +17,27 @@ $dark: #666;
   font-style: normal;
 }
 
-@include keyframes(throb) {
+@keyframes throb {
   from {
-    @include vendor-prefix(transform, scaleX(1));
+    transform: scaleX(1);
   }
   
   to {
-    @include vendor-prefix(transform, scaleX(1.2));
+    transform: scaleX(1.2);
   }
 }
 
-@include keyframes(throb-flipped) {
+@keyframes throb-flipped {
   from {
-    @include vendor-prefix(transform, scaleX(-1));
+    transform: scaleX(-1);
   }
 
   to {
-    @include vendor-prefix(transform, scaleX(-1.2));
+    transform: scaleX(-1.2);
   }
 }
 
-@include keyframes(pipe-dance) {
+@keyframes pipe-dance {
   from {
     background-position: 0 0;
   }
@@ -47,7 +47,7 @@ $dark: #666;
   }
 }
 
-@include keyframes(ken-burns-acid-test) {
+@keyframes ken-burns-acid-test {
   0% {
     background-size: 300px;
   }
@@ -88,7 +88,7 @@ $dark: #666;
 
 // Fix the box model
 * {
-  @include vendor-prefix(box-sizing, border-box);
+  box-sizing: border-box;
 }
 
 html,
@@ -99,26 +99,26 @@ body {
 }
 
 body {
-  @include vendor-prefix(text-size-adjust, 100%);
+  text-size-adjust: 100%;
   background: #ab8771 url('../img/pipetile.png');
   color: #080f17;
   cursor: pointer;
   font-family: $serif;
 
   &.sickening {
-    @include vendor-prefix(animation-name, pipe-dance);
-    @include vendor-prefix(animation-duration, 1s);
-    @include vendor-prefix(animation-iteration-count, infinite);
-    @include vendor-prefix(animation-timing-function, linear);
+    animation-name: pipe-dance;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 
   &.annoying {
-    @include vendor-prefix(background-size, 200px);
-    @include vendor-prefix(animation-timing-function, ease-in);
-    @include vendor-prefix(animation-duration, 9s);
-    @include vendor-prefix(animation-name, ken-burns-acid-test);
-    @include vendor-prefix(animation-direction, alternate);
-    @include vendor-prefix(animation-iteration-count, infinite);
+    background-size: 200px;
+    animation-timing-function: ease-in;
+    animation-duration: 9s;
+    animation-name: ken-burns-acid-test;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
     background: #000 url('../img/unicorn-glitch.gif');
     background-attachment: fixed;
     background-position: -75%;
@@ -126,9 +126,9 @@ body {
 }
 
 .image-credit {
-  @include vendor-prefix(opacity, 1);
-  @include vendor-prefix-prefix(transition, transform 3s, opacity 1s);
-  @include vendor-prefix(transform-origin, bottom left);
+  opacity: 1;
+  transition: transform 3s, opacity 1s;
+  transform-origin: bottom left;
   bottom: 10px;
   color: #fff;
   font-size: .6em;
@@ -141,47 +141,37 @@ body {
   }
 
   &.hidden {
-    @include vendor-prefix(translate, -100px, 100px);
-    @include vendor-prefix(opacity, 0);
+    translate: -100px, 100px;
+    opacity: 0;
   }
 
   .expand-link {
     display: block;
     font-size: 7em;
-    @include vendor-prefix(transition, all 3s);
+    transition: all 3s;
     &:hover {
       color: #fff;
-      //@include vendor-prefix(animation-duration, 1s);
-      //@include vendor-prefix(animation-name, throb);
-      //@include vendor-prefix(animation-direction, alternate);
-      //@include vendor-prefix(animation-iteration-count, infinite);
     }
   }
 }
 
 .hugely-annoying {
   .expand-link {
-    @include vendor-prefix(transform, scaleX(-1));
-    &:hover {
-      //@include vendor-prefix(animation-duration, 1s);
-      //@include vendor-prefix(animation-name, throb-flipped);
-      //@include vendor-prefix(animation-direction, alternate);
-      //@include vendor-prefix(animation-iteration-count, infinite);
-    }
+    transform: scaleX(-1);
   }
 
   .image-credit {
-    @include vendor-prefix(transform, scale(2));
+    transform: scale(2);
   }
 
   #container {
-    @include vendor-prefix(transform, translate3d(1000px, 0, 0));
+    transform: translate3d(1000px, 0, 0);
     background-color: rgba(255, 255, 255, 0);
   }
 
   section,
   canvas {
-    @include vendor-prefix(opacity, 0);
+    opacity: 0;
   }
 
 }
@@ -193,7 +183,7 @@ body {
 
 #container {
   @extend %clearfix;
-  @include vendor-prefix(transition, all 3s);
+  transition: all 3s;
   @include breakpoint(mobile) {
     margin: 0;
   }
@@ -279,9 +269,6 @@ h3 {
   opacity: .5;
   padding: 0 5px 1px 6px;
   text-transform: uppercase;
-  -moz-transition: opacity .5s, -moz-transform .5s;
-  -ms-transition: opacity .5s, -ms-transform .5s;
-  -webkit-transition: opacity .5s, -webkit-transform .5s;
   transition: opacity .5s, transform .5s;
 
   .project:hover & {
@@ -299,7 +286,7 @@ section {
     padding-bottom: 140px;
   }
 
-  @include vendor-prefix-prefix(transition, opacity 3s);
+  transition: opacity 3s;
 
   @include breakpoint(mobile) {
     padding: 20px 0;
@@ -307,7 +294,7 @@ section {
 }
 
 figure {
-  @include vendor-prefix(transition, opacity 2s);
+  transition: opacity 2s;
   height: 200px;
   opacity: 0;
   position: absolute;
@@ -323,16 +310,16 @@ figure {
 
   > img {
     border: 75px double #2e1404;
-    @include vendor-prefix(border-radius, 50%);
+    border-radius: 50%;
     margin: 25px;
     position: relative;
     width: 100%;
     z-index: 2;
-    @include vendor-prefix(filter, grayscale(100%));
-    @include vendor-prefix(transition, all 3s ease-in);
+    filter: grayscale(100%);
+    transition: all 3s ease-in;
 
     .active & {
-      @include vendor-prefix(filter, grayscale(0%));
+      filter: grayscale(0%);
       border-width: 0;
 
       &.square {
@@ -408,7 +395,7 @@ figure {
       display: none;
     }
     .animated-like-button {
-      @include vendor-prefix(transform, translateY(-150px) translateX(-150px) translateZ(0) scale(2.0) rotate(120deg));
+      transform: translateY(-150px) translateX(-150px) translateZ(0) scale(2.0) rotate(120deg);
     }
   }
 }
@@ -433,9 +420,9 @@ figure {
   width: 120px;
   z-index: 4;
  
-  @include vendor-prefix(opacity, 1);
-  @include vendor-prefix-prefix(transform, translate3d(0, 0, 0));
-  @include vendor-prefix-prefix(transition, filter 3s, opacity 5s);
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: filter 3s, opacity 5s;
 
   @include breakpoint(narrow) {
     display: none;
@@ -446,12 +433,12 @@ figure {
   }
 
   &.journey-started {
-    @include vendor-prefix(transition, none);
+    transition: none;
   }
 
   &.journey-completed {
-    @include vendor-prefix(filter, blur(10px));
-    @include vendor-prefix(opacity, 0);
+    filter: blur(10px);
+    opacity: 0;
   }
 
   &::selection,
@@ -485,17 +472,14 @@ figure {
   right: 10px;
   text-align: right;
   top: 22px;
-  @include vendor-prefix(transform, translate(0, 0) rotate(9deg));
-  -moz-transition: -moz-transform 3s;
-  -ms-transition: -ms-transform 3s;
-  -webkit-transition: -webkit-transform 3s;
+  transform: translate(0, 0) rotate(9deg);
   transition: transform 3s;
   width: 162px;
 
   @include breakpoint(mobile) {
     margin-right: 20px;
     position: static;
-    @include vendor-prefix(transform, none);
+    transform: none;
   }
 
   @include breakpoint(narrow) {
@@ -505,7 +489,7 @@ figure {
 
   .wf-loading & {
     visibility: hidden;
-    @include vendor-prefix(transform, translate(0, -160px) rotate(-50deg));
+    transform: translate(0, -160px) rotate(-50deg);
   }
 }
 
@@ -519,17 +503,14 @@ figure {
   right: 10px;
   text-align: center;
   top: 120px;
-  @include vendor-prefix(transform, scale(1) rotate(0deg));
-  -moz-transition: -moz-transform 3s;
-  -ms-transition: -ms-transform 3s;
-  -webkit-transition: -webkit-transform 3s;
+  transform: scale(1) rotate(0deg);
   transition: transform 3s;
   width: 3em;
   z-index: 10;
 
 
   .wf-loading & {
-    @include vendor-prefix(transform, scale(0) rotate(-180deg));
+    transform: scale(0) rotate(-180deg);
   }
 
   @include breakpoint(mobile) {
@@ -544,9 +525,7 @@ figure {
   }
 
   .icon {
-    //@include vendor-prefix(transition, color 1s, text-shadow 1.5s);
-    //@include vendor-prefix(-moz-transition, color 1s, -moz-tex-shadow 1.5s);
-    @include vendor-prefix(text-shadow, 0);
+    text-shadow: 0;
 
     &:hover {
       color: #fff;
@@ -583,7 +562,7 @@ section {
 }
 
 canvas {
-  @include vendor-prefix-prefix(transition, opacity 5s);
+  transition: opacity 5s;
   z-index: 1;
 }
 
@@ -592,7 +571,7 @@ h2,
 h3,
 p,
 .tag {
-  @include vendor-prefix(transition, opacity 2s); 
+  transition: opacity 2s; 
   opacity: 1;
   position: relative;
   z-index: 2;
