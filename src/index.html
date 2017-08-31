@@ -37,11 +37,13 @@
 
         <section id="about" itemscope itemtype="http://schema.org/Person">
         <header><h2>About Me</h2></header>
-        <figure>
-            <div class="pipe-like">    
+        <figure class="photo">
+            <div class="animated-like-button">
               <div class="fb-like" data-href="http://ben.regenspan.com" data-width="200" data-layout="button_count" data-show-faces="false" data-send="false"></div>
             </div>
-            <img src="./img/ben.jpg" itemprop="image" alt="Photograph of Ben Regenspan">
+            <img src="./img/ben.jpg" class="normal" itemprop="image" alt="Photograph of Ben Regenspan Looking Normal">
+            <img src="./img/ben-smiling.jpg" class="smiling" itemprop="image" alt="Photograph of Ben Regenspan Smiling">
+            <!--<img src="./img/ben-smiling.jpg" itemprop="image" alt="Photograph of Ben Regenspan">-->
           </figure>
           <p>I (<span itemprop="name">Ben Regenspan</span> of <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="addressLocality">New York</span>, <span itemprop="addressRegion">NY</span></span>) am a <span itemprop="jobTitle">web developer</span>. My current language of choice is Javascript. I love web technology and think it should be used for purposes that are good and/or fun. I started my career at <a href="http://huffingtonpost.com">Huffington Post</a> and most recently worked at <a href="http://gizmodo.com">Gizmodo</a> Media Group (formerly Gawker Media Group).</p>
           <p>[<a href="${require(`./resume.pdf`)}">RESUME</a>]</p>
@@ -51,7 +53,6 @@
           <img src="./img/under-construction.gif" style="float: left; margin: 0 20px 20px 0" width=150>
           <header><h2>*WARNING*</h2></header>
           <p>The content below is pretty outdated at this point. Pardon me while I update a few things. In the meantime, please check out <a href="${require(`./resume.pdf`)}">my resume</a>.</p>
-          <p><em>Please also note that I no longer smoke a tobacco pipe but am having trouble parting with the visual theme here. Besides being an anachronistic affectation, pipe tobacco causes a condition known as "hairy tongue" for some.</em></p>
         </section>
 
         <section id="projects">

@@ -47,28 +47,6 @@ $dark: #666;
   }
 }
 
-@include keyframes(pipe-smoke) {
-  0% {
-    @include vendor-prefix(opacity, 0);
-    @include vendor-prefix(transform, translateY(-26px) translateZ(0) rotate(66deg));
-  }
-
-  50% {
-    @include vendor-prefix(opacity, .75);
-    @include vendor-prefix(transform, translateY(-50px) translateZ(0) rotate(35deg));
-  }
-
-  75% {
-    z-index: 3000;
-    @include vendor-prefix(opacity, 1);
-  }
-
-  100% {
-    @include vendor-prefix(opacity, 0);
-    @include vendor-prefix(transform, translateY(-160px) translateZ(0) rotate(66deg) scale(2));
-  }
-}
-
 @include keyframes(ken-burns-acid-test) {
   0% {
     background-size: 300px;
@@ -396,16 +374,33 @@ figure {
   visibility: visible;
 }
 
-.pipe-like {
-  @include vendor-prefix(animation-duration, 4s);
-  @include vendor-prefix(animation-name, pipe-smoke);
-  @include vendor-prefix(animation-iteration-count, infinite);
-  bottom: 20%;
-  height: 22px;
-  left: 3%;
+.animated-like-button {
+  bottom: 0;
+  height: 18px;
+  right: 3%;
   position: absolute;
-  width: 78px;
+  width: 68px;
   z-index: 200;
+}
+
+.photo {
+  .smiling {
+    display: none;
+  }
+  .animated-like-button {
+    transition: all 1s;
+  }
+  &:hover {
+    .smiling {
+      display: inline;
+    }
+    .normal {
+      display: none;
+    }
+    .animated-like-button {
+      @include vendor-prefix(transform, translateY(-150px) translateX(-150px) translateZ(0) scale(2.0) rotate(120deg));
+    }
+  }
 }
 
 // Make Like button behave when transformed
