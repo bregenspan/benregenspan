@@ -35,10 +35,8 @@ export default class ScrollNav {
     this.sectionActivateHandlers = {};
     this.sectionDeactivateHandlers = {};
 
-    const activateSection = () => this.activateSection(this);
-
-    this.foreachSection(function (section) {
-      section.addEventListener('click', activateSection);
+    this.foreachSection(section => {
+      section.addEventListener('click', () => this.activateSection(section));
     });
 
     window.setTimeout(() => {
