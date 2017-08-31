@@ -385,6 +385,12 @@ figure {
   position: absolute;
   width: 68px;
   z-index: 200;
+  opacity: 0;
+  transition: opacity 2s;
+
+  .active & {
+    opacity: 1;
+  }
 }
 
 .photo {
