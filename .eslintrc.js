@@ -12,10 +12,12 @@ module.exports = {
   'parser': 'babel-eslint',
   'plugins': [
     'standard',
-    'promise'
+    'promise',
+    'prefer-object-spread'
   ],
   'rules': {
-    'semi': ['error', 'always'],
-    'no-var': 'error'
+    'no-var': 'error',
+    'prefer-object-spread/prefer-object-spread': 2,
+    'semi': ['error', 'always']
   }
 };

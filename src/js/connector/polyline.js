@@ -1,5 +1,3 @@
-import objectAssign from 'object-assign'; // Object.assign is missing in e.g. IE11
-
 // TODO: just use ES6 class...
 const AnimatedPolyline = function (options) {
   options = options || {};
@@ -8,9 +6,9 @@ const AnimatedPolyline = function (options) {
     strokeStyle: '#f1dbce',
     lineWidth: 4,
     animated: true,
-    animateAmount: 4
+    animateAmount: 4,
+    ...options
   };
-  objectAssign(this.options, options);
 
   this.finished = false;
   this.segments = options.segments;
