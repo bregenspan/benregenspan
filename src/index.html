@@ -46,13 +46,7 @@
             <!--<img src="./img/ben-smiling.jpg" itemprop="image" alt="Photograph of Ben Regenspan">-->
           </figure>
           <p>I (<span itemprop="name">Ben Regenspan</span> of <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="addressLocality">New York</span>, <span itemprop="addressRegion">NY</span></span>) am a <span itemprop="jobTitle">web developer</span>. My current language of choice is Javascript. I love web technology and think it should be used for purposes that are good and/or fun. I started my career at <a href="http://huffingtonpost.com">Huffington Post</a> and most recently worked at <a href="http://gizmodo.com">Gizmodo</a> Media Group (formerly Gawker Media Group).</p>
-          <p>[<a href="${require(`./resume.pdf`)}">RESUME</a>]</p>
-        </section>
-
-        <section id="tmp">  
-          <img src="./img/under-construction.gif" style="float: left; margin: 0 20px 20px 0" width=150>
-          <header><h2>*WARNING*</h2></header>
-          <p>The content below is pretty outdated at this point. Pardon me while I update a few things. In the meantime, please check out <a href="${require(`./resume.pdf`)}">my resume</a>.</p>
+          <p><strong>[<a href="${require(`./resume.pdf`)}">RESUME</a>]</strong></p>
         </section>
 
         <section id="projects">
@@ -60,7 +54,17 @@
 
           <div class="project">
             <header>
+              <h3><a href="https://github.com/bregenspan/webpack-closure-i18n">Webpack Closure Templates i18n</a></h3>
+              <span class="tag">Javascript</span> <span class="tag">Webpack</tag>
             </header>
+            <p>Efficient internationalization of Closure Templates in a Webpack build. It's not too common to have a need to combine all of these technologies, but this was useful at Gawker/Gizmodo Media and is still used there today.</p>
+          </div>
+          <div class="project">
+            <header>
+              <h3><a href="https://github.com/bregenspan/tess-search">TESS Search</a></h3>
+              <span class="tag">Javascript</span> <span class="tag">Node</tag>
+            </header>
+            <p>Node CLI for querying the US's trademark search engine</p>
           </div>
           <div class="project">
             <header>
@@ -105,6 +109,23 @@
 
         <section id="experiments">
           <header><h2>Experiments</h2></header>
+
+          <div class="project">
+            <header>
+              <h3><a href="https://twitter.com/benghaziword">Benghazi Every Word</a></h3>
+              <span class="tag">Twitter API</span> <span class="tag">Acrostics</span>
+            </header>
+            <figure><img src="img/benghazi.png" alt="Benghazi Every Word"></figure>
+            <p>A dumb take on a <a href="http://internet.gawker.com/a-history-of-the-benghazi-acrostic-on-its-one-year-anni-1571319745">strange Twitter trend</a>. Based on <a href="https://twitter.com/everyword">everyword</a>.</p>
+          </div>
+
+          <div class="project">
+            <header>
+              <h3><a href="http://weedshirts.biz/">WeedShirtz.biz</a></h3>
+              <span class="tag">Node</span> <span class="tag">Express</span>
+            </header>
+            <p>A (failed?) attempt to showcase the poetic form of trademark registrations, displaying marijuana-related t-shirt design trademark registrations, many of which are amusing when described in the painstaking detail necessary for a trademark registration. Data retrieved via <a href="https://github.com/bregenspan/tess-search">tess-search</a>.</p>
+          </div>
 
           <div class="project">
             <header>
