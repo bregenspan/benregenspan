@@ -4,9 +4,10 @@ const ENDPOINT = 'https://api.giphy.com/v1/gifs/search';
 const LIMIT = 100;
 
 export default class GiphySearch {
-  constructor (apiKey) {
+  constructor (apiKey, rating = 'g') {
     this.apiKey = apiKey;
     this.queryMemo = {};
+    this.rating = rating;
   }
 
   searchMemoized (term) {
@@ -19,7 +20,7 @@ export default class GiphySearch {
 
   search (term) {
     const encodedTerm = encodeURIComponent(term);
-    const url = `${ENDPOINT}?api_key=${this.apiKey}&q=${encodedTerm}&limit=${LIMIT}`;
+    const url = `${ENDPOINT}?api_key=${this.apiKey}&q=${encodedTerm}&limit=${LIMIT}&rating=${this.rating}`;
     return fetch(url)
       .then(response => response.json());
   }
