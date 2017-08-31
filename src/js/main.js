@@ -4,6 +4,8 @@ import WebFont from 'webfontloader';
 import { $ } from './dom-util';
 import ScrollNav from './scroll-nav';
 import animateFavicon from './animated-favicon';
+import loadFacebookSDK from './tags/facebook';
+import loadGA from './tags/ga';
 
 import 'main.scss';
 
@@ -156,3 +158,6 @@ WebFont.load({
 });
 
 animateFavicon();
+
+loadFacebookSDK();
+loadGA();
