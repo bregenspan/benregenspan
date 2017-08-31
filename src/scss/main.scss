@@ -293,6 +293,13 @@ section {
   }
 }
 
+.lost-to-sands-of-time {
+  text-decoration: line-through;
+  h3 {
+    text-decoration: line-through;
+  }
+}
+
 figure {
   transition: opacity 2s;
   height: 200px;
