@@ -1,6 +1,5 @@
 // TODO: just use ES6 class...
-const AnimatedPolyline = function (options) {
-  options = options || {};
+const AnimatedPolyline = function (options = {}) {
   this.options = {
     lineCap: 'round',
     strokeStyle: '#f1dbce',
