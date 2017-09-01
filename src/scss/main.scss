@@ -99,11 +99,12 @@ body {
 }
 
 body {
-  text-size-adjust: 100%;
+  text-size-adjust: 100%; // ? I think I added this as workaround for a browser-specific issue. FIXME: document!
   background: #ab8771 url('../img/pipetile.png');
   color: #080f17;
   cursor: pointer;
   font-family: $serif;
+  overflow-x: hidden; // prevent horizontal scrollbar showing when Giphy viewer mode is activated
 
   &.sickening {
     animation-name: pipe-dance;
