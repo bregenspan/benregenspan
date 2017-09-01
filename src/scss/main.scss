@@ -246,7 +246,7 @@ h2,
 h3 {
   display: inline-block;
   font-family: $sans;
-  font-weight: 100;
+  font-weight: 500;
 
   a {
     display: inline-block;
@@ -274,7 +274,7 @@ h3 {
   font-family: $sans;
   font-size: .6em;
   opacity: .5;
-  padding: 0 4px 1px;
+  padding: 1px 4px 1px;
   text-transform: uppercase;
   transition: opacity .5s, transform .5s;
   vertical-align: middle;
