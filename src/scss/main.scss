@@ -1,7 +1,7 @@
 @import 'mixins';
 
-$sans: 'Open Sans Bold', 'Open Sans', Helvetica, Arial, sans-serif;
-$serif: 'Noto Serif', serif;
+$sans: Futura, 'Trebuchet MS', Arial, sans-serif;
+$serif: Georgia, Cambria, "Times New Roman", Times, serif;
 $link-color: #158;
 $dark: #666;
 
@@ -126,6 +126,12 @@ body {
   }
 }
 
+p {
+  color: #433;
+  line-height: 1.44em;
+  font-size: 1.06em;
+}
+
 .image-credit {
   opacity: 1;
   transition: transform 3s, opacity 1s;
@@ -240,7 +246,7 @@ h2,
 h3 {
   display: inline-block;
   font-family: $sans;
-  font-weight: bold;
+  font-weight: 100;
 
   a {
     display: inline-block;
@@ -252,7 +258,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 h3 {
@@ -268,9 +274,10 @@ h3 {
   font-family: $sans;
   font-size: .6em;
   opacity: .5;
-  padding: 0 5px 1px 6px;
+  padding: 0 4px 1px;
   text-transform: uppercase;
   transition: opacity .5s, transform .5s;
+  vertical-align: middle;
 
   .project:hover & {
     opacity: 1;
@@ -495,8 +502,7 @@ figure {
     width: 1.5em;
   }
 
-  .wf-loading & {
-    visibility: hidden;
+  .loading & {
     transform: translate(0, -160px) rotate(-50deg);
   }
 }
@@ -516,8 +522,7 @@ figure {
   width: 3em;
   z-index: 10;
 
-
-  .wf-loading & {
+  .loading & {
     transform: scale(0) rotate(-180deg);
   }
 
@@ -583,10 +588,4 @@ p,
   opacity: 1;
   position: relative;
   z-index: 2;
-
-  // handle webfont FOUC
-  .wf-loading & {
-    opacity: 0;
-    visibility: hidden;
-  }
 }

@@ -1,5 +1,4 @@
 import debounce from 'debounce';
-import WebFont from 'webfontloader';
 
 import { $ } from './dom-util';
 import ScrollNav from './scroll-nav';
@@ -38,6 +37,12 @@ function initialize () {
       200: 'opacity:0; top:500px; transform:rotate(130deg)'
     }
   ]);
+
+  document.getElementsByTagName('html')[0].classList.remove('loading');
+
+  animateFavicon();
+  loadFacebookSDK();
+  loadGA();
 }
 
 let annoyingMode = false;
@@ -159,15 +164,4 @@ bod.addEventListener('click', eventHandlerFor(bod, function () {
     .catch(error => console.error('Error retrieving GIF', error));
 }));
 
-WebFont.load({
-  google: {
-    families: ['Open+Sans:400,600', 'Noto+Serif::latin']
-  },
-  active: initialize,
-  inactive: initialize
-});
-
-animateFavicon();
-
-loadFacebookSDK();
-loadGA();
+initialize();
