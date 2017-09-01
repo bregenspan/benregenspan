@@ -214,7 +214,7 @@ export default class ScrollNav {
         window.clearTimeout(this.timeout);
       }
       this.timeout = window.setTimeout(() => {
-        unicorn.style.display = 'none';
+        unicorn.style.visibility = 'hidden';
       }, 2000);
     });
 
@@ -230,7 +230,7 @@ export default class ScrollNav {
 
   showUnicorn () {
     unicorn.className = STARTED;
-    unicorn.style.display = 'inline';
+    unicorn.style.visibility = 'visible';
     if (this.timeout) {
       window.clearTimeout(this.timeout);
       delete this.timeout;
