@@ -46,7 +46,7 @@ function initialize () {
 }
 
 let annoyingMode = false;
-let veryAnnoyingMode = false;
+let gifViewerMode = false;
 let imageCredit;
 let imageCreditText;
 let expandLink;
@@ -74,21 +74,21 @@ function eventHandlerFor (element, handler, otherElHandler) {
 function toggleAnnoyingMode (on) {
   if (!annoyingMode && on) {
     annoyingMode = true;
-    bod.className += ' annoying';
-  } else if (!on && !veryAnnoyingMode) {
+    bod.classList.add('annoying');
+  } else if (!on && !gifViewerMode) {
     annoyingMode = false;
-    bod.className = bod.className.replace(' annoying', '');
+    bod.className = bod.classList.remove('annoying');
   }
 }
 
-function toggleVeryAnnoyingMode (on) {
+function toggleGifViewer (on) {
   toggleAnnoyingMode(on);
-  if (!veryAnnoyingMode && on) {
-    veryAnnoyingMode = true;
-    bod.className += ' hugely-annoying';
+  if (!gifViewerMode && on) {
+    gifViewerMode = true;
+    bod.classList.add('gif-mode');
   } else if (!on) {
-    veryAnnoyingMode = false;
-    bod.className = bod.className.replace('hugely-annoying', '');
+    gifViewerMode = false;
+    bod.classList.remove('gif-mode');
   }
 }
 
@@ -131,10 +131,10 @@ bod.addEventListener('click', eventHandlerFor(bod, function () {
           e.preventDefault();
           if (expandLink.expanded) {
             expandLink.expanded = false;
-            toggleVeryAnnoyingMode(false);
+            toggleGifViewer(false);
           } else {
             expandLink.expanded = true;
-            toggleVeryAnnoyingMode(true);
+            toggleGifViewer(true);
           }
           return false;
         });

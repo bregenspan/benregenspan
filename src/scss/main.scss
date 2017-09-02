@@ -162,7 +162,7 @@ p {
   }
 }
 
-.hugely-annoying {
+.gif-mode {
   .expand-link {
     transform: scaleX(-1);
   }
@@ -331,12 +331,11 @@ figure {
     width: 100%;
     z-index: 2;
     filter: grayscale(100%);
-    transition: all 3s ease-in;
+    transition: border-width 3s ease-in, filter 3s ease-in;
 
     .active & {
       filter: grayscale(0%);
       border-width: 0;
-
       &.square {
         border-radius: 0;
       }
