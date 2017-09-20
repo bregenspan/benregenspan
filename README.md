@@ -15,7 +15,7 @@ only to provide a deployment task.
 
  * Ensure that Node is installed
  * From the project directory, install dependencies: `npm install`
- * Now, build the project: `npm run build`. (This also launches [webpack-bundle-analyzer](https://github.com/th0r/webpack-bundle-analyzer)
+ * Now, build the project: `npm run build`
 
 
 Developing
@@ -23,6 +23,7 @@ Developing
 
 ### Useful commands:
  * `npm run lint` - lint JS
+ * `npm run analyze` - analyze Webpack bundles with bundle analyzer
  * `npm run serve` - run local development server
 
 ### Folders:

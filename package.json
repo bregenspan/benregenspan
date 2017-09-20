@@ -5,6 +5,7 @@
   "author": "Ben Regenspan",
   "browserslist": "last 2 versions",
   "scripts": {
+    "analyze": "webpack --profile --json > stats.json && ./node_modules/.bin/webpack-bundle-analyzer stats.json",
     "build": "rm -rf dist && cp -r static dist && webpack --optimize-minimize",
     "deploy": "grunt deploy",
     "lint": "eslint ./src/js",
