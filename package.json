@@ -5,7 +5,7 @@
   "author": "Ben Regenspan",
   "browserslist": "last 2 versions",
   "scripts": {
-    "analyze": "webpack --profile --json > stats.json && ./node_modules/.bin/webpack-bundle-analyzer stats.json",
+    "analyze": "source-map-explorer dist/*.js",
     "build": "rm -rf dist && cp -r static dist && webpack --optimize-minimize",
     "deploy": "grunt deploy",
     "lint": "eslint ./src/js",
@@ -41,11 +41,11 @@
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
+    "source-map-explorer": "^1.4.0",
     "style-loader": "^0.18.2",
     "unfetch": "^3.0.0",
     "webfontloader": "^1.6.28",
     "webpack": "^3.5.5",
-    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.7.1"
   }
 }
