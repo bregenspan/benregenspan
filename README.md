@@ -10,8 +10,7 @@ have been thinking at some time in the past.
 Building
 --------
 
-This page is built by Webpack. A tiny amount of Grunt use remains; it is used
-only to provide a deployment task.
+This page is built by Webpack.
 
  * Ensure that Node is installed
  * From the project directory, install dependencies: `npm install`
