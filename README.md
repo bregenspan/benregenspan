@@ -10,8 +10,7 @@ have been thinking at some time in the past.
 Building
 --------
 
-This page is built by Webpack. A tiny amount of Grunt use remains; it is used
-only to provide a deployment task.
+This page is built by Webpack.
 
  * Ensure that Node is installed
  * From the project directory, install dependencies: `npm install`
@@ -34,8 +33,10 @@ Developing
 Releasing
 ---------
 
-After committing and pushing source changes, run:
-`npm run deploy`
+Ensure an ~/.aws/credentials is correctly configured.
 
-This will build and deploy to GitHub Pages, as well as create a matching
-tag in the source repository and pages repository.
+After committing and pushing source changes, run:
+
+`npm run build && npm run deploy`
+
+This will trigger a production build and deploy to S3.

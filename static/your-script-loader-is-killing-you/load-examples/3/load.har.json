@@ -1,0 +1,418 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": {
+      "name": "WebInspector",
+      "version": "537.36"
+    },
+    "pages": [
+      {
+        "startedDateTime": "2015-10-12T23:13:56.272Z",
+        "id": "page_29",
+        "title": "http://localhost:9999/3/",
+        "pageTimings": {
+          "onContentLoad": 398.56599998893216,
+          "onLoad": 398.4749999945052
+        }
+      }
+    ],
+    "entries": [
+      {
+        "startedDateTime": "2015-10-12T23:13:56.272Z",
+        "time": 110.76599999796599,
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:9999/3/",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch"
+            },
+            {
+              "name": "Host",
+              "value": "localhost:9999"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.8"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "queryString": [],
+          "cookies": [],
+          "headersSize": 429,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.0",
+          "headers": [
+            {
+              "name": "Date",
+              "value": "Mon, 12 Oct 2015 23:13:56 GMT"
+            },
+            {
+              "name": "Last-Modified",
+              "value": "Mon, 12 Oct 2015 22:59:04 GMT"
+            },
+            {
+              "name": "Server",
+              "value": "SimpleHTTP/0.6 Python/2.7.10"
+            },
+            {
+              "name": "Content-Length",
+              "value": "135"
+            },
+            {
+              "name": "Content-type",
+              "value": "text/html"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 135,
+            "mimeType": "text/html",
+            "compression": 0
+          },
+          "redirectURL": "",
+          "headersSize": 186,
+          "bodySize": 135,
+          "_transferSize": 321
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 0.339999998686835,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.044999993406236005,
+          "wait": 109.49899998377093,
+          "receive": 0.882000022101991,
+          "ssl": -1
+        },
+        "connection": "195795",
+        "pageref": "page_29"
+      },
+      {
+        "startedDateTime": "2015-10-12T23:13:56.390Z",
+        "time": 275.24499999708496,
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:9999/3/require.js",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch"
+            },
+            {
+              "name": "Host",
+              "value": "localhost:9999"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.8"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "*/*"
+            },
+            {
+              "name": "Referer",
+              "value": "http://localhost:9999/3/"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [],
+          "headersSize": 373,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.0",
+          "headers": [
+            {
+              "name": "Date",
+              "value": "Mon, 12 Oct 2015 23:13:56 GMT"
+            },
+            {
+              "name": "Last-Modified",
+              "value": "Mon, 12 Oct 2015 22:58:10 GMT"
+            },
+            {
+              "name": "Server",
+              "value": "SimpleHTTP/0.6 Python/2.7.10"
+            },
+            {
+              "name": "Content-Length",
+              "value": "15524"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/javascript"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 15524,
+            "mimeType": "application/javascript",
+            "compression": 0
+          },
+          "redirectURL": "",
+          "headersSize": 201,
+          "bodySize": 15524,
+          "_transferSize": 15725
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 0.636999990092591,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.06800002302043096,
+          "wait": 119.50599998817798,
+          "receive": 155.03399999579398,
+          "ssl": -1
+        },
+        "connection": "195799",
+        "pageref": "page_29"
+      },
+      {
+        "startedDateTime": "2015-10-12T23:13:56.705Z",
+        "time": 115.81799999112263,
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:9999/favicon.ico",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch"
+            },
+            {
+              "name": "Host",
+              "value": "localhost:9999"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.8"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "*/*"
+            },
+            {
+              "name": "Referer",
+              "value": "http://localhost:9999/3/"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [],
+          "headersSize": 372,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 404,
+          "statusText": "File not found",
+          "httpVersion": "HTTP/1.0",
+          "headers": [
+            {
+              "name": "Date",
+              "value": "Mon, 12 Oct 2015 23:13:56 GMT"
+            },
+            {
+              "name": "Server",
+              "value": "SimpleHTTP/0.6 Python/2.7.10"
+            },
+            {
+              "name": "Connection",
+              "value": "close"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/html"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 195,
+            "mimeType": "text/html",
+            "compression": 0
+          },
+          "redirectURL": "",
+          "headersSize": 150,
+          "bodySize": 195,
+          "_transferSize": 345
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 0.506000011228025,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.05199998850002907,
+          "wait": 114.36400000820895,
+          "receive": 0.8959999831856322,
+          "ssl": -1
+        },
+        "connection": "195801",
+        "pageref": "page_29"
+      },
+      {
+        "startedDateTime": "2015-10-12T23:13:56.706Z",
+        "time": 2362.991999980295,
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:9999/3/dependencies.js",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch"
+            },
+            {
+              "name": "Host",
+              "value": "localhost:9999"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.8"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "*/*"
+            },
+            {
+              "name": "Referer",
+              "value": "http://localhost:9999/3/"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [],
+          "headersSize": 378,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.0",
+          "headers": [
+            {
+              "name": "Date",
+              "value": "Mon, 12 Oct 2015 23:13:56 GMT"
+            },
+            {
+              "name": "Last-Modified",
+              "value": "Mon, 12 Oct 2015 23:11:13 GMT"
+            },
+            {
+              "name": "Server",
+              "value": "SimpleHTTP/0.6 Python/2.7.10"
+            },
+            {
+              "name": "Content-Length",
+              "value": "215000"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/javascript"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 215000,
+            "mimeType": "application/javascript",
+            "compression": 0
+          },
+          "redirectURL": "",
+          "headersSize": 202,
+          "bodySize": 215000,
+          "_transferSize": 215202
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 0.539999979082495,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.06000002031214502,
+          "wait": 128.41599999228535,
+          "receive": 2233.975999988615,
+          "ssl": -1
+        },
+        "connection": "195803",
+        "pageref": "page_29"
+      }
+    ]
+  }
+}
