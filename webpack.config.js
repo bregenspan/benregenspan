@@ -65,7 +65,8 @@ module.exports = {
             options: {
               name: '[name].[md5:hash:base36:8].[ext]'
             }
-          }
+          },
+          'img-loader'
         ]
       },
       {
