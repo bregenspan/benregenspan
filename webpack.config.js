@@ -5,7 +5,7 @@ const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const extractSass = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
+  filename: '[name].[md5:contenthash:base36:8].css',
   disable: process.env.NODE_ENV === 'development'
 });
 
@@ -17,7 +17,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js',
-    publicPath: '/'
+    publicPath: '/',
+    hashDigestLength: 10 // Note: MD5 hex digest by default. Probably not worth writing a plugin to use base36
   },
 
   module: {
@@ -62,7 +63,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[hash].[ext]'
+              name: '[name].[md5:hash:base36:8].[ext]'
             }
           }
         ]
