@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Your Script Loader is Killing You (Slowly)</title>
+
+    <meta name="description" content="Presentation on the impact of script loader usage in modern browsers.">
+    <meta name="author" content="Ben Regenspan">
+    <!-- Created with Reveal.js by Hakim El Hattab: https://github.com/hakimel/reveal.js -->
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+    <!-- Presentation-specific custom styles for SVG chart display -->
+    <link rel="stylesheet" href="css/custom/charts.css">
+
+    <base target="_blank">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <style>
+      .reveal h1 small {
+        vertical-align: middle;
+      }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section>
+          <h1>Your Script Loader is Killing You <small>(Slowly)</small></h1>
+          <p>
+            <small><a href="http://ben.regenspan.com">Ben Regenspan</a></small>
+          </p>
+          <aside class="notes">
+            My name is Ben, I'm a developer at Gawker, and today I just want to briefly go over
+            one very small part of the process of auditing web performance and looking for
+            possible improvements.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Kinja Performance Team</h2>
+          <p>
+            Our mandate: dramatically improve site performance on Gawker Media sites (Gawker, Jezebel, Deadspin...). Try to deliver readable pages to most users within 1 second.
+          </p>
+          <img src="img/brands.png" alt="Gawker Media Sites">
+          <aside class="notes">
+            At Gawker, we recently started to focus more intensively on web performance. We're working on improvements in a number of areas,
+            and I wanted to show some of the process for how we identify the issues to improve on.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Some Possible Performance Angles to Investigate</h2>
+          <ol>
+            <li>Network requests/initial page load time</li>
+            <li>Rendering performance</li>
+            <li>Script execution / event-handler performance</li>
+          </ol>
+
+          <aside class="notes">
+            There are a lot of areas to target in a performance analysis. For purposes of this
+            presentation, I'm going to focus in just on network requests and initial page load time,
+            as this is the simplest way of targeting some of the most critical performance issues
+            affecting a site and a logical starting point.
+          </aside>
+
+        </section>
+
+        <section>
+          <h2>Waterfall Analysis</h2>
+          <p>A great way to begin any web performance effort is by analyzing waterfall charts. (<a href="http://webpagetest.org">Webpagetest.org</a> is one fantastic free tool for viewing these)</p>
+          <p class="fragment">Let's take a look at one!</p>
+        </section>
+
+        <section>
+         
+          <figure class="chart stretch"></figure>
+
+          <section data-state="chartInitial">
+            <h2>Gawker.com Homepage Waterfall</h2>
+            <p>(<a href="http://www.webpagetest.org/result/151011_BG_47a8bc5ed6d95d1309d8812968b6f69c/">Simulated 3G Connection</a>)</p>
+            <p><a href="#" class="navigate-down">▼</a></p>
+            <aside class="notes">
+              <p>Fancy D3 use here is just for presentation prettiness purposes... just going to Webpagetest.org, or other synthetic testing tools like New Relic Synthetics, is all you need to do to get started analyzing page load waterfalls.</p>
+              <p>While LTE usage is rapidly increasing, it still represented &lt; 50% of US mobile subscriptions <a href="http://www.ericsson.com/res/docs/2015/ericsson-mobility-report-june-2015.pdf">as of 2014</a>.  So it's important to test for worst-case performance.</p>
+            </aside>
+          </section>
+          <section data-state="chartFull" class="align-stretched-text-right">
+              <h4 class="stretch">All requests</h4>
+              <p><span data-bind="request-count">144</span> in total!</p>
+              <p><small>Total load time: <span data-bind="onload">23.5</span>s</small></p>
+              <aside class="notes">
+                This is a lot of requests! And total load time on 3G is obviously far from ideal. Let's take a look at some of the issues that could be resolved here.
+              </aside>
+          </section>
+          <section data-state="chartHighlightFiletypes" class="align-stretched-text-right">
+              <h4 class="stretch">All requests</h4>
+              <p><span class="label-script">Scripts</span> • <span class="label-image">Images</span>  • <span class="label-style">Fonts/Styles</span></p>
+          </section>
+          <section data-state="chartHighlightScripts" class="align-stretched-text-right">
+              <h4 class="stretch">Scripts</h4>
+          </section>
+          <section data-state="chartHighlightThirdparty" class="align-stretched-text-right">
+              <h4 class="stretch">Third-party requests</h4>
+              <p>Ad-related requests, mostly. 114 of our 144 requests...</p>
+          </section>
+        </section>
+
+        <section class="dark-bg" data-background="https://media.giphy.com/media/13ln9K5TWkNTLa/giphy.gif">
+          <h2>Can we just remove all ads?</h2>
+          <p>Like most media companies, a large chunk of our revenue comes from ads.</p>
+          <p>Revenue is used to pay software developers as well as some others involved in the business.</p>
+          <p>So we need some other way of making money.</p>
+        </section>
+
+        <section data-background="#ffffff">
+          <h3>Emergent Media Revenue Models</h3>
+          <img src="img/eggdreessen.png" style="box-shadow: none" alt="Proposal (facetious?) for alternate New Media revenue models">
+          <aside class="notes">
+            <p>A lot of people like to talk about the future of media and what revenue models will work if ad revenue dries up. These are just a
+              few ideas for alternate business models.</p>
+            <p>Current Bitcoin exchange rate is ~$245/BTC. If we sell the egg cups for 1/10th BTC and half of that is profit,
+              we have to sell 3,646,677 egg cups to reach Gawker Media's 2014 net revenue of $45 million.</p>
+          </aside>
+        </section>
+
+        <section>
+          <h2>(The business side nixed both ideas)</h2>
+        </section>
+
+        <section>
+          <figure class="chart-placeholder stretch"></figure>
+
+          <section data-state="chartInitial">
+            <h2>Back to the waterfall...</h2>
+            <p><a href="#" class="navigate-down">▼</a></p>
+          </section>
+
+          <section data-state="chartHighlightThirdparty" class="align-stretched-text-right">
+              <h4 class="stretch">Third-party requests</h4>
+              <p>So, we can't eliminate these 114 requests right away. Let's focus on our first-party content...</p>
+          </section>
+
+          <section data-state="chartZoomFirstparty" class="align-stretched-text-right">
+              <h4 class="stretch">First-party requests</h4>
+              <p>Now we're looking at 30 requests, much more manageable.
+              <p>(loaded in 18.8s)</p>
+          </section>
+
+          <section data-state="chartZoomFirstpartyImages" class="align-stretched-text-right">
+              <h4 class="stretch">First-party requests<br><small>(images)</small></h4>
+          </section>
+
+          <section data-state="chartZoomFirstpartyIgnoreImages" class="align-stretched-text-right">
+              <h4 class="stretch">First-party requests<br><small>(no images)</small></h4>
+              <p>23 requests (loaded in 10.4s)</p>
+          </section>
+
+          <section data-state="chartZoomMainScripts" class="align-stretched-text-right">
+              <h4 class="stretch">First-party requests<br><small>(script loader + main scripts)</small></h4>
+              <p class="fragment">Our script loader, require.js, followed by a 0.94s gap before the scripts it loads start to come in. 1.67s total delay.</p>
+              <p>3 requests (loaded in 8.4s)</p>
+          </section>
+
+        </section>
+
+        <section>
+          <h2>Conventional Wisdom on Script Loading<h2>
+          <h4>This is bad:</h4>
+          <pre><code class="html" data-trim>
+&lt;script src="dependency1.js"&gt;&lt;/script&gt;
+&lt;script src="dependency2.js"&gt;&lt;/script&gt;
+          </code></pre>
+
+          <h4>This is good:</h4>
+          <pre><code class="html" data-trim contenteditable>
+&lt;script src="combined-scripts.js"&gt;&lt;/script&gt;
+          </code></pre>
+
+          <h4>This is acceptable:</h4>
+          <pre><code class="html" data-trim contenteditable>
+&lt;script src="require.js" data-main="combined-scripts.js"&gt;&lt;/script&gt;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>But... concurrent is better<h2>
+          <h6><a href="load-examples/1/">Two inline scripts</a> (2.63s):</h6>
+          <img src="img/load-technique-1.png" alt="Two inline scripts, loaded in 2.63s">  
+
+          <h6><a href="load-examples/2/">Concatenated</a> (2.62s):</h6>
+          <img src="img/load-technique-2.png" alt="Concatenated scripts, loaded in 2.62s">  
+
+          <h6><a href="load-examples/3/">Require.js</a> (2.8s):</h6>
+          <img src="img/load-technique-3.png" alt="Require-packaged scripts, loaded in 2.8s">
+
+          <aside class="notes">
+						These are some example timings for the various script-loading approaches.
+
+						Require.js is a great tool, but as you can see, it imposes some clear performance penalty here.
+						This penalty isn't so extreme in this simple example, but on a complicated site, you're more likely
+						to be CPU-limited, and it can take extra time for Require.js to begin execution, meaning a longer
+						pause before your real scripts even start to load.
+					</aside>
+
+        </section>
+
+        <section>
+          <h2>Summary</h2>
+          <p>We used the power of waterfall charts to identify some key performance issues to investigate further:</p>
+          <ul>
+            <li>A lot of third-party scripts &mdash; can we reduce # of vendors?</li>
+            <li>Images &mdash; can we improve image delivery/optimize further?</li>
+            <li>Blocking behavior of script loader &mdash; we are working on switching to <a href="http://webpack.github.io/">Webpack</a>.
+							<ul><li>(<a href="https://github.com/jrburke/almond">Almond.js</a> is another alternative option for loading an AMD build)</li><ul>
+						</li>
+          </ul>
+          <aside class="notes">
+            We did not succeed in identifying a workable alternative revenue model for a large-scale media company.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Thank you!</h2>
+
+          <p>Tools used for this presentation:</p>
+          <ul>
+            <li><a href="http://lab.hakim.se/reveal-js/#/">Reveal.js</a></li>
+            <li><a href="http://d3js.org/">D3.js</a></li>
+            <li><a href="http://www.webpagetest.org/">Webpagetest.org</a></li>
+            <li><a href="http://www.softwareishard.com/har/viewer/">HAR Viewer</a></li>
+            <li><a href="#">Marc Andreessen "Future Of Media" Ideas Generator</a></li>
+          </ul>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <!-- Custom presentation-specific JS for charting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+
+    <!-- https://github.com/bregenspan/d3-har-chart -->
+    <script src="js/custom/d3-har-chart.min.js"></script>
+
+    <script src="js/custom/charts.js"></script>
+
+    <script>
+      // A little bit of irony for you: here we are, using a script loader to inject dependencies in
+      //  in a fashion that renders them invisible to browsers' preload scanners.
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

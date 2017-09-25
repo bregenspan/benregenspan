@@ -1,0 +1,160 @@
+$disabled-color: #666;
+
+.reveal p {
+	text-shadow: -1px -1px 4px #000;
+}
+
+// Define colored text labels and SVG fills for file types
+$type-colors: (
+  script: lightgreen,
+  font: lightblue,
+  style: lightblue,
+  image: orange
+);
+
+/* Prevent nested sections from blocking our chart interactions */
+section section {
+  pointer-events: none;
+  a {
+    pointer-events: auto;
+  }
+}
+
+section section 
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+	overflow: hidden;
+}
+
+.dark-bg {
+  background: rgba(0,0,0,0.7);
+}
+
+.align-stretched-text-right .stretch {
+  text-align: right;
+}
+
+svg {
+	background: transparent;
+  transform-origin: top left;
+  transition: transform 2s;
+	transform: translate3d(1, 1, 1);
+	width: 100%;
+	height: 100%;
+}
+
+.chart-highlight-filetypes {
+    rect {
+      fill: #ccc;
+    }
+}
+@each $type, $color in $type-colors {
+  .label-#{$type} {
+    color: $color;
+  }
+
+  // when one filetype is highlighted, dim everything else
+  .chart-highlight-#{$type}s rect {
+    fill: $disabled-color;
+  }
+
+  .chart-highlight-#{$type}s,
+  .chart-highlight-filetypes {
+    rect.filetype-#{$type} {
+      fill: $color;
+    }
+  }
+}
+
+.chart-initial rect {
+  fill: $disabled-color;
+}
+
+rect {
+  transition: fill 1s;
+}
+
+rect {
+  fill: white;
+  cursor: pointer;
+}
+
+.chart-highlight-thirdparty {
+  rect.tag-first-party {
+    fill: $disabled-color;
+  }
+}
+
+.chart-zoom-firstparty-images {
+  rect:not(.tag-first-party),
+	rect:not(.filetype-image) {
+    fill: $disabled-color;
+  }
+}
+
+.chart-zoom-firstparty-ignore-images,
+.chart-zoom-firstparty {
+  rect:not(.tag-first-party) {
+    fill: $disabled-color;
+  }
+}
+
+.chart-zoom-firstparty-ignore-images {
+  rect.filetype-image {
+    fill: $disabled-color;
+  }
+}
+
+.chart-zoom-main-scripts {
+  rect {
+    fill: $disabled-color;
+  }
+	rect.tag-script-loader {
+		fill: red;
+	}
+	rect.tag-main-script {
+		fill: green;
+	}
+}
+
+rect.selected {
+  transition: fill 0.1s;
+  fill: red !important;  // so sorry... but it is important that I get this presentation done in a reasonable amount of time!
+}
+
+.reveal .tooltip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+	word-wrap: break-word;
+	max-width: 40%;
+	text-align: left;
+	font-size: 0.7em;
+	background: rgba(255, 255, 255, 0.3);
+	padding: 4px 7px;
+
+  p {
+    margin: 0 0 10px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
+p {
+  transition: opacity 0.5s;
+}
+
+
+
+.reveal .slides section.tooltip-open .fragment.visible {
+    opacity: 0;  // hide text when tooltip is open
+}
+.tooltip-open {
+  p {
+    opacity: 0;  // hide text when tooltip is open
+  }
+}

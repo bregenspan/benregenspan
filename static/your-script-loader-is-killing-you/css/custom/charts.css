@@ -1,0 +1,134 @@
+.reveal p {
+  text-shadow: -1px -1px 4px #000; }
+
+/* Prevent nested sections from blocking our chart interactions */
+section section {
+  pointer-events: none; }
+  section section a {
+    pointer-events: auto; }
+
+section section
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+
+.dark-bg {
+  background: rgba(0, 0, 0, 0.7); }
+
+.align-stretched-text-right .stretch {
+  text-align: right; }
+
+svg {
+  background: transparent;
+  transform-origin: top left;
+  transition: transform 2s;
+  transform: translate3d(1, 1, 1);
+  width: 100%;
+  height: 100%; }
+
+.chart-highlight-filetypes rect {
+  fill: #ccc; }
+
+.label-script {
+  color: lightgreen; }
+
+.chart-highlight-scripts rect {
+  fill: #666; }
+
+.chart-highlight-scripts rect.filetype-script,
+.chart-highlight-filetypes rect.filetype-script {
+  fill: lightgreen; }
+
+.label-font {
+  color: lightblue; }
+
+.chart-highlight-fonts rect {
+  fill: #666; }
+
+.chart-highlight-fonts rect.filetype-font,
+.chart-highlight-filetypes rect.filetype-font {
+  fill: lightblue; }
+
+.label-style {
+  color: lightblue; }
+
+.chart-highlight-styles rect {
+  fill: #666; }
+
+.chart-highlight-styles rect.filetype-style,
+.chart-highlight-filetypes rect.filetype-style {
+  fill: lightblue; }
+
+.label-image {
+  color: orange; }
+
+.chart-highlight-images rect {
+  fill: #666; }
+
+.chart-highlight-images rect.filetype-image,
+.chart-highlight-filetypes rect.filetype-image {
+  fill: orange; }
+
+.chart-initial rect {
+  fill: #666; }
+
+rect {
+  transition: fill 1s; }
+
+rect {
+  fill: white;
+  cursor: pointer; }
+
+.chart-highlight-thirdparty rect.tag-first-party {
+  fill: #666; }
+
+.chart-zoom-firstparty-images rect:not(.tag-first-party),
+.chart-zoom-firstparty-images rect:not(.filetype-image) {
+  fill: #666; }
+
+.chart-zoom-firstparty-ignore-images rect:not(.tag-first-party),
+.chart-zoom-firstparty rect:not(.tag-first-party) {
+  fill: #666; }
+
+.chart-zoom-firstparty-ignore-images rect.filetype-image {
+  fill: #666; }
+
+.chart-zoom-main-scripts rect {
+  fill: #666; }
+
+.chart-zoom-main-scripts rect.tag-script-loader {
+  fill: red; }
+
+.chart-zoom-main-scripts rect.tag-main-script {
+  fill: green; }
+
+rect.selected {
+  transition: fill 0.1s;
+  fill: red !important; }
+
+.reveal .tooltip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  word-wrap: break-word;
+  max-width: 40%;
+  text-align: left;
+  font-size: 0.7em;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 7px; }
+  .reveal .tooltip p {
+    margin: 0 0 10px; }
+    .reveal .tooltip p:last-of-type {
+      margin-bottom: 0; }
+
+p {
+  transition: opacity 0.5s; }
+
+.reveal .slides section.tooltip-open .fragment.visible {
+  opacity: 0; }
+
+.tooltip-open p {
+  opacity: 0; }
