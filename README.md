@@ -34,8 +34,10 @@ Developing
 Releasing
 ---------
 
-After committing and pushing source changes, run:
-`npm run deploy`
+Ensure an ~/.aws/credentials is correctly configured.
 
-This will build and deploy to GitHub Pages, as well as create a matching
-tag in the source repository and pages repository.
+After committing and pushing source changes, run:
+
+`npm run build && npm run deploy`
+
+This will trigger a production build and deploy to S3.
