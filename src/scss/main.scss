@@ -426,41 +426,6 @@ figure {
   }
 }
 
-#unicorn {
-  height: 68px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 120px;
-  z-index: 4;
- 
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition: filter 3s, opacity 5s;
-
-  @include breakpoint(narrow) {
-    display: none;
-  }
-
-  @include breakpoint(mobile) {
-    display: none;
-  }
-
-  &.journey-started {
-    transition: none;
-  }
-
-  &.journey-completed {
-    filter: blur(10px);
-    opacity: 0;
-  }
-
-  &::selection,
-  &::-moz-selection {
-    background: transparent;
-  }
-}
-
 @include breakpoint(mobile) {
   #top,
   aside {

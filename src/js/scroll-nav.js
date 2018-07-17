@@ -1,8 +1,7 @@
 import debounce from 'debounce';
 
 import {
-  $,
-  getTransformPropertyName
+  $
 } from './dom-util';
 import Connector from './connector/connector';
 
@@ -10,14 +9,8 @@ const doc = document;
 const bod = doc.body;
 const win = window;
 
-const unicorn = $('unicorn');
-const unicornHeight = unicorn.offsetHeight;
-const unicornWidth = unicorn.offsetWidth;
-
 const ACTIVE = 'active';
 const ACTIVE_REGEX = new RegExp(ACTIVE + '\\w*');
-const COMPLETED = 'journey-completed';
-const STARTED = 'journey-started';
 const MARGIN = 20;
 
 /**
@@ -141,19 +134,6 @@ export default class ScrollNav {
     return true;
   };
 
-  // FIXME: this does nothing!
-  addStyleChanges (elements) {
-    /*
-    let processPref = function (element, styles, offset) {
-    };
-    for (let i = 0, ilen = elements.length; i < ilen; i++) {
-      let elementPref = elements[i];
-      let element = elementPref.el;
-       elementPref.forEach((pref) => processPref(element, elementPref));
-    }
-    */
-  }
-
   addHandler (sectionId, activateHandler, deactivateHandler) {
     this.sectionActivateHandlers[sectionId] = activateHandler;
     this.sectionDeactivateHandlers[sectionId] = deactivateHandler;
@@ -197,29 +177,7 @@ export default class ScrollNav {
       }
     });
 
-    connector.addListener('move', (e) => {
-      if (unicorn.style.visibility === 'hidden') {
-        unicorn.style.visibility = 'visible';
-      }
-      if (unicorn.className) {
-        unicorn.className = '';
-      }
-      const translate = 'translate(' + (e.x - (unicornWidth / 2)) + 'px,' + (e.y - (unicornHeight / 2)) + 'px) translateY(0)';
-      unicorn.style[getTransformPropertyName()] = translate;
-    });
-
-    connector.addListener('completed', (e) => {
-      unicorn.className = COMPLETED;
-      if (this.timeout) {
-        window.clearTimeout(this.timeout);
-      }
-      this.timeout = window.setTimeout(() => {
-        unicorn.style.visibility = 'hidden';
-      }, 2000);
-    });
-
     connector.addListener('cleared', () => {
-      unicorn.style.visibility = 'hidden';
       if (!this.currentSection) return;
       this.currentSection.className = this.currentSection.className.replace('active', '');
     });
@@ -228,18 +186,8 @@ export default class ScrollNav {
     return connector;
   }
 
-  showUnicorn () {
-    unicorn.className = STARTED;
-    unicorn.style.visibility = 'visible';
-    if (this.timeout) {
-      window.clearTimeout(this.timeout);
-      delete this.timeout;
-    }
-  }
-
   drawConnector () {
     this.activeConnector = this.getConnector(this.currentSection);
-    this.showUnicorn();
     this.activeConnector.draw();
   }
 
