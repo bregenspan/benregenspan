@@ -4,6 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const { ANALYZE } = process.env;
+
+const extraPlugins = ANALYZE ? [new BundleAnalyzerPlugin()] : [];
+
 const extractSass = new ExtractTextPlugin({
   filename: '[name].[md5:contenthash:base36:8].css',
   disable: process.env.NODE_ENV === 'development'
@@ -125,6 +129,6 @@ module.exports = {
       template: 'src/404.html'
     }),
     new HtmlWebpackHarddiskPlugin(),
-    new BundleAnalyzerPlugin()
+    ...extraPlugins
   ]
 };
