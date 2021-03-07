@@ -46,7 +46,7 @@
     "unfetch": "^3.0.0",
     "webfontloader": "^1.6.28",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-server": "^2.7.1"
   }
 }
